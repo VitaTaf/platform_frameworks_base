@@ -16,7 +16,13 @@
 
 package android.app;
 
+import android.annotation.DrawableRes;
+import android.annotation.IdRes;
+import android.annotation.IntDef;
+import android.annotation.LayoutRes;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.StyleRes;
 import android.os.PersistableBundle;
 import android.transition.Scene;
 import android.transition.TransitionManager;
@@ -2074,7 +2080,7 @@ public class Activity extends ContextThemeWrapper
      * @return The view if found or null otherwise.
      */
     @Nullable
-    public View findViewById(int id) {
+    public View findViewById(@IdRes int id) {
         return getWindow().findViewById(id);
     }
 
@@ -2147,7 +2153,7 @@ public class Activity extends ContextThemeWrapper
      * @see #setContentView(android.view.View)
      * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)
      */
-    public void setContentView(int layoutResID) {
+    public void setContentView(@LayoutRes int layoutResID) {
         getWindow().setContentView(layoutResID);
         initWindowDecorActionBar();
     }
@@ -3615,7 +3621,7 @@ public class Activity extends ContextThemeWrapper
      * Convenience for calling
      * {@link android.view.Window#setFeatureDrawableResource}.
      */
-    public final void setFeatureDrawableResource(int featureId, int resId) {
+    public final void setFeatureDrawableResource(int featureId, @DrawableRes int resId) {
         getWindow().setFeatureDrawableResource(featureId, resId);
     }
 
@@ -3670,7 +3676,7 @@ public class Activity extends ContextThemeWrapper
     }
 
     @Override
-    protected void onApplyThemeResource(Resources.Theme theme, int resid,
+    protected void onApplyThemeResource(Resources.Theme theme, @StyleRes int resid,
             boolean first) {
         if (mParent == null) {
             super.onApplyThemeResource(theme, resid, first);
