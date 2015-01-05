@@ -1374,7 +1374,7 @@ class WindowStateAnimator {
         }
     }
 
-    void setSurfaceBoundariesLocked(final boolean recoveringMemory) {
+    private void setSurfaceBoundariesLocked(final boolean recoveringMemory) {
         final WindowState w = mWin;
 
         int width;
