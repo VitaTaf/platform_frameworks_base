@@ -1582,10 +1582,9 @@ public final class ActivityStackSupervisor implements DisplayListener {
             }
 
             // Need to create an app stack for this user.
-            int stackId = createStackOnDisplay(getNextStackId(), Display.DEFAULT_DISPLAY);
+            mFocusedStack = createStackOnDisplay(getNextStackId(), Display.DEFAULT_DISPLAY);
             if (DEBUG_FOCUS || DEBUG_STACK) Slog.d(TAG, "adjustStackFocus: New stack r=" + r +
-                    " stackId=" + stackId);
-            mFocusedStack = getStack(stackId);
+                    " stackId=" + mFocusedStack.mStackId);
             return mFocusedStack;
         }
         return mHomeStack;
@@ -2608,16 +2607,16 @@ public final class ActivityStackSupervisor implements DisplayListener {
         }
     }
 
-    private int createStackOnDisplay(int stackId, int displayId) {
+    ActivityStack createStackOnDisplay(int stackId, int displayId) {
         ActivityDisplay activityDisplay = mActivityDisplays.get(displayId);
         if (activityDisplay == null) {
-            return -1;
+            return null;
         }
 
         ActivityContainer activityContainer = new ActivityContainer(stackId);
         mActivityContainers.put(stackId, activityContainer);
         activityContainer.attachToDisplayLocked(activityDisplay);
-        return stackId;
+        return activityContainer.mStack;
     }
 
     int getNextStackId() {
@@ -2654,7 +2653,7 @@ public final class ActivityStackSupervisor implements DisplayListener {
             // We couldn't find a stack to restore the task to. Possible if are restoring recents
             // before an application stack is created...Go ahead and create one on the default
             // display.
-            stack = getStack(createStackOnDisplay(getNextStackId(), Display.DEFAULT_DISPLAY));
+            stack = createStackOnDisplay(getNextStackId(), Display.DEFAULT_DISPLAY);
             // Restore home stack to top.
             moveHomeStack(true, "restoreRecentTask");
             if (DEBUG_RECENTS)

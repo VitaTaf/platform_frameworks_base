@@ -439,6 +439,7 @@ public interface IActivityManager extends IInterface {
 
     public IActivityContainer createVirtualActivityContainer(IBinder parentActivityToken,
             IActivityContainerCallback callback) throws RemoteException;
+    public IActivityContainer createStackOnDisplay(int displayId) throws RemoteException;
 
     public void deleteActivityContainer(IActivityContainer container) throws RemoteException;
 
@@ -801,4 +802,6 @@ public interface IActivityManager extends IInterface {
     int LISTEN_EVENT_LOG_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+244;
     int RESTART_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+245;
     int KILL_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+246;
+
+    int CREATE_STACK_ON_DISPLAY = IBinder.FIRST_CALL_TRANSACTION+281;
 }
