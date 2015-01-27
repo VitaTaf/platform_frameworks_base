@@ -8113,6 +8113,7 @@
   <public type="attr" name="trackTintMode" id="0x010104d9" />
   <public type="attr" name="start" id="0x010104d6" />
   <public type="attr" name="end" id="0x010104d7" />
+  <public type="attr" name="windowHasLightStatusBar" />
   <public type="attr" name="numbersInnerTextColor" id="0x010104da" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
