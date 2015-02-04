@@ -16,15 +16,14 @@
 
 package android.app;
 
-import android.content.pm.ApplicationInfo;
 import com.android.internal.app.WindowDecorActionBar;
-import com.android.internal.policy.PolicyManager;
 
 import android.annotation.Nullable;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +42,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.PhoneWindow;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
@@ -135,14 +135,14 @@ public class Dialog implements DialogInterface, Window.Callback,
 
     /**
      * Create a Dialog window that uses a custom dialog style.
-     * 
+     *
      * @param context The Context in which the Dialog should run. In particular, it
      *                uses the window manager and theme from this context to
      *                present its UI.
-     * @param theme A style resource describing the theme to use for the 
-     * window. See <a href="{@docRoot}guide/topics/resources/available-resources.html#stylesandthemes">Style 
-     * and Theme Resources</a> for more information about defining and using 
-     * styles.  This theme is applied on top of the current theme in 
+     * @param theme A style resource describing the theme to use for the
+     * window. See <a href="{@docRoot}guide/topics/resources/available-resources.html#stylesandthemes">Style
+     * and Theme Resources</a> for more information about defining and using
+     * styles.  This theme is applied on top of the current theme in
      * <var>context</var>.  If 0, the default dialog theme will be used.
      */
     public Dialog(Context context, int theme) {
@@ -163,7 +163,7 @@ public class Dialog implements DialogInterface, Window.Callback,
         }
 
         mWindowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        Window w = PolicyManager.makeNewWindow(mContext);
+        Window w = new PhoneWindow(mContext);
         mWindow = w;
         w.setCallback(this);
         w.setOnWindowDismissedCallback(this);
