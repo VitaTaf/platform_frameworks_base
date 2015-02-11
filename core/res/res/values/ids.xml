@@ -832,4 +832,6 @@
   <item type="id" name="inside" id="0x010203e8" />
   <item type="id" name="midpoint" id="0x010203e9" />
   <item type="id" name="floating_toolbar_menu_item_image_button" />
+  <item type="id" name="undo" />
+  <item type="id" name="redo" />
 </resources>
