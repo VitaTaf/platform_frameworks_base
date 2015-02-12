@@ -52,6 +52,7 @@ import android.os.StrictMode;
 import android.service.voice.IVoiceInteractionSession;
 import com.android.internal.app.IVoiceInteractor;
 import com.motorola.datacollection.IDataCollectionListener;
+import com.android.internal.os.IResultReceiver;
 
 import java.util.List;
 
@@ -420,6 +421,9 @@ public interface IActivityManager extends IInterface {
             throws RemoteException;
 
     public Bundle getAssistContextExtras(int requestType) throws RemoteException;
+
+    public void requestAssistContextExtras(int requestType, IResultReceiver receiver)
+            throws RemoteException;
 
     public void reportAssistContextExtras(IBinder token, Bundle extras) throws RemoteException;
 
@@ -806,4 +810,5 @@ public interface IActivityManager extends IInterface {
 
     int CREATE_STACK_ON_DISPLAY = IBinder.FIRST_CALL_TRANSACTION+281;
     int GET_FOCUSED_STACK_ID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+282;
+    int REQUEST_ASSIST_CONTEXT_EXTRAS_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+284;
 }
