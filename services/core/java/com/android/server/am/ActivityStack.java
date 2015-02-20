@@ -4145,6 +4145,8 @@ final class ActivityStack {
             }
             mActivityContainer.onTaskListEmptyLocked();
         }
+
+        task.stack = null;
     }
 
     TaskRecord createTaskRecord(int taskId, ActivityInfo info, Intent intent,
