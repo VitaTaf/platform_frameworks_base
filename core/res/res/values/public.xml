@@ -8168,6 +8168,12 @@
   <public type="attr" name="end" id="0x010104d7" />
   <public type="attr" name="windowHasLightStatusBar" id="0x010104dd" />
   <public type="attr" name="numbersInnerTextColor" id="0x010104da" />
+  <public type="attr" name="iconTint" />
+  <public type="attr" name="iconTintMode" />
+  <public type="attr" name="overflowTint" />
+  <public type="attr" name="overflowTintMode" />
+  <public type="attr" name="navigationTint" />
+  <public type="attr" name="navigationTintMode" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
   <public type="style" name="ThemeOverlay.Material.Dialog" />
