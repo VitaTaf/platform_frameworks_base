@@ -834,4 +834,5 @@
   <item type="id" name="floating_toolbar_menu_item_image_button" />
   <item type="id" name="undo" />
   <item type="id" name="redo" />
+  <item type="id" name="pasteAsPlainText" />
 </resources>
