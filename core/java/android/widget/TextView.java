@@ -3984,6 +3984,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         if (type == BufferType.EDITABLE || getKeyListener() != null ||
                 needEditableForNotification) {
             createEditorIfNeeded();
+            mEditor.forgetUndoRedo();
             Editable t = mEditableFactory.newEditable(text);
             text = t;
             setFilters(t, mFilters);
