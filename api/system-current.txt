@@ -3501,6 +3501,7 @@ package android.app {
     method public void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
     method public void onWindowFocusChanged(boolean);
     method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback);
+    method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback, int);
     method public void openContextMenu(android.view.View);
     method public void openOptionsMenu();
     method public void overridePendingTransition(int, int);
@@ -3547,6 +3548,7 @@ package android.app {
     method public final deprecated void showDialog(int);
     method public final deprecated boolean showDialog(int, android.os.Bundle);
     method public android.view.ActionMode startActionMode(android.view.ActionMode.Callback);
+    method public android.view.ActionMode startActionMode(android.view.ActionMode.Callback, int);
     method public void startActivityForResult(android.content.Intent, int);
     method public void startActivityForResult(android.content.Intent, int, android.os.Bundle);
     method public void startActivityFromChild(android.app.Activity, android.content.Intent, int);
@@ -4149,6 +4151,7 @@ package android.app {
     method public void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
     method public void onWindowFocusChanged(boolean);
     method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback);
+    method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback, int);
     method public void openContextMenu(android.view.View);
     method public void openOptionsMenu();
     method public void registerForContextMenu(android.view.View);
@@ -28736,6 +28739,7 @@ package android.service.dreams {
     method public void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
     method public void onWindowFocusChanged(boolean);
     method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback);
+    method public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback, int);
     method public void setContentView(int);
     method public void setContentView(android.view.View);
     method public void setContentView(android.view.View, android.view.ViewGroup.LayoutParams);
@@ -36154,6 +36158,7 @@ package android.view {
     method public void setZ(float);
     method public boolean showContextMenu();
     method public android.view.ActionMode startActionMode(android.view.ActionMode.Callback);
+    method public android.view.ActionMode startActionMode(android.view.ActionMode.Callback, int);
     method public void startAnimation(android.view.animation.Animation);
     method public final boolean startDrag(android.content.ClipData, android.view.View.DragShadowBuilder, java.lang.Object, int);
     method public boolean startNestedScroll(int);
@@ -36606,6 +36611,7 @@ package android.view {
     method public boolean shouldDelayChildPressedState();
     method public boolean showContextMenuForChild(android.view.View);
     method public android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback);
+    method public android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback, int);
     method public void startLayoutAnimation();
     method public void startViewTransition(android.view.View);
     method public void updateViewLayout(android.view.View, android.view.ViewGroup.LayoutParams);
@@ -36726,6 +36732,7 @@ package android.view {
     method public abstract void requestTransparentRegion(android.view.View);
     method public abstract boolean showContextMenuForChild(android.view.View);
     method public abstract android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback);
+    method public abstract android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback, int);
   }
 
   public class ViewPropertyAnimator {
@@ -37015,6 +37022,7 @@ package android.view {
     method public abstract void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
     method public abstract void onWindowFocusChanged(boolean);
     method public abstract android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback);
+    method public abstract android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback, int);
   }
 
   public final class WindowAnimationFrameStats extends android.view.FrameStats implements android.os.Parcelable {
