@@ -17,6 +17,7 @@
 package android.graphics;
 
 import android.annotation.ColorInt;
+import android.annotation.Size;
 import android.util.MathUtils;
 import com.android.internal.util.XmlUtils;
 
@@ -213,7 +214,7 @@ public class Color {
      * 'silver', 'teal'
      */
     @ColorInt
-    public static int parseColor(String colorString) {
+    public static int parseColor(@Size(min=1) String colorString) {
         if (colorString.charAt(0) == '#') {
             // Use a long to avoid rollovers on #ffXXXXXX
             long color = Long.parseLong(colorString.substring(1), 16);
@@ -245,7 +246,7 @@ public class Color {
      * @hide Pending API council
      */
     @ColorInt
-    public static int HSBtoColor(float[] hsb) {
+    public static int HSBtoColor(@Size(3) float[] hsb) {
         return HSBtoColor(hsb[0], hsb[1], hsb[2]);
     }
     
@@ -326,7 +327,7 @@ public class Color {
      * @param blue  blue component value [0..255]
      * @param hsv  3 element array which holds the resulting HSV components.
      */
-    public static void RGBToHSV(int red, int green, int blue, float hsv[]) {
+    public static void RGBToHSV(int red, int green, int blue, @Size(3) float hsv[]) {
         if (hsv.length < 3) {
             throw new RuntimeException("3 components required for hsv");
         }
@@ -341,7 +342,7 @@ public class Color {
      * @param color the argb color to convert. The alpha component is ignored.
      * @param hsv  3 element array which holds the resulting HSV components.
      */
-    public static void colorToHSV(@ColorInt int color, float hsv[]) {
+    public static void colorToHSV(@ColorInt int color, @Size(3) float hsv[]) {
         RGBToHSV((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, hsv);
     }
 
@@ -354,7 +355,7 @@ public class Color {
      * @param hsv  3 element array which holds the input HSV components.
      * @return the resulting argb color
     */
-    public static int HSVToColor(float hsv[]) {
+    public static int HSVToColor(@Size(3) float hsv[]) {
         return HSVToColor(0xFF, hsv);
     }
 
@@ -369,7 +370,7 @@ public class Color {
      * @param hsv  3 element array which holds the input HSV components.
      * @return the resulting argb color
     */
-    public static int HSVToColor(int alpha, float hsv[]) {
+    public static int HSVToColor(int alpha, @Size(3) float hsv[]) {
         if (hsv.length < 3) {
             throw new RuntimeException("3 components required for hsv");
         }
