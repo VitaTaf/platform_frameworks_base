@@ -26,6 +26,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslCertificate;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.print.PrintDocumentAdapter;
@@ -227,6 +228,10 @@ public interface WebViewProvider {
     public void addJavascriptInterface(Object obj, String interfaceName);
 
     public void removeJavascriptInterface(String interfaceName);
+
+    public WebMessagePort[] createWebMessageChannel();
+
+    public void postMessageToMainFrame(WebMessage message, Uri targetOrigin);
 
     public WebSettings getSettings();
 
