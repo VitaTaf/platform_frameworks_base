@@ -22,6 +22,7 @@ import android.annotation.ColorInt;
 import android.annotation.DrawableRes;
 import android.annotation.IdRes;
 import android.annotation.IntDef;
+import android.annotation.LayoutRes;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.ClipData;
@@ -18956,7 +18957,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * layout_* parameters.
      * @see LayoutInflater
      */
-    public static View inflate(Context context, int resource, ViewGroup root) {
+    public static View inflate(Context context, @LayoutRes int resource, ViewGroup root) {
         LayoutInflater factory = LayoutInflater.from(context);
         return factory.inflate(resource, root);
     }

@@ -520,7 +520,7 @@ public abstract class Drawable {
      * {@link #setTintList(ColorStateList) tint}.
      * </p>
      */
-    public void setColorFilter(int color, @NonNull PorterDuff.Mode mode) {
+    public void setColorFilter(@ColorInt int color, @NonNull PorterDuff.Mode mode) {
         setColorFilter(new PorterDuffColorFilter(color, mode));
     }
 

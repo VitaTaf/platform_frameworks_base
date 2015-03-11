@@ -22,6 +22,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.annotation.StyleRes;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -330,7 +331,7 @@ class FastScroller {
         refreshDrawablePressedState();
     }
 
-    public void setStyle(int resId) {
+    public void setStyle(@StyleRes int resId) {
         final Context context = mList.getContext();
         final TypedArray ta = context.obtainStyledAttributes(null,
                 R.styleable.FastScroll, R.attr.fastScrollStyle, resId);
