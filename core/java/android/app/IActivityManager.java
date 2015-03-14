@@ -482,6 +482,9 @@ public interface IActivityManager extends IInterface {
 
     public void listenEventLog(IDataCollectionListener listener, boolean flag) throws RemoteException;
 
+    public void setVoiceKeepAwake(IVoiceInteractionSession session, boolean keepAwake)
+            throws RemoteException;
+
     /*
      * Private non-Binder interfaces
      */
@@ -811,4 +814,5 @@ public interface IActivityManager extends IInterface {
     int CREATE_STACK_ON_DISPLAY = IBinder.FIRST_CALL_TRANSACTION+281;
     int GET_FOCUSED_STACK_ID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+282;
     int REQUEST_ASSIST_CONTEXT_EXTRAS_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+284;
+    int SET_VOICE_KEEP_AWAKE_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+289;
 }
