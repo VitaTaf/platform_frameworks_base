@@ -27,6 +27,7 @@ import android.app.SearchManager;
 import android.os.UserHandle;
 
 import com.android.internal.R;
+import com.android.internal.view.FloatingActionMode;
 import com.android.internal.view.RootViewSurfaceTaker;
 import com.android.internal.view.StandaloneActionMode;
 import com.android.internal.view.menu.ContextMenuBuilder;
@@ -39,6 +40,7 @@ import com.android.internal.view.menu.MenuView;
 import com.android.internal.widget.ActionBarContextView;
 import com.android.internal.widget.BackgroundFallback;
 import com.android.internal.widget.DecorContentParent;
+import com.android.internal.widget.FloatingToolbar;
 import com.android.internal.widget.SwipeDismissLayout;
 
 import android.app.ActivityManager;
@@ -2175,6 +2177,9 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         private ActionBarContextView mPrimaryActionModeView;
         private PopupWindow mPrimaryActionModePopup;
         private Runnable mShowPrimaryActionModePopup;
+        private ViewTreeObserver.OnPreDrawListener mFloatingToolbarPreDrawListener;
+        private View mFloatingActionModeOriginatingView;
+        private FloatingToolbar mFloatingToolbar;
 
         // View added at runtime to draw under the status bar area
         private View mStatusGuard;
@@ -2702,18 +2707,18 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 if (mode.getType() == ActionMode.TYPE_PRIMARY) {
                     cleanupPrimaryActionMode();
                     mPrimaryActionMode = mode;
-                } else {
+                } else if (mode.getType() == ActionMode.TYPE_FLOATING) {
+                    if (mFloatingActionMode != null) {
+                        mFloatingActionMode.finish();
+                    }
                     mFloatingActionMode = mode;
                 }
             } else {
-                if (type == ActionMode.TYPE_PRIMARY) {
-                    cleanupPrimaryActionMode();
-                    mode = createStandaloneActionMode(wrappedCallback);
-                    if (mode != null && callback.onCreateActionMode(mode, mode.getMenu())) {
-                        setHandledPrimaryActionMode(mode);
-                    } else {
-                        mode = null;
-                    }
+                mode = createActionMode(type, wrappedCallback, originatingView);
+                if (mode != null && wrappedCallback.onCreateActionMode(mode, mode.getMenu())) {
+                    setHandledActionMode(mode);
+                } else {
+                    mode = null;
                 }
             }
             if (mode != null && getCallback() != null && !isDestroyed()) {
@@ -2733,6 +2738,21 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             }
             if (mPrimaryActionModeView != null) {
                 mPrimaryActionModeView.killMode();
+            }
+        }
+
+        private void cleanupFloatingActionModeViews() {
+            if (mFloatingToolbar != null) {
+                mFloatingToolbar.dismiss();
+                mFloatingToolbar = null;
+            }
+            if (mFloatingActionModeOriginatingView != null) {
+                if (mFloatingToolbarPreDrawListener != null) {
+                    mFloatingActionModeOriginatingView.getViewTreeObserver()
+                        .removeOnPreDrawListener(mFloatingToolbarPreDrawListener);
+                    mFloatingToolbarPreDrawListener = null;
+                }
+                mFloatingActionModeOriginatingView = null;
             }
         }
 
@@ -3127,6 +3147,14 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             if (cb != null && !isDestroyed() && mFeatureId < 0) {
                 cb.onWindowFocusChanged(hasWindowFocus);
             }
+
+            if (mFloatingToolbar != null) {
+                if (hasWindowFocus) {
+                    mFloatingToolbar.show();
+                } else {
+                    mFloatingToolbar.dismiss();
+                }
+            }
         }
 
         void updateWindowResizeState() {
@@ -3178,6 +3206,10 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 }
                 mPrimaryActionModePopup = null;
             }
+            if (mFloatingToolbar != null) {
+                mFloatingToolbar.dismiss();
+                mFloatingToolbar = null;
+            }
 
             PanelFeatureState st = getPanelState(FEATURE_OPTIONS_PANEL, false);
             if (st != null && st.menu != null && mFeatureId < 0) {
@@ -3219,7 +3251,27 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             updateColorViewTranslations();
         }
 
+        private ActionMode createActionMode(
+                int type, ActionMode.Callback2 callback, View originatingView) {
+            switch (type) {
+                case ActionMode.TYPE_PRIMARY:
+                default:
+                    return createStandaloneActionMode(callback);
+                case ActionMode.TYPE_FLOATING:
+                    return createFloatingActionMode(originatingView, callback);
+            }
+        }
+
+        private void setHandledActionMode(ActionMode mode) {
+            if (mode.getType() == ActionMode.TYPE_PRIMARY) {
+                setHandledPrimaryActionMode(mode);
+            } else if (mode.getType() == ActionMode.TYPE_FLOATING) {
+                setHandledFloatingActionMode(mode);
+            }
+        }
+
         private ActionMode createStandaloneActionMode(ActionMode.Callback callback) {
+            cleanupPrimaryActionMode();
             if (mPrimaryActionModeView == null) {
                 if (isFloating()) {
                     // Use the action bar theme.
@@ -3290,6 +3342,35 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
         }
 
+        private ActionMode createFloatingActionMode(
+                View originatingView, ActionMode.Callback2 callback) {
+            if (mFloatingActionMode != null) {
+                mFloatingActionMode.finish();
+            }
+            cleanupFloatingActionModeViews();
+            mFloatingToolbar = new FloatingToolbar(mContext, PhoneWindow.this);
+            final FloatingActionMode mode = new FloatingActionMode(
+                    mContext, callback, originatingView, mFloatingToolbar);
+            mFloatingActionModeOriginatingView = originatingView;
+            mFloatingToolbarPreDrawListener =
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        mode.updateViewLocationInWindow();
+                        return true;
+                    }
+                };
+            return mode;
+        }
+
+        private void setHandledFloatingActionMode(ActionMode mode) {
+            mFloatingActionMode = mode;
+            mFloatingActionMode.invalidate();
+            mFloatingToolbar.show();
+            mFloatingActionModeOriginatingView.getViewTreeObserver()
+                .addOnPreDrawListener(mFloatingToolbarPreDrawListener);
+        }
+
         /**
          * Clears out internal references when the action mode is destroyed.
          */
@@ -3327,6 +3408,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     }
                     mPrimaryActionMode = null;
                 } else if (mode == mFloatingActionMode) {
+                    cleanupFloatingActionModeViews();
                     mFloatingActionMode = null;
                 }
                 if (getCallback() != null && !isDestroyed()) {
@@ -3337,6 +3419,15 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                     }
                 }
                 requestFitSystemWindows();
+            }
+
+            @Override
+            public void onGetContentRect(ActionMode mode, View view, Rect outRect) {
+                if (mWrapped instanceof ActionMode.Callback2) {
+                    ((ActionMode.Callback2) mWrapped).onGetContentRect(mode, view, outRect);
+                } else {
+                    super.onGetContentRect(mode, view, outRect);
+                }
             }
         }
     }
