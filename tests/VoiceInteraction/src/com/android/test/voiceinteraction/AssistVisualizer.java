@@ -55,6 +55,7 @@ public class AssistVisualizer extends View {
                         windowNode.getTop());
             }
         }
+        invalidate();
     }
 
     public void clearAssistData() {
