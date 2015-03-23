@@ -99,7 +99,7 @@ public class DatePicker extends FrameLayout {
     private final DatePickerDelegate mDelegate;
 
     /**
-     * The callback used to indicate the user changes\d the date.
+     * The callback used to indicate the user changed the date.
      */
     public interface OnDateChangedListener {
 
@@ -490,15 +490,14 @@ public class DatePicker extends FrameLayout {
             mDelegator = delegator;
             mContext = context;
 
-            // initialization based on locale
             setCurrentLocale(Locale.getDefault());
         }
 
         protected void setCurrentLocale(Locale locale) {
-            if (locale.equals(mCurrentLocale)) {
-                return;
+            if (!locale.equals(mCurrentLocale)) {
+                mCurrentLocale = locale;
+                onLocaleChanged(locale);
             }
-            mCurrentLocale = locale;
         }
 
         @Override
@@ -510,6 +509,10 @@ public class DatePicker extends FrameLayout {
             if (mValidationCallback != null) {
                 mValidationCallback.onValidationChanged(valid);
             }
+        }
+
+        protected void onLocaleChanged(Locale locale) {
+            // Stub.
         }
     }
 
