@@ -849,6 +849,7 @@ please see themes_device_defaults.xml.
     <!-- Theme overlay that overrides window properties to display as a dialog. -->
     <style name="ThemeOverlay.Material.Dialog">
         <item name="colorBackgroundCacheHint">@null</item>
+        <item name="colorBackground">?attr/colorBackgroundFloating</item>
 
         <item name="windowFrame">@null</item>
         <item name="windowTitleStyle">@style/DialogWindowTitle.Material</item>
@@ -1269,7 +1270,6 @@ please see themes_device_defaults.xml.
         <item name="colorBackground">@color/white</item>
         <item name="colorPrimary">@color/material_blue_grey_900</item>
         <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
 
         <item name="presentationTheme">@style/Theme.Material.Settings.Dialog.Presentation</item>
         <item name="searchDialogTheme">@style/Theme.Material.Settings.SearchBar</item>
@@ -1280,7 +1280,6 @@ please see themes_device_defaults.xml.
         <item name="colorBackground">@color/white</item>
         <item name="colorPrimary">@color/material_blue_grey_900</item>
         <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
     </style>
 
     <style name="Theme.Material.Settings.Dialog" parent="Theme.Material.Settings.BaseDialog" />
@@ -1289,7 +1288,6 @@ please see themes_device_defaults.xml.
         <item name="colorBackground">@color/white</item>
         <item name="colorPrimary">@color/material_blue_grey_900</item>
         <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
     </style>
 
     <style name="Theme.Material.Settings.Dialog.Alert" parent="Theme.Material.Settings.Dialog.BaseAlert" />
@@ -1298,7 +1296,6 @@ please see themes_device_defaults.xml.
         <item name="colorBackground">@color/white</item>
         <item name="colorPrimary">@color/material_blue_grey_900</item>
         <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
     </style>
 
     <style name="Theme.Material.Settings.SearchBar" parent="Theme.Material.Light.SearchBar">
@@ -1312,6 +1309,5 @@ please see themes_device_defaults.xml.
         <item name="colorBackground">@color/white</item>
         <item name="colorPrimary">@color/material_blue_grey_900</item>
         <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
     </style>
 </resources>
