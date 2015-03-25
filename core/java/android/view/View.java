@@ -84,6 +84,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityEventSource;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -6040,6 +6041,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                     | AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD
                     | AccessibilityNodeInfo.MOVEMENT_GRANULARITY_PARAGRAPH);
         }
+
+        info.addAction(AccessibilityAction.ACTION_SHOW_ON_SCREEN);
     }
 
     private View findLabelForView(View view, int labeledId) {
@@ -8507,6 +8510,13 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                     notifyViewAccessibilityStateChangedIfNeeded(
                             AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED);
                     return true;
+                }
+            } break;
+            case R.id.accessibility_action_show_on_screen: {
+                if (mAttachInfo != null) {
+                    final Rect r = mAttachInfo.mTmpInvalRect;
+                    getDrawingRect(r);
+                    return requestRectangleOnScreen(r, true);
                 }
             } break;
         }
