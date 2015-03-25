@@ -11048,6 +11048,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             invalidateViewProperty(false, true);
 
             invalidateParentIfNeededAndWasQuickRejected();
+            notifySubtreeAccessibilityStateChangedIfNeeded();
         }
     }
 
