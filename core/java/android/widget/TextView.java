@@ -27,6 +27,7 @@ import android.annotation.XmlRes;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.UndoManager;
 import android.content.res.ColorStateList;
 import android.content.res.CompatibilityInfo;
@@ -284,6 +285,11 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
 
     // System wide time for last cut or copy action.
     static long LAST_CUT_OR_COPY_TIME;
+
+    /**
+     * @hide
+     */
+    static final int PROCESS_TEXT_REQUEST_CODE = 100;
 
     private ColorStateList mTextColor;
     private ColorStateList mHintTextColor;
@@ -1371,6 +1377,23 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         // If not explicitly specified this view is important for accessibility.
         if (getImportantForAccessibility() == IMPORTANT_FOR_ACCESSIBILITY_AUTO) {
             setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+        }
+    }
+
+    /**
+     * @hide
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PROCESS_TEXT_REQUEST_CODE) {
+            CharSequence result = data != null
+                    ? data.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
+                    : "";
+            if (isTextEditable()) {
+                replaceSelectionWithText(result);
+            } else {
+                Toast.makeText(getContext(), String.valueOf(result), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -7316,6 +7339,13 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         return selectionStart >= 0 && selectionStart != selectionEnd;
     }
 
+    String getSelectedText() {
+        if (hasSelection()) {
+            return String.valueOf(mText.subSequence(getSelectionStart(), getSelectionEnd()));
+        }
+        return null;
+    }
+
     /**
      * Sets the properties of this field (lines, horizontally scrolling,
      * transformation method) to be for a single-line input.
@@ -8908,6 +8938,19 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
                 hasPrimaryClip());
     }
 
+    boolean canProcessText() {
+        if (!getContext().canStartActivityForResult() || getId() == View.NO_ID
+                || hasPasswordTransformationMethod()) {
+            return false;
+        }
+
+        if (mText.length() > 0 && hasSelection() && mEditor != null) {
+            return true;
+        }
+
+        return false;
+    }
+
     boolean selectAllText() {
         // Need to hide insert point cursor controller before settings selection, otherwise insert
         // point cursor controller obtains cursor update event and update cursor with cancelling
@@ -8918,6 +8961,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         final int length = mText.length();
         Selection.setSelection((Spannable) mText, 0, length);
         return length > 0;
+    }
+
+    void replaceSelectionWithText(CharSequence text) {
+        ((Editable) mText).replace(getSelectionStart(), getSelectionEnd(), text);
     }
 
     /**
