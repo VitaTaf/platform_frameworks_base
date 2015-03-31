@@ -558,7 +558,7 @@ public class Editor {
         }
     }
 
-    private void hideInsertionPointCursorController() {
+    void hideInsertionPointCursorController() {
         if (mInsertionPointCursorController != null) {
             mInsertionPointCursorController.hide();
         }
