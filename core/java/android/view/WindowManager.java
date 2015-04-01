@@ -225,6 +225,7 @@ public interface WindowManager extends ViewManager {
             @ViewDebug.IntToString(from = TYPE_PRIVATE_PRESENTATION, to = "TYPE_PRIVATE_PRESENTATION"),
             @ViewDebug.IntToString(from = TYPE_VOICE_INTERACTION, to = "TYPE_VOICE_INTERACTION"),
             @ViewDebug.IntToString(from = TYPE_TOUCH_SYSTEM_OVERLAY, to = "TYPE_TOUCH_SYSTEM_OVERLAY"),
+            @ViewDebug.IntToString(from = TYPE_VOICE_INTERACTION_STARTING, to = "TYPE_VOICE_INTERACTION_STARTING"),
         })
         public int type;
     
@@ -567,6 +568,12 @@ public interface WindowManager extends ViewManager {
         public static final int TYPE_ACCESSIBILITY_OVERLAY = FIRST_SYSTEM_WINDOW+32;
 
         public static final int TYPE_AOD = 2949;
+
+        /**
+         * Window type: Starting window for voice interaction layer.
+         * @hide
+         */
+        public static final int TYPE_VOICE_INTERACTION_STARTING = FIRST_SYSTEM_WINDOW+33;
 
         /**
          * End of types of system windows.
