@@ -27,16 +27,20 @@ import android.content.res.Resources;
 import android.media.AudioAttributes;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Slog;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.android.internal.app.IVoiceInteractionManagerService;
 import com.android.systemui.statusbar.BaseStatusBar;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusBarPanel;
@@ -71,6 +75,8 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
     private float mStartDrag;
     private boolean mLaunchPending;
 
+    private IVoiceInteractionManagerService mVoiceInteractionManagerService;
+
     public SearchPanelView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -79,6 +85,14 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
         super(context, attrs, defStyle);
         mContext = context;
         mThreshold = context.getResources().getDimensionPixelSize(R.dimen.search_panel_threshold);
+    }
+
+    private void startAssist() {
+        if (isVoiceInteractorActive()) {
+            startVoiceInteractor();
+        } else {
+            startAssistActivity();
+        }
     }
 
     private void startAssistActivity() {
@@ -107,6 +121,23 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
         }
     }
 
+    private void startVoiceInteractor() {
+        try {
+            mVoiceInteractionManagerService.showSessionForActiveService();
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed to call showSessionForActiveService", e);
+        }
+    }
+
+    private boolean isVoiceInteractorActive() {
+        try {
+            return mVoiceInteractionManagerService.isServiceActive();
+        } catch (RemoteException e) {
+            Log.w(TAG, "Failed to call isServiceActive", e);
+            return false;
+        }
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -114,6 +145,9 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
         mCircle = (SearchPanelCircleView) findViewById(R.id.search_panel_circle);
         mLogo = (ImageView) findViewById(R.id.search_logo);
         mScrim = findViewById(R.id.search_panel_scrim);
+        mVoiceInteractionManagerService = (IVoiceInteractionManagerService)
+                IVoiceInteractionManagerService.Stub.asInterface(
+                        ServiceManager.getService(Context.VOICE_INTERACTION_MANAGER_SERVICE));
     }
 
     private void maybeSwapSearchIcon() {
@@ -326,7 +360,7 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
             return;
         }
         mLaunching = true;
-        startAssistActivity();
+        startAssist();
         vibrate();
         mCircle.setAnimatingOut(true);
         mCircle.startExitAnimation(new Runnable() {
