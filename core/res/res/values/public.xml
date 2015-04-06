@@ -3547,24 +3547,10 @@
     <public type="drawable" name="scrollbar_handle_vertical" id="0x010805d2" />
     <public type="drawable" name="scrubber_control_disabled_holo" id="0x010805d3" />
     <public type="drawable" name="scrubber_control_focused_holo" id="0x010805d4" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_000" id="0x010805d5" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_001" id="0x010805d6" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_002" id="0x010805d7" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_003" id="0x010805d8" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_004" id="0x010805d9" />
-    <public type="drawable" name="scrubber_control_from_pressed_mtrl_005" id="0x010805da" />
     <public type="drawable" name="scrubber_control_normal_holo" id="0x010805dc" />
-    <public type="drawable" name="scrubber_control_off_mtrl_alpha" id="0x010805dd" />
-    <public type="drawable" name="scrubber_control_off_pressed_mtrl_alpha" id="0x010805de" />
     <public type="drawable" name="scrubber_control_on_mtrl_alpha" id="0x010805df" />
     <public type="drawable" name="scrubber_control_on_pressed_mtrl_alpha" id="0x010805e0" />
     <public type="drawable" name="scrubber_control_pressed_holo" id="0x010805e1" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_000" id="0x010805e4" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_001" id="0x010805e5" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_002" id="0x010805e6" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_003" id="0x010805e7" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_004" id="0x010805e8" />
-    <public type="drawable" name="scrubber_control_to_pressed_mtrl_005" id="0x010805e9" />
     <public type="drawable" name="scrubber_primary_holo" id="0x010805ea" />
     <public type="drawable" name="scrubber_primary_mtrl_alpha" id="0x010805eb" />
     <public type="drawable" name="scrubber_secondary_holo" id="0x010805ef" />
@@ -3924,6 +3910,19 @@
     <public type="drawable" name="spinner_disabled_holo" id="0x0108062f" />
     <public type="drawable" name="spinner_normal_holo" id="0x0108063c" />
     <public type="drawable" name="switch_thumb_holo_light_v2" id="0x010806b2" />
+    <public type="drawable" name="list_choice_background_material" id="0x01080765" />
+    <public type="drawable" name="ratingbar_full_half_material" id="0x01080766" />
+    <public type="drawable" name="ratingbar_indicator_material" id="0x01080767" />
+    <public type="drawable" name="ratingbar_material" id="0x01080768" />
+    <public type="drawable" name="ratingbar_small_material" id="0x01080769" />
+    <public type="drawable" name="seekbar_thumb_material_anim" id="0x0108076a" />
+    <public type="drawable" name="seekbar_track_material" id="0x0108076b" />
+    <public type="drawable" name="ic_star_black_36dp" id="0x010805e3" />
+    <public type="drawable" name="ic_star_black_48dp" id="0x010805ee" />
+    <public type="drawable" name="ic_star_half_black_16dp" id="0x0108063a" />
+    <public type="drawable" name="ic_star_half_black_36dp" id="0x010806b9" />
+    <public type="drawable" name="ic_star_half_black_48dp" id="0x0108073f" />
+    <public type="drawable" name="ic_star_black_16dp" id="0x010805db" />
 
     <public type="color" name="primary_text_dark_disable_only" id="0x0106011b" />
     <public type="color" name="primary_text_dark_focused" id="0x0106011c" />
