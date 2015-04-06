@@ -8789,5 +8789,7 @@
   <public type="id" name="redo" id="0x010203ec" />
   <public type="id" name="replaceText" id="0x010203ed" />
   <public type="id" name="shareText" id="0x010203f7" />
+  <public type="id" name="accessibilityActionShowOnScreen" />
+  <public type="id" name="accessibilityActionScrollToPosition" />
 
 </resources>
