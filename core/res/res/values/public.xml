@@ -7933,4 +7933,5 @@
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
   <public type="style" name="ThemeOverlay.Material.Dialog" />
 
+  <public type="attr" name="thumbPosition" />
 </resources>
