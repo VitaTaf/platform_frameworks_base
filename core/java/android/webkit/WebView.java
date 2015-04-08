@@ -2399,7 +2399,9 @@ public class WebView extends AbsoluteLayout
 
     @Override
     public void onProvideVirtualAssistStructure(ViewAssistStructure structure) {
-        mProvider.getViewDelegate().onProvideVirtualAssistStructure(structure);
+        super.onProvideVirtualAssistStructure(structure);
+        // TODO: enable when chromium backend lands.
+        // mProvider.getViewDelegate().onProvideVirtualAssistStructure(structure);
     }
 
     /** @hide */
