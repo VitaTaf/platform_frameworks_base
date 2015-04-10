@@ -890,7 +890,7 @@ public class ViewPager extends ViewGroup {
         }
     }
 
-    void populate() {
+    public void populate() {
         populate(mCurItem);
     }
 
