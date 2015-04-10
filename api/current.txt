@@ -3341,6 +3341,7 @@ package android.app {
     method public android.content.SharedPreferences getPreferences(int);
     method public android.net.Uri getReferrer();
     method public int getRequestedOrientation();
+    method public final android.view.SearchEvent getSearchEvent();
     method public int getTaskId();
     method public final java.lang.CharSequence getTitle();
     method public final int getTitleColor();
@@ -3422,6 +3423,7 @@ package android.app {
     method public deprecated java.lang.Object onRetainNonConfigurationInstance();
     method protected void onSaveInstanceState(android.os.Bundle);
     method public void onSaveInstanceState(android.os.Bundle, android.os.PersistableBundle);
+    method public boolean onSearchRequested(android.view.SearchEvent);
     method public boolean onSearchRequested();
     method protected void onStart();
     method protected void onStop();
@@ -4051,6 +4053,7 @@ package android.app {
     method public android.view.View getCurrentFocus();
     method public android.view.LayoutInflater getLayoutInflater();
     method public final android.app.Activity getOwnerActivity();
+    method public final android.view.SearchEvent getSearchEvent();
     method public final int getVolumeControlStream();
     method public android.view.Window getWindow();
     method public void hide();
@@ -4084,6 +4087,7 @@ package android.app {
     method public boolean onPreparePanel(int, android.view.View, android.view.Menu);
     method public void onRestoreInstanceState(android.os.Bundle);
     method public android.os.Bundle onSaveInstanceState();
+    method public boolean onSearchRequested(android.view.SearchEvent);
     method public boolean onSearchRequested();
     method protected void onStart();
     method protected void onStop();
@@ -27264,6 +27268,7 @@ package android.service.dreams {
     method public boolean onMenuOpened(int, android.view.Menu);
     method public void onPanelClosed(int, android.view.Menu);
     method public boolean onPreparePanel(int, android.view.View, android.view.Menu);
+    method public boolean onSearchRequested(android.view.SearchEvent);
     method public boolean onSearchRequested();
     method public void onWakeUp();
     method public void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
@@ -33472,6 +33477,10 @@ package android.view {
     method public void onScaleEnd(android.view.ScaleGestureDetector);
   }
 
+  public class SearchEvent {
+    method public android.view.InputDevice getInputDevice();
+  }
+
   public class SoundEffectConstants {
     method public static int getContantForFocusDirection(int);
     field public static final int CLICK = 0; // 0x0
@@ -35009,6 +35018,7 @@ package android.view {
     method public abstract void onPanelClosed(int, android.view.Menu);
     method public abstract boolean onPreparePanel(int, android.view.View, android.view.Menu);
     method public abstract boolean onSearchRequested();
+    method public abstract boolean onSearchRequested(android.view.SearchEvent);
     method public abstract void onWindowAttributesChanged(android.view.WindowManager.LayoutParams);
     method public abstract void onWindowFocusChanged(boolean);
     method public abstract android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode.Callback);
