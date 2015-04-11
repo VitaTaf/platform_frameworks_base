@@ -34821,6 +34821,380 @@ package android.view {
     method public abstract void setVisibility(int);
   }
 
+  public class ViewConfiguration {
+    ctor public deprecated ViewConfiguration();
+    method public static android.view.ViewConfiguration get(android.content.Context);
+    method public static int getDoubleTapTimeout();
+    method public static deprecated int getEdgeSlop();
+    method public static deprecated int getFadingEdgeLength();
+    method public static deprecated long getGlobalActionKeyTimeout();
+    method public static int getJumpTapTimeout();
+    method public static int getKeyRepeatDelay();
+    method public static int getKeyRepeatTimeout();
+    method public static int getLongPressTimeout();
+    method public static deprecated int getMaximumDrawingCacheSize();
+    method public static deprecated int getMaximumFlingVelocity();
+    method public static deprecated int getMinimumFlingVelocity();
+    method public static int getPressedStateDuration();
+    method public int getScaledDoubleTapSlop();
+    method public int getScaledEdgeSlop();
+    method public int getScaledFadingEdgeLength();
+    method public int getScaledMaximumDrawingCacheSize();
+    method public int getScaledMaximumFlingVelocity();
+    method public int getScaledMinimumFlingVelocity();
+    method public int getScaledOverflingDistance();
+    method public int getScaledOverscrollDistance();
+    method public int getScaledPagingTouchSlop();
+    method public int getScaledScrollBarSize();
+    method public int getScaledTouchSlop();
+    method public int getScaledWindowTouchSlop();
+    method public static int getScrollBarFadeDuration();
+    method public static deprecated int getScrollBarSize();
+    method public static int getScrollDefaultDelay();
+    method public static float getScrollFriction();
+    method public static int getTapTimeout();
+    method public static deprecated int getTouchSlop();
+    method public static deprecated int getWindowTouchSlop();
+    method public static long getZoomControlsTimeout();
+    method public boolean hasPermanentMenuKey();
+  }
+
+  public class ViewDebug {
+    ctor public ViewDebug();
+    method public static void dumpCapturedView(java.lang.String, java.lang.Object);
+    method public static deprecated void startHierarchyTracing(java.lang.String, android.view.View);
+    method public static deprecated void startRecyclerTracing(java.lang.String, android.view.View);
+    method public static deprecated void stopHierarchyTracing();
+    method public static deprecated void stopRecyclerTracing();
+    method public static deprecated void trace(android.view.View, android.view.ViewDebug.RecyclerTraceType, int...);
+    method public static deprecated void trace(android.view.View, android.view.ViewDebug.HierarchyTraceType);
+    field public static final deprecated boolean TRACE_HIERARCHY = false;
+    field public static final deprecated boolean TRACE_RECYCLER = false;
+  }
+
+  public static abstract class ViewDebug.CapturedViewProperty implements java.lang.annotation.Annotation {
+  }
+
+  public static abstract class ViewDebug.ExportedProperty implements java.lang.annotation.Annotation {
+  }
+
+  public static abstract class ViewDebug.FlagToString implements java.lang.annotation.Annotation {
+  }
+
+  public static final deprecated class ViewDebug.HierarchyTraceType extends java.lang.Enum {
+    method public static android.view.ViewDebug.HierarchyTraceType valueOf(java.lang.String);
+    method public static final android.view.ViewDebug.HierarchyTraceType[] values();
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType BUILD_CACHE;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType DRAW;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType INVALIDATE;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType INVALIDATE_CHILD;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType INVALIDATE_CHILD_IN_PARENT;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType ON_LAYOUT;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType ON_MEASURE;
+    enum_constant public static final android.view.ViewDebug.HierarchyTraceType REQUEST_LAYOUT;
+  }
+
+  public static abstract class ViewDebug.IntToString implements java.lang.annotation.Annotation {
+  }
+
+  public static final deprecated class ViewDebug.RecyclerTraceType extends java.lang.Enum {
+    method public static android.view.ViewDebug.RecyclerTraceType valueOf(java.lang.String);
+    method public static final android.view.ViewDebug.RecyclerTraceType[] values();
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType BIND_VIEW;
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType MOVE_FROM_ACTIVE_TO_SCRAP_HEAP;
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType MOVE_TO_SCRAP_HEAP;
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType NEW_VIEW;
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType RECYCLE_FROM_ACTIVE_HEAP;
+    enum_constant public static final android.view.ViewDebug.RecyclerTraceType RECYCLE_FROM_SCRAP_HEAP;
+  }
+
+  public abstract class ViewGroup extends android.view.View implements android.view.ViewManager android.view.ViewParent {
+    ctor public ViewGroup(android.content.Context);
+    ctor public ViewGroup(android.content.Context, android.util.AttributeSet);
+    ctor public ViewGroup(android.content.Context, android.util.AttributeSet, int);
+    ctor public ViewGroup(android.content.Context, android.util.AttributeSet, int, int);
+    method public boolean addStatesFromChildren();
+    method public void addView(android.view.View);
+    method public void addView(android.view.View, int);
+    method public void addView(android.view.View, int, int);
+    method public void addView(android.view.View, android.view.ViewGroup.LayoutParams);
+    method public void addView(android.view.View, int, android.view.ViewGroup.LayoutParams);
+    method protected boolean addViewInLayout(android.view.View, int, android.view.ViewGroup.LayoutParams);
+    method protected boolean addViewInLayout(android.view.View, int, android.view.ViewGroup.LayoutParams, boolean);
+    method protected void attachLayoutAnimationParameters(android.view.View, android.view.ViewGroup.LayoutParams, int, int);
+    method protected void attachViewToParent(android.view.View, int, android.view.ViewGroup.LayoutParams);
+    method public void bringChildToFront(android.view.View);
+    method protected boolean canAnimate();
+    method protected boolean checkLayoutParams(android.view.ViewGroup.LayoutParams);
+    method public void childDrawableStateChanged(android.view.View);
+    method public void childHasTransientStateChanged(android.view.View, boolean);
+    method protected void cleanupLayoutState(android.view.View);
+    method public void clearChildFocus(android.view.View);
+    method public void clearDisappearingChildren();
+    method protected void debug(int);
+    method protected void detachAllViewsFromParent();
+    method protected void detachViewFromParent(android.view.View);
+    method protected void detachViewFromParent(int);
+    method protected void detachViewsFromParent(int, int);
+    method protected void dispatchFreezeSelfOnly(android.util.SparseArray<android.os.Parcelable>);
+    method public void dispatchSetActivated(boolean);
+    method public void dispatchSetSelected(boolean);
+    method protected void dispatchThawSelfOnly(android.util.SparseArray<android.os.Parcelable>);
+    method protected boolean drawChild(android.graphics.Canvas, android.view.View, long);
+    method public void endViewTransition(android.view.View);
+    method public android.view.View focusSearch(android.view.View, int);
+    method public void focusableViewAvailable(android.view.View);
+    method public boolean gatherTransparentRegion(android.graphics.Region);
+    method protected android.view.ViewGroup.LayoutParams generateDefaultLayoutParams();
+    method public android.view.ViewGroup.LayoutParams generateLayoutParams(android.util.AttributeSet);
+    method protected android.view.ViewGroup.LayoutParams generateLayoutParams(android.view.ViewGroup.LayoutParams);
+    method public android.view.View getChildAt(int);
+    method public int getChildCount();
+    method protected int getChildDrawingOrder(int, int);
+    method public static int getChildMeasureSpec(int, int, int);
+    method protected boolean getChildStaticTransformation(android.view.View, android.view.animation.Transformation);
+    method public boolean getChildVisibleRect(android.view.View, android.graphics.Rect, android.graphics.Point);
+    method public boolean getClipChildren();
+    method public boolean getClipToPadding();
+    method public int getDescendantFocusability();
+    method public android.view.View getFocusedChild();
+    method public android.view.animation.LayoutAnimationController getLayoutAnimation();
+    method public android.view.animation.Animation.AnimationListener getLayoutAnimationListener();
+    method public int getLayoutMode();
+    method public android.animation.LayoutTransition getLayoutTransition();
+    method public int getNestedScrollAxes();
+    method public int getPersistentDrawingCache();
+    method public boolean getTouchscreenBlocksFocus();
+    method public int indexOfChild(android.view.View);
+    method public final void invalidateChild(android.view.View, android.graphics.Rect);
+    method public android.view.ViewParent invalidateChildInParent(int[], android.graphics.Rect);
+    method public deprecated boolean isAlwaysDrawnWithCacheEnabled();
+    method public deprecated boolean isAnimationCacheEnabled();
+    method protected boolean isChildrenDrawingOrderEnabled();
+    method protected deprecated boolean isChildrenDrawnWithCacheEnabled();
+    method public boolean isMotionEventSplittingEnabled();
+    method public boolean isTransitionGroup();
+    method public final void layout(int, int, int, int);
+    method protected void measureChild(android.view.View, int, int);
+    method protected void measureChildWithMargins(android.view.View, int, int, int, int);
+    method protected void measureChildren(int, int);
+    method public void notifySubtreeAccessibilityStateChanged(android.view.View, android.view.View, int);
+    method public final void offsetDescendantRectToMyCoords(android.view.View, android.graphics.Rect);
+    method public final void offsetRectIntoDescendantCoords(android.view.View, android.graphics.Rect);
+    method public boolean onInterceptHoverEvent(android.view.MotionEvent);
+    method public boolean onInterceptTouchEvent(android.view.MotionEvent);
+    method protected abstract void onLayout(boolean, int, int, int, int);
+    method public boolean onNestedFling(android.view.View, float, float, boolean);
+    method public boolean onNestedPreFling(android.view.View, float, float);
+    method public boolean onNestedPrePerformAccessibilityAction(android.view.View, int, android.os.Bundle);
+    method public void onNestedPreScroll(android.view.View, int, int, int[]);
+    method public void onNestedScroll(android.view.View, int, int, int, int);
+    method public void onNestedScrollAccepted(android.view.View, android.view.View, int);
+    method protected boolean onRequestFocusInDescendants(int, android.graphics.Rect);
+    method public boolean onRequestSendAccessibilityEvent(android.view.View, android.view.accessibility.AccessibilityEvent);
+    method public boolean onStartNestedScroll(android.view.View, android.view.View, int);
+    method public void onStopNestedScroll(android.view.View);
+    method public void recomputeViewAttributes(android.view.View);
+    method public void removeAllViews();
+    method public void removeAllViewsInLayout();
+    method protected void removeDetachedView(android.view.View, boolean);
+    method public void removeView(android.view.View);
+    method public void removeViewAt(int);
+    method public void removeViewInLayout(android.view.View);
+    method public void removeViews(int, int);
+    method public void removeViewsInLayout(int, int);
+    method public void requestChildFocus(android.view.View, android.view.View);
+    method public boolean requestChildRectangleOnScreen(android.view.View, android.graphics.Rect, boolean);
+    method public void requestDisallowInterceptTouchEvent(boolean);
+    method public boolean requestSendAccessibilityEvent(android.view.View, android.view.accessibility.AccessibilityEvent);
+    method public void requestTransparentRegion(android.view.View);
+    method public void scheduleLayoutAnimation();
+    method public void setAddStatesFromChildren(boolean);
+    method public deprecated void setAlwaysDrawnWithCacheEnabled(boolean);
+    method public deprecated void setAnimationCacheEnabled(boolean);
+    method protected void setChildrenDrawingCacheEnabled(boolean);
+    method protected void setChildrenDrawingOrderEnabled(boolean);
+    method protected deprecated void setChildrenDrawnWithCacheEnabled(boolean);
+    method public void setClipChildren(boolean);
+    method public void setClipToPadding(boolean);
+    method public void setDescendantFocusability(int);
+    method public void setLayoutAnimation(android.view.animation.LayoutAnimationController);
+    method public void setLayoutAnimationListener(android.view.animation.Animation.AnimationListener);
+    method public void setLayoutMode(int);
+    method public void setLayoutTransition(android.animation.LayoutTransition);
+    method public void setMotionEventSplittingEnabled(boolean);
+    method public void setOnHierarchyChangeListener(android.view.ViewGroup.OnHierarchyChangeListener);
+    method public void setPersistentDrawingCache(int);
+    method protected void setStaticTransformationsEnabled(boolean);
+    method public void setTouchscreenBlocksFocus(boolean);
+    method public void setTransitionGroup(boolean);
+    method public boolean shouldDelayChildPressedState();
+    method public boolean showContextMenuForChild(android.view.View);
+    method public android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback);
+    method public android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback, int);
+    method public void startLayoutAnimation();
+    method public void startViewTransition(android.view.View);
+    method public void updateViewLayout(android.view.View, android.view.ViewGroup.LayoutParams);
+    field protected static final int CLIP_TO_PADDING_MASK = 34; // 0x22
+    field public static final int FOCUS_AFTER_DESCENDANTS = 262144; // 0x40000
+    field public static final int FOCUS_BEFORE_DESCENDANTS = 131072; // 0x20000
+    field public static final int FOCUS_BLOCK_DESCENDANTS = 393216; // 0x60000
+    field public static final int LAYOUT_MODE_CLIP_BOUNDS = 0; // 0x0
+    field public static final int LAYOUT_MODE_OPTICAL_BOUNDS = 1; // 0x1
+    field public static final int PERSISTENT_ALL_CACHES = 3; // 0x3
+    field public static final int PERSISTENT_ANIMATION_CACHE = 1; // 0x1
+    field public static final int PERSISTENT_NO_CACHE = 0; // 0x0
+    field public static final int PERSISTENT_SCROLLING_CACHE = 2; // 0x2
+  }
+
+  public static class ViewGroup.LayoutParams {
+    ctor public ViewGroup.LayoutParams(android.content.Context, android.util.AttributeSet);
+    ctor public ViewGroup.LayoutParams(int, int);
+    ctor public ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams);
+    method public void resolveLayoutDirection(int);
+    method protected void setBaseAttributes(android.content.res.TypedArray, int, int);
+    field public static final deprecated int FILL_PARENT = -1; // 0xffffffff
+    field public static final int MATCH_PARENT = -1; // 0xffffffff
+    field public static final int WRAP_CONTENT = -2; // 0xfffffffe
+    field public int height;
+    field public android.view.animation.LayoutAnimationController.AnimationParameters layoutAnimationParameters;
+    field public int width;
+  }
+
+  public static class ViewGroup.MarginLayoutParams extends android.view.ViewGroup.LayoutParams {
+    ctor public ViewGroup.MarginLayoutParams(android.content.Context, android.util.AttributeSet);
+    ctor public ViewGroup.MarginLayoutParams(int, int);
+    ctor public ViewGroup.MarginLayoutParams(android.view.ViewGroup.MarginLayoutParams);
+    ctor public ViewGroup.MarginLayoutParams(android.view.ViewGroup.LayoutParams);
+    method public int getLayoutDirection();
+    method public int getMarginEnd();
+    method public int getMarginStart();
+    method public boolean isMarginRelative();
+    method public void setLayoutDirection(int);
+    method public void setMarginEnd(int);
+    method public void setMarginStart(int);
+    method public void setMargins(int, int, int, int);
+    field public int bottomMargin;
+    field public int leftMargin;
+    field public int rightMargin;
+    field public int topMargin;
+  }
+
+  public static abstract interface ViewGroup.OnHierarchyChangeListener {
+    method public abstract void onChildViewAdded(android.view.View, android.view.View);
+    method public abstract void onChildViewRemoved(android.view.View, android.view.View);
+  }
+
+  public class ViewGroupOverlay extends android.view.ViewOverlay {
+    method public void add(android.view.View);
+    method public void remove(android.view.View);
+  }
+
+  public abstract interface ViewManager {
+    method public abstract void addView(android.view.View, android.view.ViewGroup.LayoutParams);
+    method public abstract void removeView(android.view.View);
+    method public abstract void updateViewLayout(android.view.View, android.view.ViewGroup.LayoutParams);
+  }
+
+  public abstract class ViewOutlineProvider {
+    ctor public ViewOutlineProvider();
+    method public abstract void getOutline(android.view.View, android.graphics.Outline);
+    field public static final android.view.ViewOutlineProvider BACKGROUND;
+    field public static final android.view.ViewOutlineProvider BOUNDS;
+    field public static final android.view.ViewOutlineProvider PADDED_BOUNDS;
+  }
+
+  public class ViewOverlay {
+    method public void add(android.graphics.drawable.Drawable);
+    method public void clear();
+    method public void remove(android.graphics.drawable.Drawable);
+  }
+
+  public abstract interface ViewParent {
+    method public abstract void bringChildToFront(android.view.View);
+    method public abstract boolean canResolveLayoutDirection();
+    method public abstract boolean canResolveTextAlignment();
+    method public abstract boolean canResolveTextDirection();
+    method public abstract void childDrawableStateChanged(android.view.View);
+    method public abstract void childHasTransientStateChanged(android.view.View, boolean);
+    method public abstract void clearChildFocus(android.view.View);
+    method public abstract void createContextMenu(android.view.ContextMenu);
+    method public abstract android.view.View focusSearch(android.view.View, int);
+    method public abstract void focusableViewAvailable(android.view.View);
+    method public abstract boolean getChildVisibleRect(android.view.View, android.graphics.Rect, android.graphics.Point);
+    method public abstract int getLayoutDirection();
+    method public abstract android.view.ViewParent getParent();
+    method public abstract android.view.ViewParent getParentForAccessibility();
+    method public abstract int getTextAlignment();
+    method public abstract int getTextDirection();
+    method public abstract void invalidateChild(android.view.View, android.graphics.Rect);
+    method public abstract android.view.ViewParent invalidateChildInParent(int[], android.graphics.Rect);
+    method public abstract boolean isLayoutDirectionResolved();
+    method public abstract boolean isLayoutRequested();
+    method public abstract boolean isTextAlignmentResolved();
+    method public abstract boolean isTextDirectionResolved();
+    method public abstract void notifySubtreeAccessibilityStateChanged(android.view.View, android.view.View, int);
+    method public abstract boolean onNestedFling(android.view.View, float, float, boolean);
+    method public abstract boolean onNestedPreFling(android.view.View, float, float);
+    method public abstract boolean onNestedPrePerformAccessibilityAction(android.view.View, int, android.os.Bundle);
+    method public abstract void onNestedPreScroll(android.view.View, int, int, int[]);
+    method public abstract void onNestedScroll(android.view.View, int, int, int, int);
+    method public abstract void onNestedScrollAccepted(android.view.View, android.view.View, int);
+    method public abstract boolean onStartNestedScroll(android.view.View, android.view.View, int);
+    method public abstract void onStopNestedScroll(android.view.View);
+    method public abstract void recomputeViewAttributes(android.view.View);
+    method public abstract void requestChildFocus(android.view.View, android.view.View);
+    method public abstract boolean requestChildRectangleOnScreen(android.view.View, android.graphics.Rect, boolean);
+    method public abstract void requestDisallowInterceptTouchEvent(boolean);
+    method public abstract void requestFitSystemWindows();
+    method public abstract void requestLayout();
+    method public abstract boolean requestSendAccessibilityEvent(android.view.View, android.view.accessibility.AccessibilityEvent);
+    method public abstract void requestTransparentRegion(android.view.View);
+    method public abstract boolean showContextMenuForChild(android.view.View);
+    method public abstract android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback);
+    method public abstract android.view.ActionMode startActionModeForChild(android.view.View, android.view.ActionMode.Callback, int);
+  }
+
+  public class ViewPropertyAnimator {
+    method public android.view.ViewPropertyAnimator alpha(float);
+    method public android.view.ViewPropertyAnimator alphaBy(float);
+    method public void cancel();
+    method public long getDuration();
+    method public android.animation.TimeInterpolator getInterpolator();
+    method public long getStartDelay();
+    method public android.view.ViewPropertyAnimator rotation(float);
+    method public android.view.ViewPropertyAnimator rotationBy(float);
+    method public android.view.ViewPropertyAnimator rotationX(float);
+    method public android.view.ViewPropertyAnimator rotationXBy(float);
+    method public android.view.ViewPropertyAnimator rotationY(float);
+    method public android.view.ViewPropertyAnimator rotationYBy(float);
+    method public android.view.ViewPropertyAnimator scaleX(float);
+    method public android.view.ViewPropertyAnimator scaleXBy(float);
+    method public android.view.ViewPropertyAnimator scaleY(float);
+    method public android.view.ViewPropertyAnimator scaleYBy(float);
+    method public android.view.ViewPropertyAnimator setDuration(long);
+    method public android.view.ViewPropertyAnimator setInterpolator(android.animation.TimeInterpolator);
+    method public android.view.ViewPropertyAnimator setListener(android.animation.Animator.AnimatorListener);
+    method public android.view.ViewPropertyAnimator setStartDelay(long);
+    method public android.view.ViewPropertyAnimator setUpdateListener(android.animation.ValueAnimator.AnimatorUpdateListener);
+    method public void start();
+    method public android.view.ViewPropertyAnimator translationX(float);
+    method public android.view.ViewPropertyAnimator translationXBy(float);
+    method public android.view.ViewPropertyAnimator translationY(float);
+    method public android.view.ViewPropertyAnimator translationYBy(float);
+    method public android.view.ViewPropertyAnimator translationZ(float);
+    method public android.view.ViewPropertyAnimator translationZBy(float);
+    method public android.view.ViewPropertyAnimator withEndAction(java.lang.Runnable);
+    method public android.view.ViewPropertyAnimator withLayer();
+    method public android.view.ViewPropertyAnimator withStartAction(java.lang.Runnable);
+    method public android.view.ViewPropertyAnimator x(float);
+    method public android.view.ViewPropertyAnimator xBy(float);
+    method public android.view.ViewPropertyAnimator y(float);
+    method public android.view.ViewPropertyAnimator yBy(float);
+    method public android.view.ViewPropertyAnimator z(float);
+    method public android.view.ViewPropertyAnimator zBy(float);
+  }
+
   public final class ViewStub extends android.view.View {
     ctor public ViewStub(android.content.Context);
     ctor public ViewStub(android.content.Context, int);
