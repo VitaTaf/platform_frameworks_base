@@ -1156,7 +1156,7 @@ public class ListView extends AbsListView {
                 heightMode == MeasureSpec.UNSPECIFIED)) {
             final View child = obtainView(0, mIsScrap);
 
-            measureScrapChild(child, 0, widthMeasureSpec);
+            measureScrapChild(child, 0, widthMeasureSpec, heightSize);
 
             childWidth = child.getMeasuredWidth();
             childHeight = child.getMeasuredHeight();
@@ -1189,7 +1189,7 @@ public class ListView extends AbsListView {
         mWidthMeasureSpec = widthMeasureSpec;        
     }
 
-    private void measureScrapChild(View child, int position, int widthMeasureSpec) {
+    private void measureScrapChild(View child, int position, int widthMeasureSpec, int heightHint) {
         LayoutParams p = (LayoutParams) child.getLayoutParams();
         if (p == null) {
             p = (AbsListView.LayoutParams) generateDefaultLayoutParams();
@@ -1205,7 +1205,7 @@ public class ListView extends AbsListView {
         if (lpHeight > 0) {
             childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight, MeasureSpec.EXACTLY);
         } else {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+            childHeightSpec = MeasureSpec.makeMeasureSpec(heightHint, MeasureSpec.UNSPECIFIED);
         }
         child.measure(childWidthSpec, childHeightSpec);
     }
@@ -1272,7 +1272,7 @@ public class ListView extends AbsListView {
         for (i = startPosition; i <= endPosition; ++i) {
             child = obtainView(i, isScrap);
 
-            measureScrapChild(child, i, widthMeasureSpec);
+            measureScrapChild(child, i, widthMeasureSpec, maxHeight);
 
             if (i > 0) {
                 // Count the divider for all but one child
@@ -1942,7 +1942,8 @@ public class ListView extends AbsListView {
             if (lpHeight > 0) {
                 childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight, MeasureSpec.EXACTLY);
             } else {
-                childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+                childHeightSpec = MeasureSpec.makeMeasureSpec(getMeasuredHeight(),
+                        MeasureSpec.UNSPECIFIED);
             }
             child.measure(childWidthSpec, childHeightSpec);
         } else {
@@ -2689,7 +2690,8 @@ public class ListView extends AbsListView {
         if (lpHeight > 0) {
             childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight, MeasureSpec.EXACTLY);
         } else {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+            childHeightSpec = MeasureSpec.makeMeasureSpec(getMeasuredHeight(),
+                    MeasureSpec.UNSPECIFIED);
         }
         child.measure(childWidthSpec, childHeightSpec);
     }

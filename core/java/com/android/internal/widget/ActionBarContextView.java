@@ -336,7 +336,8 @@ public class ActionBarContextView extends AbsActionBarView {
 
         if (mTitleLayout != null && mCustomView == null) {
             if (mTitleOptional) {
-                final int titleWidthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+                final int titleWidthSpec = MeasureSpec.makeMeasureSpec(contentWidth,
+                        MeasureSpec.UNSPECIFIED);
                 mTitleLayout.measure(titleWidthSpec, childSpecHeight);
                 final int titleWidth = mTitleLayout.getMeasuredWidth();
                 final boolean titleFits = titleWidth <= availableWidth;
