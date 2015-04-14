@@ -176,6 +176,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int APPLICATION_MEDIA_OVERLAY_SUBLAYER = -1;
     static final int APPLICATION_PANEL_SUBLAYER = 1;
     static final int APPLICATION_SUB_PANEL_SUBLAYER = 2;
+    static final int APPLICATION_ABOVE_SUB_PANEL_SUBLAYER = 3;
 
     static public final String SYSTEM_DIALOG_REASON_KEY = "reason";
     static public final String SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions";
@@ -1925,6 +1926,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return APPLICATION_MEDIA_OVERLAY_SUBLAYER;
         case TYPE_APPLICATION_SUB_PANEL:
             return APPLICATION_SUB_PANEL_SUBLAYER;
+        case TYPE_APPLICATION_ABOVE_SUB_PANEL:
+            return APPLICATION_ABOVE_SUB_PANEL_SUBLAYER;
         }
         Log.e(TAG, "Unknown sub-window type: " + type);
         return 0;
