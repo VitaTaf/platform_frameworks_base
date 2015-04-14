@@ -836,4 +836,5 @@
   <item type="id" name="undo" />
   <item type="id" name="redo" />
   <item type="id" name="replaceText" />
+  <item type="id" name="shareText" />
 </resources>
