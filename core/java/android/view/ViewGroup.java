@@ -6375,6 +6375,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
     public void onStopNestedScroll(View child) {
         // Stop any recursive nested scrolling.
         stopNestedScroll();
+        mNestedScrollAxes = 0;
     }
 
     /**
