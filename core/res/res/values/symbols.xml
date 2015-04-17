@@ -2144,4 +2144,6 @@
   <java-symbol type="string" name="date_picker_next_month_button" />
   <java-symbol type="layout" name="date_picker_month_item_material" />
   <java-symbol type="id" name="month_view" />
+  <java-symbol type="id" name="day_picker_view_pager" />
+  <java-symbol type="layout" name="day_picker_content_material" />
 </resources>
