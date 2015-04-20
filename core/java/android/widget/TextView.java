@@ -1395,7 +1395,9 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             if (isTextEditable()) {
                 replaceSelectionWithText(result);
             } else {
-                Toast.makeText(getContext(), String.valueOf(result), Toast.LENGTH_LONG).show();
+                if (result.length() > 0) {
+                    Toast.makeText(getContext(), String.valueOf(result), Toast.LENGTH_LONG).show();
+                }
             }
         }
     }
