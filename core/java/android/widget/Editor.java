@@ -1959,6 +1959,9 @@ public class Editor {
         if (mPositionListener != null) {
             mPositionListener.onScrollChanged();
         }
+        if (mSelectionActionMode != null) {
+            mSelectionActionMode.invalidateContentRect();
+        }
     }
 
     /**
