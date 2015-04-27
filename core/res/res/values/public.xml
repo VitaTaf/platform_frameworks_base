@@ -8855,5 +8855,9 @@
   <public type="id" name="accessibilityActionStylusButtonPress" />
   <public type="id" name="accessibilityActionShowOnScreen" />
   <public type="id" name="accessibilityActionScrollToPosition" />
+  <public type="id" name="accessibilityActionScrollUp" />
+  <public type="id" name="accessibilityActionScrollLeft" />
+  <public type="id" name="accessibilityActionScrollDown" />
+  <public type="id" name="accessibilityActionScrollRight" />
 
 </resources>
