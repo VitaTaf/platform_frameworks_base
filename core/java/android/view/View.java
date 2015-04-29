@@ -15667,7 +15667,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                             renderNode.setAlpha(alpha * getAlpha() * getTransitionAlpha());
                         } else if (layerType == LAYER_TYPE_NONE) {
                             canvas.saveLayerAlpha(sx, sy, sx + getWidth(), sy + getHeight(),
-                                    multipliedAlpha, layerFlags);
+                                    multipliedAlpha);
                         }
                     } else {
                         // Alpha is handled by the child directly, clobber the layer's alpha
