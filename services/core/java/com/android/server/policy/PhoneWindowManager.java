@@ -274,6 +274,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Vibrator pattern for haptic feedback during boot when safe mode is enabled.
     long[] mSafeModeEnabledVibePattern;
 
+    // Vibrator pattern for haptic feedback of a stylus button press.
+    long[] mStylusButtonPressVibePattern;
+
     /** If true, hitting shift & menu will broadcast Intent.ACTION_BUG_REPORT */
     boolean mEnableShiftMenuBugReports = false;
 
@@ -1337,6 +1340,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.array.config_safeModeDisabledVibePattern);
         mSafeModeEnabledVibePattern = getLongIntArray(mContext.getResources(),
                 com.android.internal.R.array.config_safeModeEnabledVibePattern);
+        mStylusButtonPressVibePattern = getLongIntArray(mContext.getResources(),
+                com.android.internal.R.array.config_stylusButtonPressVibePattern);
 
         mScreenshotChordEnabled = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_enableScreenshotChord);
@@ -5942,6 +5947,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case HapticFeedbackConstants.SAFE_MODE_ENABLED:
                 pattern = mSafeModeEnabledVibePattern;
+                break;
+            case HapticFeedbackConstants.STYLUS_BUTTON_PRESS:
+                pattern = mStylusButtonPressVibePattern;
                 break;
             default:
                 return false;

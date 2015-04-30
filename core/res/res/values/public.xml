@@ -8773,6 +8773,7 @@
   <public type="attr" name="__reserved7" />
 
   <public type="attr" name="assistBlocked" />
+  <public type="attr" name="stylusButtonPressable" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
   <public type="style" name="ThemeOverlay.Material.Dialog" />
@@ -8789,6 +8790,7 @@
   <public type="id" name="redo" id="0x010203ec" />
   <public type="id" name="replaceText" id="0x010203ed" />
   <public type="id" name="shareText" id="0x010203f7" />
+  <public type="id" name="accessibilityActionStylusButtonPress" />
   <public type="id" name="accessibilityActionShowOnScreen" />
   <public type="id" name="accessibilityActionScrollToPosition" />
 

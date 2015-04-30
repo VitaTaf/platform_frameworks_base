@@ -2335,6 +2335,9 @@
         <!-- Defines whether this view reacts to long click events. -->
         <attr name="longClickable" format="boolean" />
 
+        <!--  Defines whether this view reacts to stylus button press events. -->
+        <attr name="stylusButtonPressable" format="boolean" />
+
         <!-- If false, no state will be saved for this view when it is being
              frozen. The default is true, allowing the view to be saved
              (however it also must have an ID assigned to it for its
@@ -3064,6 +3067,8 @@
             <flag name="typeViewScrolled" value="0x000001000" />
             <!-- Receives {@link android.view.accessibility.AccessibilityEvent#TYPE_VIEW_TEXT_SELECTION_CHANGED} events. -->
             <flag name="typeViewTextSelectionChanged" value="0x000002000" />
+            <!-- Receives {@link android.view.accessibility.AccessibilityEvent#TYPE_VIEW_STYLUS_BUTTON_PRESSED} events. -->
+            <flag name="typeStylusButtonPressed" value="0x00800000" />
             <!-- Receives {@link android.view.accessibility.AccessibilityEvent#TYPES_ALL_MASK} i.e. all events. -->
             <flag name="typeAllMask" value="0xffffffff" />
         </attr>
