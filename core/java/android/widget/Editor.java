@@ -1400,12 +1400,11 @@ public class Editor {
             InputMethodManager imm = InputMethodManager.peekInstance();
             if (imm != null) {
                 if (imm.isActive(mTextView)) {
-                    boolean reported = false;
                     if (ims.mContentChanged || ims.mSelectionModeChanged) {
                         // We are in extract mode and the content has changed
                         // in some way... just report complete new text to the
                         // input method.
-                        reported = reportExtractedText();
+                        reportExtractedText();
                     }
                 }
             }
@@ -1921,10 +1920,6 @@ public class Editor {
         }
         hideControllers();
         mSuggestionsPopupWindow.show();
-    }
-
-    boolean areSuggestionsShown() {
-        return mSuggestionsPopupWindow != null && mSuggestionsPopupWindow.isShowing();
     }
 
     void onScrollChanged() {
@@ -4630,8 +4625,6 @@ public class Editor {
     }
 
     static class InputMethodState {
-        Rect mCursorRectInWindow = new Rect();
-        float[] mTmpOffset = new float[2];
         ExtractedTextRequest mExtractedTextRequest;
         final ExtractedText mExtractedText = new ExtractedText();
         int mBatchEditNesting;
