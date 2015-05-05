@@ -34,8 +34,7 @@ import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.ViewHierarchyEncoder;
 import android.widget.RemoteViews.RemoteView;
 
 import com.android.internal.R;
@@ -408,6 +407,18 @@ public class FrameLayout extends ViewGroup {
     @Override
     public CharSequence getAccessibilityClassName() {
         return FrameLayout.class.getName();
+    }
+
+    /** @hide */
+    @Override
+    protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
+        super.encodeProperties(encoder);
+
+        encoder.addProperty("measurement:measureAllChildren", mMeasureAllChildren);
+        encoder.addProperty("padding:foregroundPaddingLeft", mForegroundPaddingLeft);
+        encoder.addProperty("padding:foregroundPaddingTop", mForegroundPaddingTop);
+        encoder.addProperty("padding:foregroundPaddingRight", mForegroundPaddingRight);
+        encoder.addProperty("padding:foregroundPaddingBottom", mForegroundPaddingBottom);
     }
 
     /**

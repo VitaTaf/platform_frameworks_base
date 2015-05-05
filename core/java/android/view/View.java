@@ -22381,7 +22381,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /** {@hide} */
-    void encode(@NonNull ViewHierarchyEncoder stream) {
+    public void encode(@NonNull ViewHierarchyEncoder stream) {
         stream.beginObject(this);
         encodeProperties(stream);
         stream.endObject();

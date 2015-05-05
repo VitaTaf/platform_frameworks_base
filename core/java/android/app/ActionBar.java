@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewHierarchyEncoder;
 import android.view.Window;
 import android.widget.SpinnerAdapter;
 import android.widget.Toolbar;
@@ -1377,5 +1378,13 @@ public abstract class ActionBar {
          * version of the SDK an app can end up statically linking to the new MarginLayoutParams
          * overload, causing a crash when running on older platform versions with no other changes.
          */
+
+        /** @hide */
+        @Override
+        protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
+            super.encodeProperties(encoder);
+
+            encoder.addProperty("gravity", gravity);
+        }
     }
 }

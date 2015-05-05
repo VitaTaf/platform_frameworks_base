@@ -16,6 +16,7 @@
 
 package android.widget;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -24,9 +25,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
-
+import android.view.ViewHierarchyEncoder;
 
 /**
  * <p>A layout that arranges its children horizontally. A TableRow should
@@ -510,6 +509,14 @@ public class TableRow extends LinearLayout {
             } else {
                 height = WRAP_CONTENT;
             }
+        }
+
+        /** @hide */
+        @Override
+        protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
+            super.encodeProperties(encoder);
+            encoder.addProperty("layout:column", column);
+            encoder.addProperty("layout:span", span);
         }
     }
 

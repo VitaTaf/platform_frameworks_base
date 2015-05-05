@@ -16,6 +16,7 @@
 
 package android.widget;
 
+import android.annotation.NonNull;
 import android.util.ArrayMap;
 import com.android.internal.R;
 
@@ -36,6 +37,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
+import android.view.ViewHierarchyEncoder;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.RemoteViews.RemoteView;
@@ -1600,6 +1602,13 @@ public class RelativeLayout extends ViewGroup {
             }
             // This will set the layout direction
             super.resolveLayoutDirection(layoutDirection);
+        }
+
+        /** @hide */
+        @Override
+        protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
+            super.encodeProperties(encoder);
+            encoder.addProperty("layout:alignWithParent", alignWithParent);
         }
     }
 
