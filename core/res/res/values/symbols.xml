@@ -2105,8 +2105,6 @@
   <java-symbol type="bool" name="config_defaultWindowFeatureContextMenu" />
 
   <java-symbol type="layout" name="simple_account_item" />
-  <java-symbol type="id" name="scrollIndicatorUp" />
-  <java-symbol type="id" name="scrollIndicatorDown" />
   <java-symbol type="array" name="config_sms_convert_destination_number_support" />
   <java-symbol type="string" name="prohibit_manual_network_selection_in_gobal_mode" />
   <java-symbol type="id" name="profile_button" />
@@ -2125,7 +2123,6 @@
   <java-symbol type="bool" name="config_LTE_eri_for_network_name" />
   <java-symbol type="bool" name="config_defaultInTouchMode" />
 
-  <java-symbol type="bool" name="allow_stacked_button_bar" />
   <java-symbol type="id" name="spacer" />
 
   <java-symbol type="dimen" name="timepicker_selector_stroke"/>
@@ -2144,6 +2141,7 @@
   <java-symbol type="id" name="month_view" />
   <java-symbol type="id" name="day_picker_view_pager" />
   <java-symbol type="layout" name="day_picker_content_material" />
+  <java-symbol type="drawable" name="scroll_indicator_material" />
   <java-symbol type="attr" name="seekBarDialogPreferenceStyle" />
 
   <!-- Floating toolbar -->
