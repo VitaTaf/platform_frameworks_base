@@ -8442,6 +8442,55 @@
     <public type="drawable" name="item_background_material_dark" id="0x010805e9" />
     <public type="drawable" name="item_background_material_light" id="0x0108076c" />
     <public type="drawable" name="control_background_40dp_material" id="0x0108076d" />
+    <public type="array" name="config_autoBrightnessLevels" id="0x01070024" />
+    <public type="array" name="config_autoBrightnessLcdBacklightValues" id="0x01070025" />
+    <public type="array" name="config_autoBrightnessButtonBacklightValues" id="0x01070026" />
+    <public type="array" name="config_autoBrightnessKeyboardBacklightValues" id="0x01070027" />
+    <public type="array" name="config_locationProviderPackageNames" id="0x01070028" />
+    <public type="array" name="config_testLocationProviders" id="0x01070029" />
+    <public type="array" name="config_twoDigitNumberPattern" id="0x0107002a" />
+    <public type="array" name="config_sms_enabled_single_shift_tables" id="0x0107002b" />
+    <public type="array" name="config_sms_enabled_locking_shift_tables" id="0x0107002c" />
+    <public type="array" name="config_oemUsbModeOverride" id="0x0107002d" />
+    <public type="array" name="config_mobile_tcp_buffers" id="0x0107002e" />
+    <public type="array" name="config_onlySingleDcAllowed" id="0x0107002f" />
+    <public type="array" name="config_defaultNotificationVibePattern" id="0x01070030" />
+    <public type="array" name="config_notificationFallbackVibePattern" id="0x01070031" />
+    <public type="array" name="config_disabledUntilUsedPreinstalledImes" id="0x01070032" />
+    <public type="array" name="config_notificationSignalExtractors" id="0x01070033" />
+    <public type="array" name="config_operatorConsideredNonRoaming" id="0x01070034" />
+    <public type="array" name="config_sameNamedOperatorConsideredRoaming" id="0x01070035" />
+    <public type="array" name="config_callBarringMMI" id="0x01070036" />
+    <public type="array" name="config_globalActionsList" id="0x01070037" />
+    <public type="array" name="config_telephonyHardware" id="0x01070038" />
+    <public type="array" name="config_cdma_home_system" id="0x01070039" />
+    <public type="array" name="no_ems_support_sim_operators" id="0x0107003a" />
+    <public type="array" name="config_gpsParameters" id="0x0107003b" />
+    <public type="array" name="config_default_vm_number" id="0x0107003c" />
+    <public type="array" name="dial_string_replace" id="0x0107003d" />
+    <public type="array" name="networks_not_clear_data" id="0x0107003e" />
+    <public type="array" name="config_system_condition_providers" id="0x0107003f" />
+    <public type="array" name="config_sms_convert_destination_number_support" id="0x01070040" />
+    <public type="array" name="config_cdma_international_roaming_indicators" id="0x01070041" />
+    <public type="array" name="config_spn_display_rules" id="0x01070042" />
+    <public type="array" name="config_sim_operator_override_rules" id="0x01070043" />
+    <public type="array" name="maps_starting_lat_lng" id="0x01070044" />
+    <public type="array" name="maps_starting_zoom" id="0x01070045" />
+    <public type="array" name="common_nicknames" id="0x01070046" />
+    <public type="array" name="imAddressTypes" id="0x01070047" />
+    <public type="array" name="carrier_properties" id="0x01070048" />
+    <public type="array" name="config_sms_short_code_exception_list" id="0x01070049" />
+    <public type="array" name="config_sms_priority_filter_list" id="0x0107004a" />
+    <public type="array" name="config_sms_write_message_filter_list" id="0x0107004b" />
+    <public type="array" name="config_dual_imsi_sim_mcc_mnc_list" id="0x0107004c" />
+    <public type="array" name="broker_mnc_mcc" id="0x0107004d" />
+    <public type="array" name="Carrier_MccMnc" id="0x0107004e" />
+    <public type="array" name="config_recover_carriers_fields" id="0x0107004f" />
+    <public type="array" name="config_recover_carriers_keys" id="0x01070050" />
+    <public type="array" name="config_lmk_minfreelow" id="0x01070051" />
+    <public type="array" name="config_lmk_minfreehigh" id="0x01070052" />
+    <public type="array" name="config_erase_recovery_blacklist" id="0x01070053" />
+    <public type="array" name="config_erase_recovery_prefix" id="0x01070054" />
 
     <public type="style" name="Widget.FastScroll" id="0x010301e5" />
     <public type="style" name="Widget.StackView" id="0x010301e6" />
@@ -8772,7 +8821,9 @@
   <attr name="__reserved7" format="boolean" />
   <public type="attr" name="__reserved7" />
 
-  <public type="attr" name="assistBlocked" />
+  <attr name="__reserved0" format="boolean" />
+  <public type="attr" name="__reserved0" />
+
   <public type="attr" name="stylusButtonPressable" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
