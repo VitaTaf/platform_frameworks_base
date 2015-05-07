@@ -1810,6 +1810,7 @@ public class Editor {
                 // When the cursor moves, the word that was typed may need spell check
                 mSpellChecker.onSelectionChanged();
             }
+
             if (!extractedTextModeWillBeStarted()) {
                 if (isCursorInsideEasyCorrectionSpan()) {
                     mShowSuggestionRunnable = new Runnable() {
@@ -4122,6 +4123,10 @@ public class Editor {
 
         public void show() {
             getHandle().show();
+
+            if (mSelectionModifierCursorController != null) {
+                mSelectionModifierCursorController.hide();
+            }
         }
 
         public void hide() {
