@@ -79,7 +79,6 @@ public final class FloatingToolbar {
     private final FloatingToolbarPopup mPopup;
 
     private final Rect mContentRect = new Rect();
-    private final Point mCoordinates = new Point();
 
     private Menu mMenu;
     private List<CharSequence> mShowingTitles = new ArrayList<CharSequence>();
@@ -87,7 +86,6 @@ public final class FloatingToolbar {
 
     private int mSuggestedWidth;
     private boolean mWidthChanged = true;
-    private int mOverflowDirection;
 
     /**
      * Initializes a floating toolbar.
@@ -157,11 +155,9 @@ public final class FloatingToolbar {
             mPopup.layoutMenuItems(menuItems, mMenuItemClickListener, mSuggestedWidth);
             mShowingTitles = getMenuItemTitles(menuItems);
         }
-        refreshCoordinates();
-        mPopup.setOverflowDirection(mOverflowDirection);
-        mPopup.updateCoordinates(mCoordinates.x, mCoordinates.y);
+        mPopup.updateCoordinates(mContentRect);
         if (!mPopup.isShowing()) {
-            mPopup.show(mCoordinates.x, mCoordinates.y);
+            mPopup.show(mContentRect);
         }
         mWidthChanged = false;
         return this;
@@ -206,25 +202,6 @@ public final class FloatingToolbar {
      */
     public boolean isHidden() {
         return mPopup.isHidden();
-    }
-
-    /**
-     * Refreshes {@link #mCoordinates} with values based on {@link #mContentRect}.
-     */
-    private void refreshCoordinates() {
-        int x = mContentRect.centerX() - mPopup.getWidth() / 2;
-        int y;
-        if (mContentRect.top > mPopup.getHeight()) {
-            y = mContentRect.top - mPopup.getHeight();
-            mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_UP;
-        } else if (mContentRect.top > mPopup.getToolbarHeightWithVerticalMargin()) {
-            y = mContentRect.top - mPopup.getToolbarHeightWithVerticalMargin();
-            mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_DOWN;
-        } else {
-            y = mContentRect.bottom;
-            mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_DOWN;
-        }
-        mCoordinates.set(x, y);
     }
 
     /**
@@ -345,6 +322,8 @@ public final class FloatingToolbar {
             }
         };
 
+        private final Point mCoords = new Point();
+
         private final Region mTouchableRegion = new Region();
         private final ViewTreeObserver.OnComputeInternalInsetsListener mInsetsComputer =
                 new ViewTreeObserver.OnComputeInternalInsetsListener() {
@@ -406,6 +385,8 @@ public final class FloatingToolbar {
          */
         public void layoutMenuItems(List<MenuItem> menuItems,
                 MenuItem.OnMenuItemClickListener menuItemClickListener, int suggestedWidth) {
+            Preconditions.checkNotNull(menuItems);
+
             mContentContainer.removeAllViews();
             if (mMainPanel == null) {
                 mMainPanel = new FloatingToolbarMainPanel(mParent.getContext(), mOpenOverflow);
@@ -428,7 +409,9 @@ public final class FloatingToolbar {
          * Shows this popup at the specified coordinates.
          * The specified coordinates may be adjusted to make sure the popup is entirely on-screen.
          */
-        public void show(int x, int y) {
+        public void show(Rect contentRect) {
+            Preconditions.checkNotNull(contentRect);
+
             if (isShowing()) {
                 return;
             }
@@ -437,6 +420,7 @@ public final class FloatingToolbar {
             mDismissed = false;
             cancelDismissAndHideAnimations();
             cancelOverflowAnimations();
+
             // Make sure a panel is set as the content.
             if (mContentContainer.getChildCount() == 0) {
                 setMainPanelAsContent();
@@ -444,8 +428,10 @@ public final class FloatingToolbar {
                 // The "show" animation will make this visible.
                 mContentContainer.setAlpha(0);
             }
+            updateOverflowHeight(contentRect.top - (mMarginVertical * 2));
+            refreshCoordinatesAndOverflowDirection(contentRect);
             preparePopupContent();
-            mPopupWindow.showAtLocation(mParent, Gravity.NO_GRAVITY, x, y);
+            mPopupWindow.showAtLocation(mParent, Gravity.NO_GRAVITY, mCoords.x, mCoords.y);
             setTouchableSurfaceInsetsComputer();
             runShowAnimation();
         }
@@ -498,27 +484,17 @@ public final class FloatingToolbar {
          * The specified coordinates may be adjusted to make sure the popup is entirely on-screen.
          * This is a no-op if this popup is not showing.
          */
-        public void updateCoordinates(int x, int y) {
+        public void updateCoordinates(Rect contentRect) {
+            Preconditions.checkNotNull(contentRect);
+
             if (!isShowing() || !mPopupWindow.isShowing()) {
                 return;
             }
 
             cancelOverflowAnimations();
+            refreshCoordinatesAndOverflowDirection(contentRect);
             preparePopupContent();
-            mPopupWindow.update(x, y, getWidth(), getHeight());
-        }
-
-        /**
-         * Sets the direction in which the overflow will open. i.e. up or down.
-         *
-         * @param overflowDirection Either {@link #OVERFLOW_DIRECTION_UP}
-         *   or {@link #OVERFLOW_DIRECTION_DOWN}.
-         */
-        public void setOverflowDirection(int overflowDirection) {
-            mOverflowDirection = overflowDirection;
-            if (mOverflowPanel != null) {
-                mOverflowPanel.setOverflowDirection(mOverflowDirection);
-            }
+            mPopupWindow.update(mCoords.x, mCoords.y, getWidth(), getHeight());
         }
 
         /**
@@ -542,7 +518,26 @@ public final class FloatingToolbar {
             return mContentContainer.getContext();
         }
 
-        int getToolbarHeightWithVerticalMargin() {
+        private void refreshCoordinatesAndOverflowDirection(Rect contentRect) {
+            int x = contentRect.centerX() - getWidth() / 2;
+            int y;
+            if (contentRect.top > getHeight()) {
+                y = contentRect.top - getHeight();
+                mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_UP;
+            } else if (contentRect.top > getToolbarHeightWithVerticalMargin()) {
+                y = contentRect.top - getToolbarHeightWithVerticalMargin();
+                mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_DOWN;
+            } else {
+                y = contentRect.bottom;
+                mOverflowDirection = FloatingToolbarPopup.OVERFLOW_DIRECTION_DOWN;
+            }
+            mCoords.set(x, y);
+            if (mOverflowPanel != null) {
+                mOverflowPanel.setOverflowDirection(mOverflowDirection);
+            }
+        }
+
+        private int getToolbarHeightWithVerticalMargin() {
             return getEstimatedToolbarHeight(mParent.getContext()) + mMarginVertical * 2;
         }
 
@@ -695,14 +690,22 @@ public final class FloatingToolbar {
             }
 
             // Reset position.
-            if (mMainPanel != null
-                    && mContentContainer.getChildAt(0) == mMainPanel.getView()) {
+            if (isMainPanelContent()) {
                 positionMainPanel();
             }
-            if (mOverflowPanel != null
-                    && mContentContainer.getChildAt(0) == mOverflowPanel.getView()) {
+            if (isOverflowPanelContent()) {
                 positionOverflowPanel();
             }
+        }
+
+        private boolean isMainPanelContent() {
+            return mMainPanel != null
+                    && mContentContainer.getChildAt(0) == mMainPanel.getView();
+        }
+
+        private boolean isOverflowPanelContent() {
+            return mOverflowPanel != null
+                    && mContentContainer.getChildAt(0) == mOverflowPanel.getView();
         }
 
         /**
@@ -765,6 +768,25 @@ public final class FloatingToolbar {
             mContentContainer.setX(x);
             mContentContainer.setY(mMarginVertical);
             setContentAreaAsTouchableSurface();
+        }
+
+        private void updateOverflowHeight(int height) {
+            if (mOverflowPanel != null) {
+                mOverflowPanel.setSuggestedHeight(height);
+
+                // Re-measure the popup and it's contents.
+                boolean mainPanelContent = isMainPanelContent();
+                boolean overflowPanelContent = isOverflowPanelContent();
+                mContentContainer.removeAllViews();  // required to update popup size.
+                updatePopupSize();
+                // Reset the appropriate content.
+                if (mainPanelContent) {
+                    setMainPanelAsContent();
+                }
+                if (overflowPanelContent) {
+                    setOverflowPanelAsContent();
+                }
+            }
         }
 
         private void updatePopupSize() {
@@ -866,6 +888,8 @@ public final class FloatingToolbar {
          * @return The menu items that are not included in this main panel.
          */
         public List<MenuItem> layoutMenuItems(List<MenuItem> menuItems, int suggestedWidth) {
+            Preconditions.checkNotNull(menuItems);
+
             final int toolbarWidth = getAdjustedToolbarWidth(mContext, suggestedWidth)
                     // Reserve space for the "open overflow" button.
                     - getEstimatedOpenOverflowButtonWidth(mContext);
@@ -974,6 +998,7 @@ public final class FloatingToolbar {
 
         private MenuItem.OnMenuItemClickListener mOnMenuItemClickListener;
         private int mOverflowWidth = 0;
+        private int mSuggestedHeight;
 
         /**
          * Initializes a floating toolbar popup overflow view panel.
@@ -983,6 +1008,7 @@ public final class FloatingToolbar {
          */
         public FloatingToolbarOverflowPanel(Context context, Runnable closeOverflow) {
             mCloseOverflow = Preconditions.checkNotNull(closeOverflow);
+            mSuggestedHeight = getScreenHeight(context);
 
             mContentView = new LinearLayout(context);
             mContentView.setOrientation(LinearLayout.VERTICAL);
@@ -1045,6 +1071,11 @@ public final class FloatingToolbar {
             mContentView.addView(mBackButtonContainer, index);
         }
 
+        public void setSuggestedHeight(int height) {
+            mSuggestedHeight = height;
+            setListViewHeight();
+        }
+
         /**
          * Returns the content view of the overflow.
          */
@@ -1076,9 +1107,17 @@ public final class FloatingToolbar {
             int itemHeight = getEstimatedToolbarHeight(mContentView.getContext());
             int height = mListView.getAdapter().getCount() * itemHeight;
             int maxHeight = mContentView.getContext().getResources().
+                    getDimensionPixelSize(R.dimen.floating_toolbar_maximum_overflow_height);
+            int minHeight = mContentView.getContext().getResources().
                     getDimensionPixelSize(R.dimen.floating_toolbar_minimum_overflow_height);
+            int availableHeight = mSuggestedHeight - (mSuggestedHeight % itemHeight)
+                    - itemHeight;  // reserve space for the back button.
             ViewGroup.LayoutParams params = mListView.getLayoutParams();
-            params.height = Math.min(height, maxHeight);
+            if (availableHeight >= minHeight) {
+                params.height = Math.min(Math.min(availableHeight, maxHeight), height);
+            } else {
+                params.height = Math.min(maxHeight, height);
+            }
             mListView.setLayoutParams(params);
         }
 
@@ -1273,17 +1312,5 @@ public final class FloatingToolbar {
      */
     private static int getScreenHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
-    }
-
-    /**
-     * Returns value, restricted to the range min->max (inclusive).
-     * If maximum is less than minimum, the result is undefined.
-     *
-     * @param value  The value to clamp.
-     * @param minimum  The minimum value in the range.
-     * @param maximum  The maximum value in the range. Must not be less than minimum.
-     */
-    private static int clamp(int value, int minimum, int maximum) {
-        return Math.max(minimum, Math.min(value, maximum));
     }
 }
