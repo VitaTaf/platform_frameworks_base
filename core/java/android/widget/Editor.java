@@ -3860,8 +3860,8 @@ public class Editor {
     private class SelectionStartHandleView extends HandleView {
         // Indicates whether the cursor is making adjustments within a word.
         private boolean mInWord = false;
-        // Offset to track difference between touch and word boundary.
-        protected int mTouchWordOffset;
+        // Difference between touch position and word boundary position.
+        private float mTouchWordDelta;
 
         public SelectionStartHandleView(Drawable drawableLtr, Drawable drawableRtl) {
             super(drawableLtr, drawableRtl);
@@ -3913,18 +3913,36 @@ public class Editor {
                         offset = mPreviousOffset;
                     }
                 }
-                mTouchWordOffset = Math.max(trueOffset - offset, 0);
-                positionCursor = true;
-            } else if (offset - mTouchWordOffset > mPreviousOffset || currLine > mPrevLine) {
-                // User is shrinking the selection.
-                if (currLine > mPrevLine) {
-                    // We're on a different line, so we'll snap to word boundaries.
-                    offset = start;
-                    mTouchWordOffset = Math.max(trueOffset - offset, 0);
+                final Layout layout = mTextView.getLayout();
+                if (layout != null && offset < trueOffset) {
+                    final float adjustedX = layout.getPrimaryHorizontal(offset);
+                    mTouchWordDelta =
+                            mTextView.convertToLocalHorizontalCoordinate(x) - adjustedX;
                 } else {
-                    offset -= mTouchWordOffset;
+                    mTouchWordDelta = 0.0f;
                 }
                 positionCursor = true;
+            } else {
+                final int adjustedOffset =
+                        mTextView.getOffsetAtCoordinate(currLine, x - mTouchWordDelta);
+                if (adjustedOffset > mPreviousOffset || currLine > mPrevLine) {
+                    // User is shrinking the selection.
+                    if (currLine > mPrevLine) {
+                        // We're on a different line, so we'll snap to word boundaries.
+                        offset = start;
+                        final Layout layout = mTextView.getLayout();
+                        if (layout != null && offset < trueOffset) {
+                            final float adjustedX = layout.getPrimaryHorizontal(offset);
+                            mTouchWordDelta =
+                                    mTextView.convertToLocalHorizontalCoordinate(x) - adjustedX;
+                        } else {
+                            mTouchWordDelta = 0.0f;
+                        }
+                    } else {
+                        offset = adjustedOffset;
+                    }
+                    positionCursor = true;
+                }
             }
 
             // Handles can not cross and selection is at least one character.
@@ -3939,7 +3957,7 @@ public class Editor {
                     } else {
                         offset = alteredOffset;
                     }
-                    mTouchWordOffset = 0;
+                    mTouchWordDelta = 0.0f;
                 }
                 mInWord = !getWordIteratorWithText().isBoundary(offset);
                 positionAtCursorOffset(offset, false);
@@ -3951,7 +3969,7 @@ public class Editor {
             boolean superResult = super.onTouchEvent(event);
             if (event.getActionMasked() == MotionEvent.ACTION_UP) {
                 // Reset the touch word offset when the user has lifted their finger.
-                mTouchWordOffset = 0;
+                mTouchWordDelta = 0.0f;
             }
             return superResult;
         }
@@ -3960,8 +3978,8 @@ public class Editor {
     private class SelectionEndHandleView extends HandleView {
         // Indicates whether the cursor is making adjustments within a word.
         private boolean mInWord = false;
-        // Offset to track difference between touch and word boundary.
-        protected int mTouchWordOffset;
+        // Difference between touch position and word boundary position.
+        private float mTouchWordDelta;
 
         public SelectionEndHandleView(Drawable drawableLtr, Drawable drawableRtl) {
             super(drawableLtr, drawableRtl);
@@ -4013,18 +4031,36 @@ public class Editor {
                         offset = mPreviousOffset;
                     }
                 }
-                mTouchWordOffset = Math.max(offset - trueOffset, 0);
-                positionCursor = true;
-            } else if (offset + mTouchWordOffset < mPreviousOffset || currLine < mPrevLine) {
-                // User is shrinking the selection.
-                if (currLine < mPrevLine) {
-                    // We're on a different line, so we'll snap to word boundaries.
-                    offset = end;
-                    mTouchWordOffset = Math.max(offset - trueOffset, 0);
+                final Layout layout = mTextView.getLayout();
+                if (layout != null && offset > trueOffset) {
+                    final float adjustedX = layout.getPrimaryHorizontal(offset);
+                    mTouchWordDelta =
+                            adjustedX - mTextView.convertToLocalHorizontalCoordinate(x);
                 } else {
-                    offset += mTouchWordOffset;
+                    mTouchWordDelta = 0.0f;
                 }
                 positionCursor = true;
+            } else {
+                final int adjustedOffset =
+                        mTextView.getOffsetAtCoordinate(currLine, x + mTouchWordDelta);
+                if (adjustedOffset < mPreviousOffset || currLine < mPrevLine) {
+                    // User is shrinking the selection.
+                    if (currLine < mPrevLine) {
+                        // We're on a different line, so we'll snap to word boundaries.
+                        offset = end;
+                        final Layout layout = mTextView.getLayout();
+                        if (layout != null && offset > trueOffset) {
+                            final float adjustedX = layout.getPrimaryHorizontal(offset);
+                            mTouchWordDelta =
+                                    adjustedX - mTextView.convertToLocalHorizontalCoordinate(x);
+                        } else {
+                            mTouchWordDelta = 0.0f;
+                        }
+                    } else {
+                        offset = adjustedOffset;
+                    }
+                    positionCursor = true;
+                }
             }
 
             if (positionCursor) {
@@ -4039,7 +4075,7 @@ public class Editor {
                     } else {
                         offset = Math.min(alteredOffset, length);
                     }
-                    mTouchWordOffset = 0;
+                    mTouchWordDelta = 0.0f;
                 }
                 mInWord = !getWordIteratorWithText().isBoundary(offset);
                 positionAtCursorOffset(offset, false);
@@ -4051,7 +4087,7 @@ public class Editor {
             boolean superResult = super.onTouchEvent(event);
             if (event.getActionMasked() == MotionEvent.ACTION_UP) {
                 // Reset the touch word offset when the user has lifted their finger.
-                mTouchWordOffset = 0;
+                mTouchWordDelta = 0.0f;
             }
             return superResult;
         }
