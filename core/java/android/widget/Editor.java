@@ -289,6 +289,13 @@ public class Editor {
         mUndoManager.redo(owners, 1);  // Redo 1 action.
     }
 
+    void replace() {
+        int middle = (mTextView.getSelectionStart() + mTextView.getSelectionEnd()) / 2;
+        stopSelectionActionMode();
+        Selection.setSelection((Spannable) mTextView.getText(), middle);
+        showSuggestions();
+    }
+
     void onAttachedToWindow() {
         if (mShowErrorAfterAttach) {
             showError();
@@ -3188,10 +3195,6 @@ public class Editor {
                  mCustomSelectionActionModeCallback.onActionItemClicked(mode, item)) {
                 return true;
             }
-            if (item.getItemId() == TextView.ID_REPLACE) {
-                onReplace();
-                return true;
-            }
             return mTextView.onTextContextMenuItem(item.getItemId());
         }
 
@@ -3263,13 +3266,6 @@ public class Editor {
                     (int) Math.ceil(mSelectionBounds.right + textHorizontalOffset),
                     (int) Math.ceil(mSelectionBounds.bottom + textVerticalOffset));
         }
-    }
-
-    private void onReplace() {
-        int middle = (mTextView.getSelectionStart() + mTextView.getSelectionEnd()) / 2;
-        stopSelectionActionMode();
-        Selection.setSelection((Spannable) mTextView.getText(), middle);
-        showSuggestions();
     }
 
     /**
