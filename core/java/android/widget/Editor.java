@@ -3874,7 +3874,7 @@ public class Editor {
 
         @Override
         protected int getHorizontalGravity(boolean isRtlRun) {
-            return isRtlRun ? Gravity.RIGHT : Gravity.LEFT;
+            return isRtlRun ? Gravity.LEFT : Gravity.RIGHT;
         }
 
         @Override
@@ -3974,7 +3974,7 @@ public class Editor {
 
         @Override
         protected int getHorizontalGravity(boolean isRtlRun) {
-            return isRtlRun ? Gravity.LEFT : Gravity.RIGHT;
+            return isRtlRun ? Gravity.RIGHT : Gravity.LEFT;
         }
 
         @Override
