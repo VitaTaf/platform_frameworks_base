@@ -395,4 +395,5 @@
   <item type="id" name="amPm" id="0x010203eb" />
   <item type="id" name="divider" id="0x010203ec" />
   <item type="id" name="time_layout" id="0x010203ed" />
+  <item type="id" name="floating_toolbar_menu_item_image_button" />
 </resources>
