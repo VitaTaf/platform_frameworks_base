@@ -6141,6 +6141,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         // extracted mode will start. Some text is selected though, and will trigger an action mode
         // in the extracted view.
         mEditor.hideControllers();
+        stopSelectionActionMode();
     }
 
     /**
@@ -7975,6 +7976,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         super.onVisibilityChanged(changedView, visibility);
         if (mEditor != null && visibility != VISIBLE) {
             mEditor.hideControllers();
+            stopSelectionActionMode();
         }
     }
 
