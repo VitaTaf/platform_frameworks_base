@@ -137,7 +137,8 @@ public class Editor {
     // Cursor Controllers.
     InsertionPointCursorController mInsertionPointCursorController;
     SelectionModifierCursorController mSelectionModifierCursorController;
-    ActionMode mSelectionActionMode;
+    // Action mode used when text is selected or when actions on an insertion cursor are triggered.
+    ActionMode mTextActionMode;
     boolean mInsertionControllerEnabled;
     boolean mSelectionControllerEnabled;
 
@@ -208,13 +209,14 @@ public class Editor {
 
     float mLastDownPositionX, mLastDownPositionY;
     Callback mCustomSelectionActionModeCallback;
+    Callback mCustomInsertionActionModeCallback;
 
     // Set when this TextView gained focus with some text selected. Will start selection mode.
     boolean mCreatedWithASelection;
 
     boolean mDoubleTap = false;
 
-    private Runnable mSelectionModeWithoutSelectionRunnable;
+    private Runnable mInsertionActionModeRunnable;
 
     // The span controller helps monitoring the changes to which the Editor needs to react:
     // - EasyEditSpans, for which we have some UI to display on attach and on hide
@@ -239,8 +241,8 @@ public class Editor {
     private final Runnable mHideFloatingToolbar = new Runnable() {
         @Override
         public void run() {
-            if (mSelectionActionMode != null) {
-                mSelectionActionMode.snooze(ActionMode.SNOOZE_TIME_DEFAULT);
+            if (mTextActionMode != null) {
+                mTextActionMode.snooze(ActionMode.SNOOZE_TIME_DEFAULT);
             }
         }
     };
@@ -248,8 +250,8 @@ public class Editor {
     private final Runnable mShowFloatingToolbar = new Runnable() {
         @Override
         public void run() {
-            if (mSelectionActionMode != null) {
-                mSelectionActionMode.snooze(0);  // snooze off.
+            if (mTextActionMode != null) {
+                mTextActionMode.snooze(0);  // snooze off.
             }
         }
     };
@@ -313,7 +315,7 @@ public class Editor {
 
     void replace() {
         int middle = (mTextView.getSelectionStart() + mTextView.getSelectionEnd()) / 2;
-        stopSelectionActionMode();
+        stopTextActionMode();
         Selection.setSelection((Spannable) mTextView.getText(), middle);
         showSuggestions();
     }
@@ -346,7 +348,7 @@ public class Editor {
             mTextView.setHasTransientState(false);
 
             // We had an active selection from before, start the selection mode.
-            startSelectionActionModeWithSelection();
+            startSelectionActionMode();
         }
 
         getPositionListener().addSubscriber(mCursorAnchorInfoNotifier, true);
@@ -375,8 +377,8 @@ public class Editor {
         }
 
         // Cancel the single tap delayed runnable.
-        if (mSelectionModeWithoutSelectionRunnable != null) {
-            mTextView.removeCallbacks(mSelectionModeWithoutSelectionRunnable);
+        if (mInsertionActionModeRunnable != null) {
+            mTextView.removeCallbacks(mInsertionActionModeRunnable);
         }
 
         mTextView.removeCallbacks(mHideFloatingToolbar);
@@ -393,7 +395,7 @@ public class Editor {
 
         mPreserveDetachedSelection = true;
         hideControllers();
-        stopSelectionActionMode();
+        stopTextActionMode();
         mPreserveDetachedSelection = false;
         mTemporaryDetach = false;
     }
@@ -589,7 +591,7 @@ public class Editor {
         }
 
         if (!mSelectionControllerEnabled) {
-            stopSelectionActionMode();
+            stopTextActionMode();
             if (mSelectionModifierCursorController != null) {
                 mSelectionModifierCursorController.onDetached();
                 mSelectionModifierCursorController = null;
@@ -987,14 +989,14 @@ public class Editor {
                 mInsertionControllerEnabled) {
             final int offset = mTextView.getOffsetForPosition(mLastDownPositionX,
                     mLastDownPositionY);
-            stopSelectionActionMode();
+            stopTextActionMode();
             Selection.setSelection((Spannable) mTextView.getText(), offset);
             getInsertionController().show();
-            startSelectionActionModeWithoutSelection();
+            startInsertionActionMode();
             handled = true;
         }
 
-        if (!handled && mSelectionActionMode != null) {
+        if (!handled && mTextActionMode != null) {
             if (touchPositionIsInSelection()) {
                 // Start a drag
                 final int start = mTextView.getSelectionStart();
@@ -1004,9 +1006,9 @@ public class Editor {
                 DragLocalState localState = new DragLocalState(mTextView, start, end);
                 mTextView.startDrag(data, getTextThumbnailBuilder(selectedText), localState,
                         View.DRAG_FLAG_GLOBAL);
-                stopSelectionActionMode();
+                stopTextActionMode();
             } else {
-                stopSelectionActionMode();
+                stopTextActionMode();
                 selectCurrentWordAndStartDrag();
             }
             handled = true;
@@ -1104,12 +1106,12 @@ public class Editor {
                 final int selStart = mTextView.getSelectionStart();
                 final int selEnd = mTextView.getSelectionEnd();
                 hideControllers();
-                stopSelectionActionMode();
+                stopTextActionMode();
                 Selection.setSelection((Spannable) mTextView.getText(), selStart, selEnd);
             } else {
                 if (mTemporaryDetach) mPreserveDetachedSelection = true;
                 hideControllers();
-                stopSelectionActionMode();
+                stopTextActionMode();
                 if (mTemporaryDetach) mPreserveDetachedSelection = false;
                 downgradeEasyCorrectionSpans();
             }
@@ -1152,7 +1154,7 @@ public class Editor {
         // We do not hide the span controllers, since they can be added when a new text is
         // inserted into the text view (voice IME).
         hideCursorControllers();
-        stopSelectionActionMode();
+        stopTextActionMode();
     }
 
     private int getLastTapPosition() {
@@ -1219,7 +1221,7 @@ public class Editor {
     }
 
     private void updateFloatingToolbarVisibility(MotionEvent event) {
-        if (mSelectionActionMode != null) {
+        if (mTextActionMode != null) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_MOVE:
                     hideFloatingToolbar();
@@ -1232,7 +1234,7 @@ public class Editor {
     }
 
     private void hideFloatingToolbar() {
-        if (mSelectionActionMode != null) {
+        if (mTextActionMode != null) {
             mTextView.removeCallbacks(mShowFloatingToolbar);
             // Delay the "hide" a little bit just in case a "show" will happen almost immediately.
             mTextView.postDelayed(mHideFloatingToolbar, 100);
@@ -1240,7 +1242,7 @@ public class Editor {
     }
 
     private void showFloatingToolbar() {
-        if (mSelectionActionMode != null) {
+        if (mTextActionMode != null) {
             mTextView.removeCallbacks(mHideFloatingToolbar);
             // Delay "show" so it doesn't interfere with click confirmations
             // or double-clicks that could "dismiss" the floating toolbar.
@@ -1705,26 +1707,20 @@ public class Editor {
     /**
      * @return true if the selection mode was actually started.
      */
-    private boolean startSelectionActionModeWithoutSelection() {
+    private boolean startInsertionActionMode() {
+        if (mInsertionActionModeRunnable != null) {
+            mTextView.removeCallbacks(mInsertionActionModeRunnable);
+        }
         if (extractedTextModeWillBeStarted()) {
-            // Cancel the single tap delayed runnable.
-            if (mSelectionModeWithoutSelectionRunnable != null) {
-                mTextView.removeCallbacks(mSelectionModeWithoutSelectionRunnable);
-            }
-
             return false;
         }
+        stopTextActionMode();
 
-        if (mSelectionActionMode != null) {
-            // Selection action mode is already started
-            // TODO: revisit invocations to minimize this case.
-            mSelectionActionMode.invalidate();
-            return false;
-        }
-        ActionMode.Callback actionModeCallback = new SelectionActionModeCallback();
-        mSelectionActionMode = mTextView.startActionMode(
+        ActionMode.Callback actionModeCallback =
+                new TextActionModeCallback(false /* hasSelection */);
+        mTextActionMode = mTextView.startActionMode(
                 actionModeCallback, ActionMode.TYPE_FLOATING);
-        return mSelectionActionMode != null;
+        return mTextActionMode != null;
     }
 
     /**
@@ -1734,8 +1730,8 @@ public class Editor {
      *
      * @return true if the selection mode was actually started.
      */
-    boolean startSelectionActionModeWithSelection() {
-        boolean selectionStarted = startSelectionActionModeWithSelectionInternal();
+    boolean startSelectionActionMode() {
+        boolean selectionStarted = startSelectionActionModeInternal();
         if (selectionStarted) {
             getSelectionController().show();
         } else if (getInsertionController() != null) {
@@ -1753,13 +1749,13 @@ public class Editor {
     private boolean selectCurrentWordAndStartDrag() {
         if (extractedTextModeWillBeStarted()) {
             // Cancel the single tap delayed runnable.
-            if (mSelectionModeWithoutSelectionRunnable != null) {
-                mTextView.removeCallbacks(mSelectionModeWithoutSelectionRunnable);
+            if (mInsertionActionModeRunnable != null) {
+                mTextView.removeCallbacks(mInsertionActionModeRunnable);
             }
             return false;
         }
-        if (mSelectionActionMode != null) {
-            mSelectionActionMode.finish();
+        if (mTextActionMode != null) {
+            mTextActionMode.finish();
         }
         if (!checkFieldAndSelectCurrentWord()) {
             return false;
@@ -1788,10 +1784,10 @@ public class Editor {
         return true;
     }
 
-    private boolean startSelectionActionModeWithSelectionInternal() {
-        if (mSelectionActionMode != null) {
+    private boolean startSelectionActionModeInternal() {
+        if (mTextActionMode != null) {
             // Selection action mode is already started
-            mSelectionActionMode.invalidate();
+            mTextActionMode.invalidate();
             return false;
         }
 
@@ -1804,12 +1800,13 @@ public class Editor {
         // Do not start the action mode when extracted text will show up full screen, which would
         // immediately hide the newly created action bar and would be visually distracting.
         if (!willExtract) {
-            ActionMode.Callback actionModeCallback = new SelectionActionModeCallback();
-            mSelectionActionMode = mTextView.startActionMode(
+            ActionMode.Callback actionModeCallback =
+                    new TextActionModeCallback(true /* hasSelection */);
+            mTextActionMode = mTextView.startActionMode(
                     actionModeCallback, ActionMode.TYPE_FLOATING);
         }
 
-        final boolean selectionStarted = mSelectionActionMode != null || willExtract;
+        final boolean selectionStarted = mTextActionMode != null || willExtract;
         if (selectionStarted && !mTextView.isTextSelectable() && mShowSoftInputOnFocus) {
             // Show the IME to be able to replace text, except when selecting non editable text.
             final InputMethodManager imm = InputMethodManager.peekInstance();
@@ -1910,7 +1907,7 @@ public class Editor {
     void onTouchUpEvent(MotionEvent event) {
         boolean selectAllGotFocus = mSelectAllOnFocus && mTextView.didTouchFocusSelect();
         hideControllers();
-        stopSelectionActionMode();
+        stopTextActionMode();
         CharSequence text = mTextView.getText();
         if (!selectAllGotFocus && text.length() > 0) {
             // Move cursor
@@ -1924,8 +1921,8 @@ public class Editor {
             if (!extractedTextModeWillBeStarted()) {
                 if (isCursorInsideEasyCorrectionSpan()) {
                     // Cancel the single tap delayed runnable.
-                    if (mSelectionModeWithoutSelectionRunnable != null) {
-                        mTextView.removeCallbacks(mSelectionModeWithoutSelectionRunnable);
+                    if (mInsertionActionModeRunnable != null) {
+                        mTextView.removeCallbacks(mInsertionActionModeRunnable);
                     }
 
                     mShowSuggestionRunnable = new Runnable() {
@@ -1943,10 +1940,10 @@ public class Editor {
         }
     }
 
-    protected void stopSelectionActionMode() {
-        if (mSelectionActionMode != null) {
+    protected void stopTextActionMode() {
+        if (mTextActionMode != null) {
             // This will hide the mSelectionModifierCursorController
-            mSelectionActionMode.finish();
+            mTextActionMode.finish();
         }
     }
 
@@ -2031,7 +2028,7 @@ public class Editor {
             mSuggestionsPopupWindow = new SuggestionsPopupWindow();
         }
         hideControllers();
-        stopSelectionActionMode();
+        stopTextActionMode();
         mSuggestionsPopupWindow.show();
     }
 
@@ -2039,8 +2036,8 @@ public class Editor {
         if (mPositionListener != null) {
             mPositionListener.onScrollChanged();
         }
-        if (mSelectionActionMode != null) {
-            mSelectionActionMode.invalidateContentRect();
+        if (mTextActionMode != null) {
+            mTextActionMode.invalidateContentRect();
         }
     }
 
@@ -3090,45 +3087,51 @@ public class Editor {
     }
 
     /**
-     * An ActionMode Callback class that is used to provide actions while in text selection mode.
+     * An ActionMode Callback class that is used to provide actions while in text insertion or
+     * selection mode.
      *
-     * The default callback provides a subset of Select All, Cut, Copy and Paste actions, depending
-     * on which of these this TextView supports.
+     * The default callback provides a subset of Select All, Cut, Copy, Paste, Share and Replace
+     * actions, depending on which of these this TextView supports and the current selection.
      */
-    private class SelectionActionModeCallback extends ActionMode.Callback2 {
+    private class TextActionModeCallback extends ActionMode.Callback2 {
         private final Path mSelectionPath = new Path();
         private final RectF mSelectionBounds = new RectF();
+        private final boolean mHasSelection;
 
-        private int mSelectionHandleHeight;
-        private int mInsertionHandleHeight;
+        private int mHandleHeight;
 
-        public SelectionActionModeCallback() {
-            SelectionModifierCursorController selectionController = getSelectionController();
-            if (selectionController.mStartHandle == null) {
-                // As these are for initializing selectionController, hide() must be called.
-                selectionController.initDrawables();
-                selectionController.initHandles();
-                selectionController.hide();
-            }
-            mSelectionHandleHeight = Math.max(
-                    mSelectHandleLeft.getMinimumHeight(), mSelectHandleRight.getMinimumHeight());
-            InsertionPointCursorController insertionController = getInsertionController();
-            if (insertionController != null) {
-                insertionController.getHandle();
-                mInsertionHandleHeight = mSelectHandleCenter.getMinimumHeight();
+        public TextActionModeCallback(boolean hasSelection) {
+            mHasSelection = hasSelection;
+            if (mHasSelection) {
+                SelectionModifierCursorController selectionController = getSelectionController();
+                if (selectionController.mStartHandle == null) {
+                    // As these are for initializing selectionController, hide() must be called.
+                    selectionController.initDrawables();
+                    selectionController.initHandles();
+                    selectionController.hide();
+                }
+                mHandleHeight = Math.max(
+                        mSelectHandleLeft.getMinimumHeight(),
+                        mSelectHandleRight.getMinimumHeight());
+            } else {
+                InsertionPointCursorController insertionController = getInsertionController();
+                if (insertionController != null) {
+                    insertionController.getHandle();
+                    mHandleHeight = mSelectHandleCenter.getMinimumHeight();
+                }
             }
         }
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            mode.setTitle(mTextView.getContext().getString(
-                    com.android.internal.R.string.textSelectionCABTitle));
+            mode.setTitle(null);
             mode.setSubtitle(null);
             mode.setTitleOptionalHint(true);
             populateMenuWithItems(menu);
 
-            if (mCustomSelectionActionModeCallback != null) {
-                if (!mCustomSelectionActionModeCallback.onCreateActionMode(mode, menu)) {
+            Callback customCallback = getCustomCallback();
+            if (customCallback != null) {
+                if (!customCallback.onCreateActionMode(mode, menu)) {
                     // The custom mode can choose to cancel the action mode
                     return false;
                 }
@@ -3142,6 +3145,12 @@ public class Editor {
             } else {
                 return false;
             }
+        }
+
+        private Callback getCustomCallback() {
+            return mHasSelection
+                    ? mCustomSelectionActionModeCallback
+                    : mCustomInsertionActionModeCallback;
         }
 
         private void populateMenuWithItems(Menu menu) {
@@ -3206,8 +3215,9 @@ public class Editor {
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             updateReplaceItem(menu);
 
-            if (mCustomSelectionActionModeCallback != null) {
-                return mCustomSelectionActionModeCallback.onPrepareActionMode(mode, menu);
+            Callback customCallback = getCustomCallback();
+            if (customCallback != null) {
+                return customCallback.onPrepareActionMode(mode, menu);
             }
             return true;
         }
@@ -3233,8 +3243,8 @@ public class Editor {
                         item.getIntent(), TextView.PROCESS_TEXT_REQUEST_CODE);
                 return true;
             }
-            if (mCustomSelectionActionModeCallback != null &&
-                 mCustomSelectionActionModeCallback.onActionItemClicked(mode, item)) {
+            Callback customCallback = getCustomCallback();
+            if (customCallback != null && customCallback.onActionItemClicked(mode, item)) {
                 return true;
             }
             return mTextView.onTextContextMenuItem(item.getItemId());
@@ -3242,8 +3252,9 @@ public class Editor {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            if (mCustomSelectionActionModeCallback != null) {
-                mCustomSelectionActionModeCallback.onDestroyActionMode(mode);
+            Callback customCallback = getCustomCallback();
+            if (customCallback != null) {
+                customCallback.onDestroyActionMode(mode);
             }
 
             /*
@@ -3261,7 +3272,7 @@ public class Editor {
                 mSelectionModifierCursorController.hide();
             }
 
-            mSelectionActionMode = null;
+            mTextActionMode = null;
         }
 
         @Override
@@ -3276,7 +3287,7 @@ public class Editor {
                 mTextView.getLayout().getSelectionPath(
                         mTextView.getSelectionStart(), mTextView.getSelectionEnd(), mSelectionPath);
                 mSelectionPath.computeBounds(mSelectionBounds, true);
-                mSelectionBounds.bottom += mSelectionHandleHeight;
+                mSelectionBounds.bottom += mHandleHeight;
             } else if (mCursorCount == 2) {
                 // We have a split cursor. In this case, we take the rectangle that includes both
                 // parts of the cursor to ensure we don't obscure either of them.
@@ -3287,7 +3298,7 @@ public class Editor {
                         Math.min(firstCursorBounds.top, secondCursorBounds.top),
                         Math.max(firstCursorBounds.right, secondCursorBounds.right),
                         Math.max(firstCursorBounds.bottom, secondCursorBounds.bottom)
-                            + mInsertionHandleHeight);
+                                + mHandleHeight);
             } else {
                 // We have a single cursor.
                 int line = mTextView.getLayout().getLineForOffset(mTextView.getSelectionStart());
@@ -3297,7 +3308,7 @@ public class Editor {
                         primaryHorizontal,
                         mTextView.getLayout().getLineTop(line),
                         primaryHorizontal + 1,
-                        mTextView.getLayout().getLineTop(line + 1) + mInsertionHandleHeight);
+                        mTextView.getLayout().getLineTop(line + 1) + mHandleHeight);
             }
             // Take TextView's padding and scroll into account.
             int textHorizontalOffset = mTextView.viewportToContentHorizontalOffset();
@@ -3854,25 +3865,25 @@ public class Editor {
                     SystemClock.uptimeMillis() - TextView.sLastCutCopyOrTextChangedTime;
 
             // Cancel the single tap delayed runnable.
-            if (mSelectionModeWithoutSelectionRunnable != null
+            if (mInsertionActionModeRunnable != null
                     && (mDoubleTap || isCursorInsideEasyCorrectionSpan())) {
-                mTextView.removeCallbacks(mSelectionModeWithoutSelectionRunnable);
+                mTextView.removeCallbacks(mInsertionActionModeRunnable);
             }
 
             // Prepare and schedule the single tap runnable to run exactly after the double tap
             // timeout has passed.
             if (!mDoubleTap && !isCursorInsideEasyCorrectionSpan()
                     && (durationSinceCutOrCopy < RECENT_CUT_COPY_DURATION)) {
-                if (mSelectionModeWithoutSelectionRunnable == null) {
-                    mSelectionModeWithoutSelectionRunnable = new Runnable() {
+                if (mInsertionActionModeRunnable == null) {
+                    mInsertionActionModeRunnable = new Runnable() {
                         public void run() {
-                            startSelectionActionModeWithoutSelection();
+                            startInsertionActionMode();
                         }
                     };
                 }
 
                 mTextView.postDelayed(
-                        mSelectionModeWithoutSelectionRunnable,
+                        mInsertionActionModeRunnable,
                         ViewConfiguration.getDoubleTapTimeout() + 1);
             }
 
@@ -3941,15 +3952,15 @@ public class Editor {
 
                         if (distanceSquared < touchSlop * touchSlop) {
                             // Tapping on the handle toggles the selection action mode.
-                            if (mSelectionActionMode != null) {
-                                mSelectionActionMode.finish();
+                            if (mTextActionMode != null) {
+                                mTextActionMode.finish();
                             } else {
-                                startSelectionActionModeWithoutSelection();
+                                startInsertionActionMode();
                             }
                         }
                     } else {
-                        if (mSelectionActionMode != null) {
-                            mSelectionActionMode.invalidateContentRect();
+                        if (mTextActionMode != null) {
+                            mTextActionMode.invalidateContentRect();
                         }
                     }
                     hideAfterDelay();
@@ -3979,8 +3990,8 @@ public class Editor {
         @Override
         public void updatePosition(float x, float y) {
             positionAtCursorOffset(mTextView.getOffsetForPosition(x, y), false);
-            if (mSelectionActionMode != null) {
-                mSelectionActionMode.invalidate();
+            if (mTextActionMode != null) {
+                mTextActionMode.invalidate();
             }
         }
 
@@ -4027,8 +4038,8 @@ public class Editor {
             Selection.setSelection((Spannable) mTextView.getText(), offset,
                     mTextView.getSelectionEnd());
             updateDrawable();
-            if (mSelectionActionMode != null) {
-                mSelectionActionMode.invalidate();
+            if (mTextActionMode != null) {
+                mTextActionMode.invalidate();
             }
         }
 
@@ -4149,8 +4160,8 @@ public class Editor {
         public void updateSelection(int offset) {
             Selection.setSelection((Spannable) mTextView.getText(),
                     mTextView.getSelectionStart(), offset);
-            if (mSelectionActionMode != null) {
-                mSelectionActionMode.invalidate();
+            if (mTextActionMode != null) {
+                mTextActionMode.invalidate();
             }
             updateDrawable();
         }
@@ -4514,7 +4525,7 @@ public class Editor {
                         mEndHandle.showAtLocation(endOffset);
 
                         // No longer the first dragging motion, reset.
-                        startSelectionActionModeWithSelection();
+                        startSelectionActionMode();
                         mDragAcceleratorActive = false;
                         mStartOffset = -1;
                     }
