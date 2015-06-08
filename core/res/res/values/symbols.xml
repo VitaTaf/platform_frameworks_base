@@ -1305,7 +1305,6 @@
   <java-symbol type="layout" name="preference_widget_seekbar" />
   <java-symbol type="layout" name="progress_dialog" />
   <java-symbol type="layout" name="resolve_list_item" />
-  <java-symbol type="layout" name="seekbar_dialog" />
   <java-symbol type="layout" name="select_dialog_singlechoice_holo" />
   <java-symbol type="layout" name="ssl_certificate" />
   <java-symbol type="layout" name="tab_content" />
@@ -2144,4 +2143,5 @@
   <java-symbol type="id" name="month_view" />
   <java-symbol type="id" name="day_picker_view_pager" />
   <java-symbol type="layout" name="day_picker_content_material" />
+  <java-symbol type="attr" name="seekBarDialogPreferenceStyle" />
 </resources>
