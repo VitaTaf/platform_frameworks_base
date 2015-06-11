@@ -1155,6 +1155,10 @@ public class Editor {
         // We do not hide the span controllers, since they can be added when a new text is
         // inserted into the text view (voice IME).
         hideCursorControllers();
+        // Reset drag accelerator.
+        if (mSelectionModifierCursorController != null) {
+            mSelectionModifierCursorController.resetTouchOffsets();
+        }
         stopTextActionMode();
     }
 
