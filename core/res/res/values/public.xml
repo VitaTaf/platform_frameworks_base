@@ -8826,6 +8826,9 @@
   <public type="attr" name="__reserved0" />
 
   <public type="attr" name="stylusButtonPressable" />
+  <public type="attr" name="logoDescription" />
+  <public type="attr" name="titleTextColor" />
+  <public type="attr" name="subtitleTextColor" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
   <public type="style" name="ThemeOverlay.Material.Dialog" />
