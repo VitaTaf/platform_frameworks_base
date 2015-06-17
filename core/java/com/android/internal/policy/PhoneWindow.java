@@ -388,6 +388,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         } else {
             mLayoutInflater.inflate(layoutResID, mContentParent);
         }
+        mContentParent.requestApplyInsets();
         final Callback cb = getCallback();
         if (cb != null && !isDestroyed()) {
             cb.onContentChanged();
@@ -417,6 +418,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         } else {
             mContentParent.addView(view, params);
         }
+        mContentParent.requestApplyInsets();
         final Callback cb = getCallback();
         if (cb != null && !isDestroyed()) {
             cb.onContentChanged();
@@ -433,6 +435,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             Log.v(TAG, "addContentView does not support content transitions");
         }
         mContentParent.addView(view, params);
+        mContentParent.requestApplyInsets();
         final Callback cb = getCallback();
         if (cb != null && !isDestroyed()) {
             cb.onContentChanged();

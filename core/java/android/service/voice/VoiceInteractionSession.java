@@ -787,7 +787,7 @@ public abstract class VoiceInteractionSession implements KeyEvent.Callback {
         mContentFrame.addView(view, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-
+        mContentFrame.requestApplyInsets();
     }
 
     public void onHandleAssist(Bundle assistBundle) {
