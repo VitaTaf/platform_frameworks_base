@@ -1776,7 +1776,18 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         return false;
     }
-    
+
+    /**
+     * @return {#link ExtractEditText} if it is considered to be visible and active. Otherwise
+     * {@code null} is returned.
+     */
+    private ExtractEditText getExtractEditTextIfVisible() {
+        if (!isExtractViewShown() || !isInputViewShown()) {
+            return null;
+        }
+        return mExtractEditText;
+    }
+
     /**
      * Override this to intercept key down events before they are processed by the
      * application.  If you return true, the application will not 
@@ -1792,6 +1803,10 @@ public class InputMethodService extends AbstractInputMethodService {
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            final ExtractEditText eet = getExtractEditTextIfVisible();
+            if (eet != null && eet.handleBackInTextActionModeIfNeeded(event)) {
+                return true;
+            }
             if (handleBack(false)) {
                 event.startTracking();
                 return true;
@@ -1839,11 +1854,15 @@ public class InputMethodService extends AbstractInputMethodService {
      * them to perform navigation in the underlying application.
      */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.isTracking()
-                && !event.isCanceled()) {
-            return handleBack(true);
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            final ExtractEditText eet = getExtractEditTextIfVisible();
+            if (eet != null && eet.handleBackInTextActionModeIfNeeded(event)) {
+                return true;
+            }
+            if (event.isTracking() && !event.isCanceled()) {
+                return handleBack(true);
+            }
         }
-        
         return doMovementKey(keyCode, event, MOVEMENT_UP);
     }
 
@@ -1909,10 +1928,10 @@ public class InputMethodService extends AbstractInputMethodService {
         }
         onExtractedCursorMovement(dx, dy);
     }
-    
+
     boolean doMovementKey(int keyCode, KeyEvent event, int count) {
-        final ExtractEditText eet = mExtractEditText;
-        if (isExtractViewShown() && isInputViewShown() && eet != null) {
+        final ExtractEditText eet = getExtractEditTextIfVisible();
+        if (eet != null) {
             // If we are in fullscreen mode, the cursor will move around
             // the extract edit text, but should NOT cause focus to move
             // to other fields.
@@ -1963,7 +1982,7 @@ public class InputMethodService extends AbstractInputMethodService {
                     return true;
             }
         }
-        
+
         return false;
     }
     
