@@ -6150,7 +6150,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         // This would stop a possible selection mode, but no such mode is started in case
         // extracted mode will start. Some text is selected though, and will trigger an action mode
         // in the extracted view.
-        mEditor.hideControllers();
+        mEditor.hideCursorAndSpanControllers();
         stopTextActionMode();
     }
 
@@ -7985,7 +7985,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         if (mEditor != null && visibility != VISIBLE) {
-            mEditor.hideControllers();
+            mEditor.hideCursorAndSpanControllers();
             stopTextActionMode();
         }
     }
@@ -9434,7 +9434,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         // since we are doing so explicitlty by other means and these
         // controllers interact with how selection behaves.
         if (mEditor != null) {
-            mEditor.hideControllers();
+            mEditor.hideCursorAndSpanControllers();
         }
         CharSequence text = getIterableTextForAccessibility();
         if (Math.min(start, end) >= 0 && Math.max(start, end) <= text.length()) {
