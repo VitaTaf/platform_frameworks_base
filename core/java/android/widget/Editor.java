@@ -1687,8 +1687,7 @@ public class Editor {
             return;
         }
 
-        Layout layout = mTextView.getLayout();
-        Layout hintLayout = mTextView.getHintLayout();
+        Layout layout = getActiveLayout();
         final int offset = mTextView.getSelectionStart();
         final int line = layout.getLineForOffset(offset);
         final int top = layout.getLineTop(line);
@@ -1703,23 +1702,11 @@ public class Editor {
         }
 
         boolean clamped = layout.shouldClampCursor(line);
-        updateCursorPosition(0, top, middle,
-                getPrimaryHorizontal(layout, hintLayout, offset, clamped));
+        updateCursorPosition(0, top, middle, layout.getPrimaryHorizontal(offset, clamped));
 
         if (mCursorCount == 2) {
             updateCursorPosition(1, middle, bottom,
                     layout.getSecondaryHorizontal(offset, clamped));
-        }
-    }
-
-    private float getPrimaryHorizontal(Layout layout, Layout hintLayout, int offset,
-            boolean clamped) {
-        if (TextUtils.isEmpty(layout.getText()) &&
-                hintLayout != null &&
-                !TextUtils.isEmpty(hintLayout.getText())) {
-            return hintLayout.getPrimaryHorizontal(offset, clamped);
-        } else {
-            return layout.getPrimaryHorizontal(offset, clamped);
         }
     }
 
@@ -3314,14 +3301,15 @@ public class Editor {
                                 + mHandleHeight);
             } else {
                 // We have a single cursor.
-                int line = mTextView.getLayout().getLineForOffset(mTextView.getSelectionStart());
+                Layout layout = getActiveLayout();
+                int line = layout.getLineForOffset(mTextView.getSelectionStart());
                 float primaryHorizontal =
-                        mTextView.getLayout().getPrimaryHorizontal(mTextView.getSelectionStart());
+                        layout.getPrimaryHorizontal(mTextView.getSelectionStart());
                 mSelectionBounds.set(
                         primaryHorizontal,
-                        mTextView.getLayout().getLineTop(line),
+                        layout.getLineTop(line),
                         primaryHorizontal + 1,
-                        mTextView.getLayout().getLineTop(line + 1) + mHandleHeight);
+                        layout.getLineTop(line + 1) + mHandleHeight);
             }
             // Take TextView's padding and scroll into account.
             int textHorizontalOffset = mTextView.viewportToContentHorizontalOffset();
@@ -3682,6 +3670,7 @@ public class Editor {
                 prepareCursorControllers();
                 return;
             }
+            layout = getActiveLayout();
 
             boolean offsetChanged = offset != mPreviousOffset;
             if (offsetChanged || parentScrolled || parentPositionChanged) {
@@ -3856,6 +3845,19 @@ public class Editor {
         void onHandleMoved() {}
 
         public void onDetached() {}
+    }
+
+    /**
+     * Returns the active layout (hint or text layout). Note that the text layout can be null.
+     */
+    private Layout getActiveLayout() {
+        Layout layout = mTextView.getLayout();
+        Layout hintLayout = mTextView.getHintLayout();
+        if (TextUtils.isEmpty(layout.getText()) && hintLayout != null &&
+                !TextUtils.isEmpty(hintLayout.getText())) {
+            layout = hintLayout;
+        }
+        return layout;
     }
 
     private class InsertionHandleView extends HandleView {
