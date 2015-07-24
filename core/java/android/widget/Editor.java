@@ -4052,9 +4052,17 @@ public class Editor {
         private float mPrevX;
         // Indicates if the handle has moved a boundary between LTR and RTL text.
         private boolean mLanguageDirectionChanged = false;
+        // Distance from edge of horizontally scrolling text view
+        // to use to switch to character mode.
+        private final float mTextViewEdgeSlop;
+        // Used to save text view location.
+        private final int[] mTextViewLocation = new int[2];
 
         public SelectionStartHandleView(Drawable drawableLtr, Drawable drawableRtl) {
             super(drawableLtr, drawableRtl);
+            ViewConfiguration viewConfiguration = ViewConfiguration.get(
+                    mTextView.getContext());
+            mTextViewEdgeSlop = viewConfiguration.getScaledTouchSlop() * 4;
         }
 
         @Override
@@ -4088,7 +4096,7 @@ public class Editor {
             if (layout == null) {
                 // HandleView will deal appropriately in positionAtCursorOffset when
                 // layout is null.
-                positionAtCursorOffset(mTextView.getOffsetForPosition(x, y), false);
+                positionAndAdjustForCrossingHandles(mTextView.getOffsetForPosition(x, y));
                 return;
             }
 
@@ -4130,12 +4138,12 @@ public class Editor {
                 // to the current position.
                 mLanguageDirectionChanged = true;
                 mTouchWordDelta = 0.0f;
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
                 return;
             } else if (mLanguageDirectionChanged && !isLvlBoundary) {
                 // We've just moved past the boundary so update the position. After this we can
                 // figure out if the user is expanding or shrinking to go by word or character.
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
                 mTouchWordDelta = 0.0f;
                 mLanguageDirectionChanged = false;
                 return;
@@ -4145,6 +4153,21 @@ public class Editor {
                     isExpanding = xDiff > 0 || currLine > mPreviousLineTouched;
                 } else {
                     isExpanding = xDiff < 0 || currLine < mPreviousLineTouched;
+                }
+            }
+
+            if (mTextView.getHorizontallyScrolling()) {
+                if (positionNearEdgeOfScrollingView(x, atRtl)
+                        && (mTextView.getScrollX() != 0)
+                        && ((isExpanding && offset < selectionStart) || !isExpanding)) {
+                    // If we're expanding ensure that the offset is smaller than the
+                    // selection start, if the handle snapped to the word, the finger position
+                    // may be out of sync and we don't want the selection to jump back.
+                    mTouchWordDelta = 0.0f;
+                    final int nextOffset = atRtl ? layout.getOffsetToRightOf(mPreviousOffset)
+                            : layout.getOffsetToLeftOf(mPreviousOffset);
+                    positionAndAdjustForCrossingHandles(nextOffset);
+                    return;
                 }
             }
 
@@ -4203,15 +4226,20 @@ public class Editor {
             }
 
             if (positionCursor) {
-                // Handles can not cross and selection is at least one character.
-                if (offset >= selectionEnd) {
-                    offset = getNextCursorOffset(selectionEnd, false);
-                    mTouchWordDelta = 0.0f;
-                }
                 mPreviousLineTouched = currLine;
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
             }
             mPrevX = x;
+        }
+
+        private void positionAndAdjustForCrossingHandles(int offset) {
+            final int selectionEnd = mTextView.getSelectionEnd();
+            if (offset >= selectionEnd) {
+                // Handles can not cross and selection is at least one character.
+                offset = getNextCursorOffset(selectionEnd, false);
+                mTouchWordDelta = 0.0f;
+            }
+            positionAtCursorOffset(offset, false);
         }
 
         @Override
@@ -4231,6 +4259,20 @@ public class Editor {
             }
             return superResult;
         }
+
+        private boolean positionNearEdgeOfScrollingView(float x, boolean atRtl) {
+            mTextView.getLocationOnScreen(mTextViewLocation);
+            boolean nearEdge;
+            if (atRtl) {
+                int rightEdge = mTextViewLocation[0] + mTextView.getWidth()
+                        - mTextView.getPaddingRight();
+                nearEdge = x > rightEdge - mTextViewEdgeSlop;
+            } else {
+                int leftEdge = mTextViewLocation[0] + mTextView.getPaddingLeft();
+                nearEdge = x < leftEdge + mTextViewEdgeSlop;
+            }
+            return nearEdge;
+        }
     }
 
     private class SelectionEndHandleView extends HandleView {
@@ -4242,9 +4284,17 @@ public class Editor {
         private float mPrevX;
         // Indicates if the handle has moved a boundary between LTR and RTL text.
         private boolean mLanguageDirectionChanged = false;
+        // Distance from edge of horizontally scrolling text view
+        // to use to switch to character mode.
+        private final float mTextViewEdgeSlop;
+        // Used to save the text view location.
+        private final int[] mTextViewLocation = new int[2];
 
         public SelectionEndHandleView(Drawable drawableLtr, Drawable drawableRtl) {
             super(drawableLtr, drawableRtl);
+            ViewConfiguration viewConfiguration = ViewConfiguration.get(
+                    mTextView.getContext());
+            mTextViewEdgeSlop = viewConfiguration.getScaledTouchSlop() * 4;
         }
 
         @Override
@@ -4278,7 +4328,7 @@ public class Editor {
             if (layout == null) {
                 // HandleView will deal appropriately in positionAtCursorOffset when
                 // layout is null.
-                positionAtCursorOffset(mTextView.getOffsetForPosition(x, y), false);
+                positionAndAdjustForCrossingHandles(mTextView.getOffsetForPosition(x, y));
                 return;
             }
 
@@ -4320,12 +4370,12 @@ public class Editor {
                 // to the current position.
                 mLanguageDirectionChanged = true;
                 mTouchWordDelta = 0.0f;
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
                 return;
             } else if (mLanguageDirectionChanged && !isLvlBoundary) {
                 // We've just moved past the boundary so update the position. After this we can
                 // figure out if the user is expanding or shrinking to go by word or character.
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
                 mTouchWordDelta = 0.0f;
                 mLanguageDirectionChanged = false;
                 return;
@@ -4335,6 +4385,21 @@ public class Editor {
                     isExpanding = xDiff < 0 || currLine < mPreviousLineTouched;
                 } else {
                     isExpanding = xDiff > 0 || currLine > mPreviousLineTouched;
+                }
+            }
+
+            if (mTextView.getHorizontallyScrolling()) {
+                if (positionNearEdgeOfScrollingView(x, atRtl)
+                        && mTextView.canScrollHorizontally(atRtl ? -1 : 1)
+                        && ((isExpanding && offset > selectionEnd) || !isExpanding)) {
+                    // If we're expanding ensure that the offset is actually greater than the
+                    // selection end, if the handle snapped to the word, the finger position
+                    // may be out of sync and we don't want the selection to jump back.
+                    mTouchWordDelta = 0.0f;
+                    final int nextOffset = atRtl ? layout.getOffsetToLeftOf(mPreviousOffset)
+                            : layout.getOffsetToRightOf(mPreviousOffset);
+                    positionAndAdjustForCrossingHandles(nextOffset);
+                    return;
                 }
             }
 
@@ -4393,15 +4458,20 @@ public class Editor {
             }
 
             if (positionCursor) {
-                // Handles can not cross and selection is at least one character.
-                if (offset <= selectionStart) {
-                    offset = getNextCursorOffset(selectionStart, true);
-                    mTouchWordDelta = 0.0f;
-                }
                 mPreviousLineTouched = currLine;
-                positionAtCursorOffset(offset, false);
+                positionAndAdjustForCrossingHandles(offset);
             }
             mPrevX = x;
+        }
+
+        private void positionAndAdjustForCrossingHandles(int offset) {
+            final int selectionStart = mTextView.getSelectionStart();
+            if (offset <= selectionStart) {
+                // Handles can not cross and selection is at least one character.
+                offset = getNextCursorOffset(selectionStart, true);
+                mTouchWordDelta = 0.0f;
+            }
+            positionAtCursorOffset(offset, false);
         }
 
         @Override
@@ -4420,6 +4490,20 @@ public class Editor {
                 mPrevX = UNSET_X_VALUE;
             }
             return superResult;
+        }
+
+        private boolean positionNearEdgeOfScrollingView(float x, boolean atRtl) {
+            mTextView.getLocationOnScreen(mTextViewLocation);
+            boolean nearEdge;
+            if (atRtl) {
+                int leftEdge = mTextViewLocation[0] + mTextView.getPaddingLeft();
+                nearEdge = x < leftEdge + mTextViewEdgeSlop;
+            } else {
+                int rightEdge = mTextViewLocation[0] + mTextView.getWidth()
+                        - mTextView.getPaddingRight();
+                nearEdge = x > rightEdge - mTextViewEdgeSlop;
+            }
+            return nearEdge;
         }
     }
 
