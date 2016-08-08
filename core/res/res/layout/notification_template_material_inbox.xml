@@ -135,7 +135,6 @@
             android:ellipsize="end"
             android:visibility="gone"
             android:layout_weight="1"
-            android:text="@android:string/ellipsis"
             />
         <FrameLayout
             android:id="@+id/inbox_end_pad"

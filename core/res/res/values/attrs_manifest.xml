@@ -757,6 +757,7 @@
         <!-- The font scaling factor has changed, that is the user has
              selected a new global font size. -->
         <flag name="fontScale" value="0x40000000" />
+        <flag name="spn" value="0x8000" />
     </attr>
 
     <!-- Indicate that the activity can be launched as the embedded child of another

@@ -4187,6 +4187,42 @@
     <string-array translatable="false" name="carrier_properties">
     </string-array>
 
+    <string-array translatable="false" name="config_sms_short_code_exception_list">
+    </string-array>
+
+    <string-array translatable="false" name="config_sms_priority_filter_list">
+    </string-array>
+
+    <string-array translatable="false" name="config_sms_write_message_filter_list">
+    </string-array>
+
+    <string-array translatable="false" name="config_dual_imsi_sim_mcc_mnc_list">
+    </string-array>
+
+    <string-array translatable="false" name="broker_mnc_mcc">
+    </string-array>
+
+    <string-array translatable="false" name="Carrier_MccMnc">
+    </string-array>
+
+    <string-array translatable="false" name="config_recover_carriers_fields">
+    </string-array>
+
+    <string-array translatable="false" name="config_recover_carriers_keys">
+    </string-array>
+
+    <string-array translatable="false" name="config_lmk_minfreelow">
+    </string-array>
+
+    <string-array translatable="false" name="config_lmk_minfreehigh">
+    </string-array>
+
+    <string-array translatable="false" name="config_erase_recovery_blacklist">
+    </string-array>
+
+    <string-array translatable="false" name="config_erase_recovery_prefix">
+    </string-array>
+
     <string name="grant_credentials_permission_message_header">The following one or more apps request permission to access your account, now and in the future.</string>
     <string name="grant_credentials_permission_message_footer">Do you want to allow this request?</string>
     <string name="grant_permissions_header_text">Access request</string>
@@ -5152,6 +5188,9 @@
     <!-- Zen mode condition - line one: until next alarm. [CHAR LIMIT=NONE] -->
     <string name="zen_mode_next_alarm_line_one">Until next alarm</string>
 
+    <string name="permdesc_userpreferredsim">Allows management of dual sim related settings</string>
+    <string name="permlab_userpreferredsim">Access DualSim Settings</string>
+
     <!-- Indication that the current volume and other effects (vibration) are being suppressed by a third party, such as a notification listener. [CHAR LIMIT=30] -->
     <string name="muted_by">Muted by <xliff:g id="third_party">%1$s</xliff:g></string>
 
@@ -5169,4 +5208,84 @@
     <string name="stk_cc_ss_to_ussd">SS request is modified to USSD request.</string>
     <string name="stk_cc_ss_to_ss">SS request is modified to new SS request.</string>
 
+    <string name="wifi_eap_operator_id_realm">@null</string>
+    <string name="config_data_stall_query_server" />
+    <string name="config_actionDirectedSMSReceived">verizon.intent.action.DIRECTED_SMS_RECEIVED</string>
+    <string name="config_adsPermissionPackage">com.verizon.permissions.appdirectedsms</string>
+    <string name="config_keyAppPrefix">com.verizon.directedAppSMS</string>
+    <string name="config_adsPrefix">//VZW</string>
+    <string name="config_sprint_mcc_mnc_list">310000,310120,311490,311870,312530</string>
+    <string name="config_using_predefined_sim_mcc_mnc_list">@null</string>
+    <string name="wifi_mhs_ssid_model_num">Mobile</string>
+    <string name="config_cbs_operator_name">usc</string>
+    <string name="config_geofenceServicesProvider">com.motorola.motgeofencesvc</string>
+    <string name="config_comboNetworkLocationProvider">com.qualcomm.location</string>
+    <string name="config_permanent_storage_telephony">/persist/telephony</string>
+    <string name="config_cid_block_path">/dev/block/platform/msm_sdcc.1/by-name/cid</string>
+    <string name="config_clogo_block_path">/dev/block/platform/msm_sdcc.1/by-name/clogo</string>
+    <string name="config_lenovo_safecenter_package_name">com.lenovo.safecenter</string>
+    <string name="config_lenovo_safecenter_sms_class_name">com.lenovo.safecenter.broadcastReceiver.SMSCheckReceiver</string>
+    <string name="config_lenovo_safecenter_mms_class_name">com.lenovo.safecenter.mmsutils.PushReceiver</string>
+    <string name="email_port">6245</string>
+    <string name="config_moto_display_dozeComponent">com.motorola.motodisplay/com.motorola.motodisplay.DozeService</string>
+    <string name="vzw_disable_we_gsm_cf">Call forward is disabled outside Verizon Wireless network.</string>
+    <string name="permlab_bindGeoFenceService">Bind to the Motorola Geofence Service</string>
+    <string name="permdesc_bindGeoFenceService">Allows holder to bind to the Motorola Geofence Service. Should only be used by the system.</string>
+    <string name="wispr_login_success">Login Success</string>
+    <string name="wispr_login_failed">Login Failed</string>
+    <string name="wispr_login_header">AT&amp;T Wi-Fi Hot Spot Status</string>
+    <string name="wispr_login_failed_credential">Unable to confirm eligibility, please call Customer CARE at 1-800-331-0500</string>
+    <string name="wispr_login_failed_network">Authentication Failed</string>
+    <string name="wispr_insert_sim">Unable to confirm eligibility, please call Customer CARE at 1-800-331-0500</string>
+    <string name="config_wifi_hotspot_mask_ssid">AT&amp;T Wi-Fi</string>
+    <string name="config_wifi_hotspot_ssid_1">Wayport_Access</string>
+    <string name="config_wifi_hotspot_ssid_2">attmetrowifi</string>
+    <string name="config_wifi_hotspot_ssid_3">attwifi</string>
+    <string name="wifi_p2p_wifi_connection_active">Wi-Fi connection is active. Do you want to disconnect and connect to Direct device?</string>
+    <string name="wifi_p2p_direct_connection_active">Wi-Fi Direct connection is active. Do you want to disconnect and connect to access point?</string>
+    <string name="wifi_p2p_warning">Warning</string>
+    <string name="wifi_p2p_disconnect_and_reconnect">Wi-Fi Direct connection is active. Do you want to disconnect and connect to other P2P device?</string>
+    <string name="f39360_voice_roaming">Voice roaming</string>
+    <string name="f39360_data_roaming">Data roaming</string>
+    <string name="f39360_voice_and_data_roaming">Voice and data roaming</string>
+    <string name="f39360_touch_for_network_settings">Touch for network settings</string>
+    <string name="smart_unlock_toast_charger">Phone will stay unlocked until the charger is disconnected</string>
+    <string name="smart_unlock_toast_cardock">Phone will stay unlocked until the cardock is disconnected</string>
+    <string name="smart_unlock_toast_deskdock">Phone will stay unlocked until the deskdock is disconnected</string>
+    <string name="kg_remote_lock_instructions">Enter remote lock password</string>
+    <string name="kg_remote_unlock_progress_dialog_message">Unlocking remote lock…</string>
+    <string name="kg_password_wrong_remote_lock_code">Incorrect remote lock code.</string>
+    <string name="switch_ime_warning">Please go to Settings application and select \"Language and Input\" to change your default language</string>
+    <string name="storage_usb_disk">USB disk</string>
+    <string name="config_update_certificate">MIIDuzCCAqOgAwIBAgICGh0wDQYJKoZIhvcNAQELBQAwczELMAkGA1UEBhMCVVMxETAPBgNVBAgTCElsbGlub2lzMRUwEwYDVQQHEwxMaWJlcnR5dmlsbGUxETAPBgNVBAoTCE1vdG9yb2xhMQwwCgYDVQQLEwNNRGIxGTAXBgNVBAMTEE1BUDQgTWVkaWEgNDY2LTIwHhcNMTQxMTE5MTkyMDA5WhcNMzkxMTE5MTkyMDA5WjBxMQswCQYDVQQGEwJVUzERMA8GA1UECBMISWxsaW5vaXMxEDAOBgNVBAcTB0NoaWNhZ28xETAPBgNVBAoTCE1vdG9yb2xhMQswCQYDVQQLEwJNRDEdMBsGA1UEAxMUTUFQNCBNZWRpYSA0NjYtMi0xMzcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC/hrUXdqOdUx5bEP6VNNRM+QON8YHnjd1E/eHPQk9NCa1kGhfwnkEUUMjoejzfODaDzYjrz9CkpwCOAaEE9FPSfFW3BplXgRgOPEs1R7/54cavy51xafiMDGea3WKXSXvtDF5X1xDtxh9N7I72GbT7EGyDkT6Di/DhkMdnBDM3R+d6nKnf2CY5mbJ44Ly87XycbYbZDkAWdVxbVeBu1x6N92OwQCWtRSm6LSLhwlcKjNCPH/5O0xdpLlzhYlvMmeneNP95nQmIWJqZqRJBZlwdXtwTK77xFjGejslEplIE/pBN5HJ1iki9f41gV0K0QWDNfJk0HsWV5QMtMJ/lPRLPAgMBAAGjWzBZMB8GA1UdIwQYMBaAFHTH7IXEGIy9nh4Vp+5Ja7CUSgrnMBEGCWCGSAGG+EIBAQQEAwIEEDAOBgNVHQ8BAf8EBAMCBeAwEwYDVR0lBAwwCgYIKwYBBQUHAwMwDQYJKoZIhvcNAQELBQADggEBAESIBA7mkchf48yIIoQTHrfnGakvGCH52vA1qohHX5t9Z2kT8no1f8N6+eIxJPtksb91kmeAXWM/v2zJTB/3clBWwH1tNJLn12PQfK0wob+oxXxlY2jVo33Z2f3mpRPgPTgVX4TnNHl/PAi4L0dHj9n2zz49fVt58CXTMf8llKDgwytJq4sHBkVi9+3hb9FDAZ6n4U4HUrAIMLhZvioT2/QVPqJ98Y+wx8/q3efMALgYT+ct0iohuh4IzUNgraP0juYnWwcbtMQdikTcHvIpWYIaiMB34jY1lU/8axAre21327gt/9+e8PmO+MJRiVr3mdilR7FXpcXlmSUUY2IJipk=</string>
+    <string name="config_update_bound_sepolicy_certificate">MIIDwzCCAqugAwIBAgICGPUwDQYJKoZIhvcNAQEFBQAwdDELMAkGA1UEBhMCVVMxETAPBgNVBAgTCElsbGlub2lzMRUwEwYDVQQHEwxMaWJlcnR5dmlsbGUxETAPBgNVBAoTCE1vdG9yb2xhMQwwCgYDVQQLEwNNRGIxGjAYBgNVBAMTEU1BUDQgU2hhcmVkIDQ2Ni0zMB4XDTE0MDIxNDIyMTUxMFoXDTM5MDIxNDIyMTUxMFoweDELMAkGA1UEBhMCVVMxETAPBgNVBAgTCElsbGlub2lzMRUwEwYDVQQHEwxMaWJlcnR5dmlsbGUxETAPBgNVBAoTCE1vdG9yb2xhMQwwCgYDVQQLEwNNTUkxHjAcBgNVBAMTFU1BUDQgU2hhcmVkIDQ2Ni0zLTEzMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKhgutl7/21cLvTzJyJafOUfIOA4Op9SsM1HRlSx0DK++kA3l0Ss1cfP2Koi6U+NmAGcq4lOROBwfS/YloBEsvaqwOS3o9OhHwOblnmmLfoUjT+Uv5mEOC1UyMQ2qQ3RZWlMjoqA3K76kkLEWm8Rj9ue88z9kJCVIHZLxxrMfmsSfS7EwDh2TweIGF7rhT2HDp6dzrLqSdujoWB2ejKP7xZyp9Pf5if5ZeX2OwYtjMHjDSaT9tyCdaeZx2Kr3c5G0oZc5HieL56MwW7LfWeKj+0PM1+r2DsyEknZquVLj0ytCGSsHJFQNNpfnlfC0u8Dy0kJNMikvCBJQcZ3C8dacUMCAwEAAaNbMFkwHwYDVR0jBBgwFoAUnSQGHRSknKxCgd71ltaAAR6XxkQwEQYJYIZIAYb4QgEBBAQDAgQQMA4GA1UdDwEB/wQEAwIF4DATBgNVHSUEDDAKBggrBgEFBQcDAzANBgkqhkiG9w0BAQUFAAOCAQEAHXE51kxKBxYaV3Pd+MUfn6ISPCN5vqi1cfKRdrZwNtkokyAgN9j56cwmQB9XuG2DC4SV1Zj2Wxi1dBsA74QwES0NUlNYPiAWZFqfaxuVgbWe49axLS6rvwW/Xq0nNGApO1v4iLEVg2F4knrXdWi/0+1bhdlX/7kBm7mLhYPcpU947O0HDduv8M0Dj/3zysyQGsPgCf+6kZQajaHjLEsLe8B9+tkgwcn2mjTPq7K1tcATBp+EDXxb+71YDSONdChoQ763sMH5Xm5U2F2pifABANJzBnCcQSUBc25p/rFAbBjpIJu+QV6QwFq89517zzZp4yBuspOkE2J2x2Ppo2Y7LQ==</string>
+    <string name="permlab_readCidBlock">Read cid block</string>
+    <string name="permdesc_readCidBlock">Allows an application to read the CID block.</string>
+    <string name="permlab_accessClogoBlock">Read/Write clogo block</string>
+    <string name="permdesc_accessClogoBlock">Allows an application to read/write the CLOGO block.</string>
+    <string name="permlab_aov_audio_process">Moto Voice</string>
+    <string name="permdesc_aov_audio_process">Allows to access audio hardware</string>
+    <string name="permlab_sensorhub">Access to the native SensorHub</string>
+    <string name="permdesc_sensorhub">Allows direct access to the SensorHub.</string>
+    <string name="tethered_hotspot_only_active_title">Mobile hotspot active</string>
+    <string name="tethered_usb_only_active_title">USB tethering active</string>
+    <string name="tethered_bluetooth_only_active_title">Bluetooth tethering active</string>
+    <string name="tethered_multiple_active_title">Tethering or hotspot active</string>
+    <string name="tethered_hotspot_only_paused_title">Mobile hotspot paused</string>
+    <string name="tethered_hotspot_only_paused_message">Mobile hotspot is paused during this call</string>
+    <string name="tethered_usb_only_paused_title">USB tethering paused</string>
+    <string name="tethered_usb_only_paused_message">USB tethering is paused during this call</string>
+    <string name="tethered_bluetooth_only_paused_title">Bluetooth tethering paused</string>
+    <string name="tethered_bluetooth_only_paused_message">Bluetooth tethering is paused during this call</string>
+    <string name="tethered_multiple_paused_title">Tethering or hotspot paused</string>
+    <string name="tethered_multiple_paused_message">Tethering or hotspot is paused during this call</string>
+    <string name="permlab_lockNow">lock the phone</string>
+    <string name="permdesc_lockNow">Allows the app to lock the phone, requiring the user to enter their unlock PIN, password, or pattern in order to resume using the phone.</string>
+    <string name="permlab_clearCache">Clear Cache</string>
+    <string name="permdesc_clearCache">Allows the app to clear cache directory if this directory space is lower than some threshold</string>
+    <string name="permlab_tcmdlocal">Should only be used by Motorola applications to have tcmd permission</string>
+    <string name="permdesc_tcmdlocal">Allows app to have gid mot_tcmd</string>
+    <string name="nfc_lock_intimation_title">Motorola Skip Authentication</string>
+    <string name="nfc_lock_intimation_text">Please re-enable Motorola Skip using SmartLock.</string>
+    <string name="def_sim_card_name_prefix">SIM</string>
 </resources>

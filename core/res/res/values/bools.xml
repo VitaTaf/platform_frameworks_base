@@ -15,6 +15,9 @@
 -->
 
 <resources>
+    <bool name="config_dynamic_mms_user_agent">false</bool>
+    <bool name="config_dynamic_mms_user_agent_profile_url">false</bool>
+    <bool name="is_broker_home_mcc_mnc">false</bool>
     <bool name="kg_enable_camera_default_widget">true</bool>
     <bool name="kg_center_small_widgets_vertically">false</bool>
     <bool name="kg_top_align_page_shrink_on_bouncer_visible">true</bool>

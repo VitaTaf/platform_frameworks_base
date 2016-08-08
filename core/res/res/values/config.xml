@@ -2020,6 +2020,10 @@
     <!-- An array of CDMA roaming indicators which means international roaming -->
     <integer-array translatable="false" name="config_cdma_international_roaming_indicators" />
 
+    <integer-array translatable="false" name="config_spn_display_rules" />
+
+    <integer-array translatable="false" name="config_sim_operator_override_rules" />
+
     <!-- set the system language as value of EF LI/EF PL -->
     <bool name="config_use_sim_language_file">true</bool>
 
