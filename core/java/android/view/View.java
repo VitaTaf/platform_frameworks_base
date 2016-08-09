@@ -45,6 +45,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.Shader;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.display.DisplayManagerGlobal;
@@ -13154,6 +13155,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *                    {@link #SCREEN_STATE_ON} or {@link #SCREEN_STATE_OFF}
      */
     public void onScreenStateChanged(int screenState) {
+	    if ((mBackground instanceof AnimationDrawable)) {
+	      ((AnimationDrawable)mBackground).setCurrentScreenState(screenState);
+	    }
     }
 
     /**
@@ -13411,6 +13415,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     protected void onDetachedFromWindowInternal() {
         mPrivateFlags &= ~PFLAG_CANCEL_NEXT_UP_EVENT;
         mPrivateFlags3 &= ~PFLAG3_IS_LAID_OUT;
+	    if (mSendViewStateChangedAccessibilityEvent != null) {
+    		removeCallbacks(mSendViewStateChangedAccessibilityEvent);
+    	}
 
         removeUnsetPressCallback();
         removeLongPressCallback();

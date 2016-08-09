@@ -222,6 +222,7 @@ public interface WindowManager extends ViewManager {
             @ViewDebug.IntToString(from = TYPE_MAGNIFICATION_OVERLAY, to = "TYPE_MAGNIFICATION_OVERLAY"),
             @ViewDebug.IntToString(from = TYPE_PRIVATE_PRESENTATION, to = "TYPE_PRIVATE_PRESENTATION"),
             @ViewDebug.IntToString(from = TYPE_VOICE_INTERACTION, to = "TYPE_VOICE_INTERACTION"),
+            @ViewDebug.IntToString(from = TYPE_TOUCH_SYSTEM_OVERLAY, to = "TYPE_TOUCH_SYSTEM_OVERLAY"),
         })
         public int type;
     
@@ -500,6 +501,8 @@ public interface WindowManager extends ViewManager {
          */
         public static final int TYPE_NAVIGATION_BAR_PANEL = FIRST_SYSTEM_WINDOW+24;
 
+        public static final int TYPE_TOUCH_SYSTEM_OVERLAY = 2100;
+
         /**
          * Window type: Behind the universe of the real windows.
          * In multiuser systems shows on all users' windows.
@@ -553,6 +556,8 @@ public interface WindowManager extends ViewManager {
          * they are covered by a touchable window.
          */
         public static final int TYPE_ACCESSIBILITY_OVERLAY = FIRST_SYSTEM_WINDOW+32;
+
+        public static final int TYPE_AOD = 2949;
 
         /**
          * End of types of system windows.
@@ -1082,6 +1087,9 @@ public interface WindowManager extends ViewManager {
          * {@hide} */
         public static final int PRIVATE_FLAG_COMPATIBLE_WINDOW = 0x00000080;
 
+        public static final int PRIVATE_FLAG_DISABLE_PIXELPIPE = Integer.MIN_VALUE;
+        public static final int PRIVATE_FLAG_DISABLE_REQUEST_TRANSIENT_BARS = 4096;
+
         /** Window flag: a special option intended for system dialogs.  When
          * this flag is set, the window will demand focus unconditionally when
          * it is created.
@@ -1366,6 +1374,11 @@ public interface WindowManager extends ViewManager {
          */
         public static final float BRIGHTNESS_OVERRIDE_NONE = -1.0f;
 
+        public static final float AUTO_BRIGHTNESS_ADJUSTMENT_OVERRIDE_MAX = 1.0F;
+        public static final float AUTO_BRIGHTNESS_ADJUSTMENT_OVERRIDE_MIN = -1.0F;
+        public static final float AUTO_BRIGHTNESS_ADJUSTMENT_OVERRIDE_NONE = Float.NaN;
+        public static final float AUTO_BRIGHTNESS_ADJUSTMENT_OVERRIDE_OFF = 0.0F;
+
         /**
          * Value for {@link #screenBrightness} and {@link #buttonBrightness}
          * indicating that the screen or button backlight brightness should be set
@@ -1402,6 +1415,8 @@ public interface WindowManager extends ViewManager {
          */
         public static final int ROTATION_ANIMATION_ROTATE = 0;
 
+        public static final int SCREEN_AUTO_BRIGHTNESS_ADJ_CHANGED = 1073741824;
+
         /**
          * Value for {@link #rotationAnimation} to define the animation used to
          * specify that this window will fade in or out following a rotation.
@@ -1426,6 +1441,9 @@ public interface WindowManager extends ViewManager {
          * @see #ROTATION_ANIMATION_CROSSFADE
          * @see #ROTATION_ANIMATION_JUMPCUT
          */
+
+        public float screenAutoBrightnessAdjustment = Float.NaN;
+
         public int rotationAnimation = ROTATION_ANIMATION_ROTATE;
 
         /**
@@ -1613,6 +1631,7 @@ public interface WindowManager extends ViewManager {
             out.writeFloat(dimAmount);
             out.writeFloat(screenBrightness);
             out.writeFloat(buttonBrightness);
+            out.writeFloat(screenAutoBrightnessAdjustment);
             out.writeInt(rotationAnimation);
             out.writeStrongBinder(token);
             out.writeString(packageName);
@@ -1661,6 +1680,7 @@ public interface WindowManager extends ViewManager {
             dimAmount = in.readFloat();
             screenBrightness = in.readFloat();
             buttonBrightness = in.readFloat();
+            screenAutoBrightnessAdjustment = in.readFloat();
             rotationAnimation = in.readInt();
             token = in.readStrongBinder();
             packageName = in.readString();
@@ -1816,6 +1836,10 @@ public interface WindowManager extends ViewManager {
                 buttonBrightness = o.buttonBrightness;
                 changes |= BUTTON_BRIGHTNESS_CHANGED;
             }
+            if (Float.compare(screenAutoBrightnessAdjustment, o.screenAutoBrightnessAdjustment) != 0) {
+                screenAutoBrightnessAdjustment = o.screenAutoBrightnessAdjustment;
+                changes |= 0x40000000;
+            }
             if (rotationAnimation != o.rotationAnimation) {
                 rotationAnimation = o.rotationAnimation;
                 changes |= ROTATION_ANIMATION_CHANGED;
@@ -1947,6 +1971,11 @@ public interface WindowManager extends ViewManager {
             if (preferredRefreshRate != 0) {
                 sb.append(" preferredRefreshRate=");
                 sb.append(preferredRefreshRate);
+            }
+            if ((screenAutoBrightnessAdjustment >= -1.0F) && (screenAutoBrightnessAdjustment <= 1.0F))
+            {
+              sb.append(" sabrtadj=");
+              sb.append(screenAutoBrightnessAdjustment);
             }
             if (systemUiVisibility != 0) {
                 sb.append(" sysui=0x");

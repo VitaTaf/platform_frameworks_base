@@ -95,6 +95,8 @@ public class AnimationDrawable extends DrawableContainer implements Runnable, An
 
     private boolean mMutated;
 
+    private int mScreenState = 1;
+
     public AnimationDrawable() {
         this(null, null);
     }
@@ -182,7 +184,9 @@ public class AnimationDrawable extends DrawableContainer implements Runnable, An
      */
     @Override
     public void run() {
+        if (mScreenState == 1) {
         nextFrame(false);
+        }
     }
 
     @Override
@@ -415,6 +419,14 @@ public class AnimationDrawable extends DrawableContainer implements Runnable, An
 
         if (state instanceof AnimationState) {
             mAnimationState = (AnimationState) state;
+        }
+    }
+
+    public void setCurrentScreenState(int screenState)
+    {
+        mScreenState = screenState;
+        if ((isRunning()) && (isVisible())) {
+        run();
         }
     }
 
