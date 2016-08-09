@@ -48,6 +48,8 @@
         android:orientation="horizontal"
         >
 
+        <TextView android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:gravity="start|center" android:id="@+id/onsText" android:paddingLeft="6.0dip" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="fill_parent" android:singleLine="true" android:maxLength="18" />
+
         <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
             android:id="@+id/notification_icon_area"
             android:layout_width="0dip"

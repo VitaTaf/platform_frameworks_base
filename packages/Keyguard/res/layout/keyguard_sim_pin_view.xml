@@ -186,11 +186,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 >
-            <Space
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
+            <ImageButton android:id="@+id/key_ds_skip" android:background="@drawable/ripple_drawable" android:paddingBottom="11.0sp" android:visibility="invisible" android:layout_width="0.0px" android:layout_height="fill_parent" android:src="@drawable/ic_media_play" android:layout_weight="1.0" android:contentDescription="@string/keyboardview_keycode_skip" />
             <com.android.keyguard.NumPadKey
                     android:id="@+id/key0"
                     android:layout_width="0px"

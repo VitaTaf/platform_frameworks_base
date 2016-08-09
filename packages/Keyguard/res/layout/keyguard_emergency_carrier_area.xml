@@ -55,4 +55,6 @@
         android:drawablePadding="8dip"
         android:textAllCaps="@bool/kg_use_all_caps" />
 
+        <com.android.keyguard.EmergencyTextButton android:textAppearance="?android:textAppearanceMedium" android:textSize="@dimen/kg_status_line_font_size" android:textColor="?android:textColorSecondary" android:id="@+id/emergency_text_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/eca_overlap" android:text="@string/lockscreen_emergency_text" android:drawableLeft="@drawable/lockscreen_emergency_text_button" android:drawablePadding="4.0dip" android:layout_weight="1.0" android:textAllCaps="@bool/kg_use_all_caps" style="?android:attr/buttonBarButtonStyle" />
+
 </com.android.keyguard.EmergencyCarrierArea>

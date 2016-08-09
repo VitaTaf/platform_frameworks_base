@@ -272,4 +272,13 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:alertDialogTheme">@style/Theme.SystemUI.Dialog.Alert</item>
     </style>
+    <style name="TextAppearance.StatusBar.SimLabel" parent="@android:style/TextAppearance.StatusBar.Icon">
+        <item name="android:textSize">12.0dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#80ffffff</item>
+    </style>
+    <style name="TextAppearance.StatusBar.Expanded.Network.SimLabel" parent="@style/TextAppearance.StatusBar.Expanded.Network">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
 </resources>

@@ -206,6 +206,7 @@
     <string name="keyboardview_keycode_shift">Shift</string>
     <!-- Description of the Enter button in a KeyboardView. [CHAR LIMIT=NONE] -->
     <string name="keyboardview_keycode_enter">Enter</string>
+    <string name="keyboardview_keycode_skip">Skip</string>
 
     <!-- Description of the unlock target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
     <string name="description_target_unlock">Unlock</string>
@@ -433,7 +434,16 @@
         This is displayed if the phone is not connected to a carrier.-->
     <string name="keyguard_carrier_default">No service.</string>
 
+    <string name="kg_wrong_wipe">%1$s - Attempt %2$d of %3$d</string>
+    <string name="kg_remote_lock_instructions">Enter remote lock password</string>
+    <string name="kg_remote_unlock_progress_dialog_message">Unlocking remote lock…</string>
+    <string name="kg_password_wrong_remote_lock_code">Incorrect remote lock code.</string>
+    <string name="lockscreen_emergency_text">Emergency message</string>
+    <string name="keyguard_sim_error_message_short">Invalid Card.</string>
+    <string name="moto_ds_skip">Skip</string>
+
     <!-- Content description of the switch input method button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_ime_switch_button" msgid="5032926134740456424">Switch input method button.</string>
+
 
 </resources>
