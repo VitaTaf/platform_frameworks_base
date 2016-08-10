@@ -89,8 +89,8 @@ public class Recents extends SystemUI
     final static int sMinToggleDelay = 350;
 
     final static String sToggleRecentsAction = "com.android.systemui.recents.SHOW_RECENTS";
-    public final static String sRecentsPackage = "com.android.systemui";
-    public final static String sRecentsActivity = "com.android.systemui.recents.RecentsActivity";
+    final static String sRecentsPackage = "com.android.systemui";
+    final static String sRecentsActivity = "com.android.systemui.recents.RecentsActivity";
 
     /**
      * An implementation of ITaskStackListener, that allows us to listen for changes to the system
@@ -114,11 +114,10 @@ public class Recents extends SystemUI
         public void run() {
             RecentsConfiguration config = RecentsConfiguration.getInstance();
             if (config.svelteLevel == RecentsConfiguration.SVELTE_NONE) {
-                RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
-                SystemServicesProxy ssp = loader.getSystemServicesProxy();
-                ActivityManager.RunningTaskInfo runningTaskInfo = ssp.getTopMostTask();
+                ActivityManager.RunningTaskInfo runningTaskInfo = getTopMostTask();
 
                 // Load the next task only if we aren't svelte
+                RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
                 RecentsTaskLoadPlan plan = loader.createLoadPlan(mContext);
                 loader.preloadTasks(plan, true /* isTopTaskHome */);
                 RecentsTaskLoadPlan.Options launchOpts = new RecentsTaskLoadPlan.Options();
@@ -301,8 +300,8 @@ public class Recents extends SystemUI
 
     void hideRecentsInternal(boolean triggeredFromAltTab, boolean triggeredFromHomeKey) {
         if (mBootCompleted) {
-            ActivityManager.RunningTaskInfo topTask = mSystemServicesProxy.getTopMostTask();
-            if (topTask != null && mSystemServicesProxy.isRecentsTopMost(topTask, null)) {
+            ActivityManager.RunningTaskInfo topTask = getTopMostTask();
+            if (topTask != null && isRecentsTopMost(topTask, null)) {
                 // Notify recents to hide itself
                 Intent intent = createLocalBroadcastIntent(mContext, ACTION_HIDE_RECENTS_ACTIVITY);
                 intent.putExtra(EXTRA_TRIGGERED_FROM_ALT_TAB, triggeredFromAltTab);
@@ -370,7 +369,7 @@ public class Recents extends SystemUI
         // Return early if there are no tasks
         if (stack.getTaskCount() == 0) return;
 
-        ActivityManager.RunningTaskInfo runningTask = mSystemServicesProxy.getTopMostTask();
+        ActivityManager.RunningTaskInfo runningTask = getTopMostTask();
         // Return early if there is no running task (can't determine affiliated tasks in this case)
         if (runningTask == null) return;
         // Return early if the running task is in the home stack (optimization)
@@ -516,6 +515,38 @@ public class Recents extends SystemUI
         }
     }
 
+    /** Gets the top task. */
+    ActivityManager.RunningTaskInfo getTopMostTask() {
+        SystemServicesProxy ssp = mSystemServicesProxy;
+        List<ActivityManager.RunningTaskInfo> tasks = ssp.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            return tasks.get(0);
+        }
+        return null;
+    }
+
+    /** Returns whether the recents is currently running */
+    boolean isRecentsTopMost(ActivityManager.RunningTaskInfo topTask, AtomicBoolean isHomeTopMost) {
+        SystemServicesProxy ssp = mSystemServicesProxy;
+        if (topTask != null) {
+            ComponentName topActivity = topTask.topActivity;
+
+            // Check if the front most activity is recents
+            if (topActivity.getPackageName().equals(sRecentsPackage) &&
+                    topActivity.getClassName().equals(sRecentsActivity)) {
+                if (isHomeTopMost != null) {
+                    isHomeTopMost.set(false);
+                }
+                return true;
+            }
+
+            if (isHomeTopMost != null) {
+                isHomeTopMost.set(ssp.isInHomeStack(topTask.id));
+            }
+        }
+        return false;
+    }
+
     /** Toggles the recents activity */
     void toggleRecentsActivity() {
         // If the user has toggled it too quickly, then just eat up the event here (it's better than
@@ -527,9 +558,9 @@ public class Recents extends SystemUI
 
         // If Recents is the front most activity, then we should just communicate with it directly
         // to launch the first task or dismiss itself
-        ActivityManager.RunningTaskInfo topTask = mSystemServicesProxy.getTopMostTask();
+        ActivityManager.RunningTaskInfo topTask = getTopMostTask();
         AtomicBoolean isTopTaskHome = new AtomicBoolean(true);
-        if (topTask != null && mSystemServicesProxy.isRecentsTopMost(topTask, isTopTaskHome)) {
+        if (topTask != null && isRecentsTopMost(topTask, isTopTaskHome)) {
             // Notify recents to toggle itself
             Intent intent = createLocalBroadcastIntent(mContext, ACTION_TOGGLE_RECENTS_ACTIVITY);
             mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT);
@@ -544,9 +575,9 @@ public class Recents extends SystemUI
     /** Starts the recents activity if it is not already running */
     void startRecentsActivity() {
         // Check if the top task is in the home stack, and start the recents activity
-        ActivityManager.RunningTaskInfo topTask = mSystemServicesProxy.getTopMostTask();
+        ActivityManager.RunningTaskInfo topTask = getTopMostTask();
         AtomicBoolean isTopTaskHome = new AtomicBoolean(true);
-        if (topTask == null || !mSystemServicesProxy.isRecentsTopMost(topTask, isTopTaskHome)) {
+        if (topTask == null || !isRecentsTopMost(topTask, isTopTaskHome)) {
             startRecentsActivity(topTask, isTopTaskHome.get());
         }
     }
