@@ -485,6 +485,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
      */
     public int uiMode;
 
+    public int spn;
+
     /**
      * Default value for {@link #screenWidthDp} indicating that no width
      * has been specified.
@@ -601,6 +603,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
     /** @hide Native-specific bit mask for SMALLEST_SCREEN_SIZE config; DO NOT USE UNLESS YOU
      * ARE SURE. */
     public static final int NATIVE_CONFIG_SMALLEST_SCREEN_SIZE = 0x2000;
+    public static final int NATIVE_CONFIG_SPN = 0x8000;
     /** @hide Native-specific bit mask for LAYOUTDIR config ; DO NOT USE UNLESS YOU ARE SURE.*/
     public static final int NATIVE_CONFIG_LAYOUTDIR = 0x4000;
 
@@ -644,6 +647,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         compatScreenHeightDp = o.compatScreenHeightDp;
         compatSmallestScreenWidthDp = o.compatSmallestScreenWidthDp;
         seq = o.seq;
+        spn = o.spn;
     }
     
     public String toString() {
@@ -780,6 +784,12 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             sb.append(" s.");
             sb.append(seq);
         }
+        if (spn != 0) {
+            sb.append("spn");
+            sb.append(spn);
+        } else {
+            sb.append("?spn");
+        }
         sb.append('}');
         return sb.toString();
     }
@@ -806,6 +816,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         smallestScreenWidthDp = compatSmallestScreenWidthDp = SMALLEST_SCREEN_WIDTH_DP_UNDEFINED;
         densityDpi = DENSITY_DPI_UNDEFINED;
         seq = 0;
+        spn = 0;
     }
 
     /** {@hide} */
@@ -948,7 +959,12 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         if (delta.seq != 0) {
             seq = delta.seq;
         }
-        
+        if (delta.spn != 0
+                && spn != delta.spn) {
+            changed |= ActivityInfo.CONFIG_SPN;
+            spn = delta.spn;
+        }
+
         return changed;
     }
 
@@ -1058,6 +1074,10 @@ public final class Configuration implements Parcelable, Comparable<Configuration
                 && densityDpi != delta.densityDpi) {
             changed |= ActivityInfo.CONFIG_DENSITY;
         }
+        if (delta.spn != 0
+                && spn != delta.spn) {
+            changed |= ActivityInfo.CONFIG_SPN;
+        }
 
         return changed;
     }
@@ -1147,6 +1167,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         dest.writeInt(compatScreenHeightDp);
         dest.writeInt(compatSmallestScreenWidthDp);
         dest.writeInt(seq);
+        dest.writeInt(spn);
     }
 
     public void readFromParcel(Parcel source) {
@@ -1175,6 +1196,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         compatScreenHeightDp = source.readInt();
         compatSmallestScreenWidthDp = source.readInt();
         seq = source.readInt();
+        spn = source.readInt();
     }
     
     public static final Parcelable.Creator<Configuration> CREATOR
@@ -1242,6 +1264,8 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         n = this.smallestScreenWidthDp - that.smallestScreenWidthDp;
         if (n != 0) return n;
         n = this.densityDpi - that.densityDpi;
+        if (n != 0) return n;
+        n = this.spn - that.spn;
         //if (n != 0) return n;
         return n;
     }
@@ -1279,6 +1303,7 @@ public final class Configuration implements Parcelable, Comparable<Configuration
         result = 31 * result + screenHeightDp;
         result = 31 * result + smallestScreenWidthDp;
         result = 31 * result + densityDpi;
+        result = 31 * result + spn;
         return result;
     }
 

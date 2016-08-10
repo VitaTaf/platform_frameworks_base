@@ -677,6 +677,10 @@ public final class AssetManager implements AutoCloseable {
      */
     public native final String[] getLocales();
 
+  public final void setConfiguration(int mcc, int mnc, String locale, int orientation, int touchscreen, int density, int keyboard, int keyboardHidden, int navigation, int screenWidth, int screenHeight, int smallestScreenWidthDp, int screenWidthDp, int screenHeightDp, int screenLayout, int uiMode, int majorVersion)
+  {
+    setConfiguration(mcc, mnc, locale, orientation, touchscreen, density, keyboard, keyboardHidden, navigation, screenWidth, screenHeight, smallestScreenWidthDp, screenWidthDp, screenHeightDp, screenLayout, uiMode, majorVersion, 0);
+  }
     /**
      * Change the configuation used when retrieving resources.  Not for use by
      * applications.
@@ -686,7 +690,7 @@ public final class AssetManager implements AutoCloseable {
             int orientation, int touchscreen, int density, int keyboard,
             int keyboardHidden, int navigation, int screenWidth, int screenHeight,
             int smallestScreenWidthDp, int screenWidthDp, int screenHeightDp,
-            int screenLayout, int uiMode, int majorVersion);
+            int screenLayout, int uiMode, int majorVersion, int spn);
 
     /**
      * Retrieve the resource identifier for the given resource name.

@@ -527,6 +527,7 @@ public class ActivityInfo extends ComponentInfo
      * they are interested in.  Please don't do that, thanks.
      */
     public static final int CONFIG_SMALLEST_SCREEN_SIZE = 0x0800;
+    public static final int CONFIG_SPN = 0x8000;
     /**
      * Bit in {@link #configChanges} that indicates that the activity
      * can itself handle density changes. Set from the
@@ -568,6 +569,7 @@ public class ActivityInfo extends ComponentInfo
         Configuration.NATIVE_CONFIG_SMALLEST_SCREEN_SIZE,   // SMALLEST SCREEN SIZE
         Configuration.NATIVE_CONFIG_DENSITY,                // DENSITY
         Configuration.NATIVE_CONFIG_LAYOUTDIR,              // LAYOUT DIRECTION
+        Configuration.NATIVE_CONFIG_SPN,
     };
     /** @hide
      * Convert Java change bits to native.

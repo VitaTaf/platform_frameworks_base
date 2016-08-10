@@ -1834,7 +1834,7 @@ public class Resources {
                     mConfiguration.smallestScreenWidthDp,
                     mConfiguration.screenWidthDp, mConfiguration.screenHeightDp,
                     mConfiguration.screenLayout, mConfiguration.uiMode,
-                    Build.VERSION.RESOURCES_SDK_INT);
+                    Build.VERSION.RESOURCES_SDK_INT, mConfiguration.spn);
 
             if (DEBUG_CONFIG) {
                 Slog.i(TAG, "**** Updating config of " + this + ": final config is " + mConfiguration
