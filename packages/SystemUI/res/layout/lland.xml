@@ -20,12 +20,12 @@
               android:layout_height="match_parent"
         >
     <com.android.systemui.egg.LLand
-            android:id="@+id/world"
+            android:id="@id/world"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
     </com.android.systemui.egg.LLand>
     <TextView
-            android:id="@+id/score"
+            android:id="@id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="32sp"
@@ -40,7 +40,7 @@
             android:background="@drawable/scorecard"
             />
     <TextView
-            android:id="@+id/welcome"
+            android:id="@id/welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"

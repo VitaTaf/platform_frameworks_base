@@ -15,12 +15,12 @@
 -->
 <com.android.systemui.recents.views.TaskViewHeader
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/task_view_bar"
+    android:id="@id/task_view_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/recents_task_bar_height"
     android:layout_gravity="top|center_horizontal">
     <com.android.systemui.recents.views.FixedSizeImageView
-        android:id="@+id/application_icon"
+        android:id="@id/application_icon"
         android:layout_width="@dimen/recents_task_view_application_icon_size"
         android:layout_height="@dimen/recents_task_view_application_icon_size"
         android:layout_marginStart="8dp"
@@ -28,7 +28,7 @@
         android:padding="8dp"
         android:background="@drawable/recents_button_bg" />
     <TextView
-        android:id="@+id/activity_description"
+        android:id="@id/activity_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|start"
@@ -43,7 +43,7 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal" />
     <com.android.systemui.recents.views.FixedSizeImageView
-        android:id="@+id/dismiss_task"
+        android:id="@id/dismiss_task"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="4dp"

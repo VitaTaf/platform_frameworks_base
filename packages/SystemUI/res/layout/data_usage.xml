@@ -29,13 +29,13 @@
         android:textAppearance="@style/TextAppearance.QS.DataUsage" />
 
     <TextView
-        android:id="@+id/usage_text"
+        android:id="@id/usage_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.QS.DataUsage.Usage" />
 
     <com.android.systemui.qs.DataUsageGraph
-        android:id="@+id/usage_graph"
+        android:id="@id/usage_graph"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:layout_marginBottom="@dimen/qs_panel_padding"
@@ -47,14 +47,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/usage_carrier_text"
+            android:id="@id/usage_carrier_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@style/TextAppearance.QS.DataUsage" />
 
         <TextView
-            android:id="@+id/usage_info_top_text"
+            android:id="@id/usage_info_top_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,14 +68,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/usage_period_text"
+            android:id="@id/usage_period_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAppearance="@style/TextAppearance.QS.DataUsage.Secondary" />
 
         <TextView
-            android:id="@+id/usage_info_bottom_text"
+            android:id="@id/usage_info_bottom_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

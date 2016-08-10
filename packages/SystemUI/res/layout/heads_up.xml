@@ -28,6 +28,6 @@
                 android:paddingStart="@dimen/notification_side_padding"
                 android:paddingEnd="@dimen/notification_side_padding"
                 android:elevation="8dp"
-                android:id="@+id/content_holder" />
+                android:id="@id/content_holder" />
 
 </com.android.systemui.statusbar.policy.HeadsUpNotificationView>

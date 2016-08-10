@@ -22,7 +22,7 @@
     android:orientation="horizontal" >
 
     <ImageView
-        android:id="@+id/stream_icon"
+        android:id="@id/stream_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="center"
@@ -35,7 +35,7 @@
         android:layout_weight="1" >
 
         <TextView
-            android:id="@+id/suppressor"
+            android:id="@id/suppressor"
             android:visibility="gone"
             android:textAppearance="@style/TextAppearance.QS.VolumeSuppressor"
             android:paddingStart="8dp"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content" />
 
         <SeekBar
-            android:id="@+id/seekbar"
+            android:id="@id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="0dp"
@@ -57,7 +57,7 @@
     </FrameLayout>
 
     <View
-        android:id="@+id/divider"
+        android:id="@id/divider"
         android:layout_width="1dp"
         android:layout_height="32dp"
         android:layout_marginLeft="8dp"
@@ -65,7 +65,7 @@
         android:background="@color/volume_panel_divider" />
 
     <ImageView
-        android:id="@+id/secondary_icon"
+        android:id="@id/secondary_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="center"

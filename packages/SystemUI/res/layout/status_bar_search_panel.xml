@@ -21,23 +21,23 @@
 <!-- Extends FrameLayout -->
 <com.android.systemui.SearchPanelView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/search_panel_container"
+    android:id="@id/search_panel_container"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
     <com.android.systemui.statusbar.AlphaOptimizedView
         style="@style/SearchPanelScrim"
-        android:id="@+id/search_panel_scrim"
+        android:id="@id/search_panel_scrim"
         android:background="@drawable/search_panel_scrim" />
 
     <com.android.systemui.SearchPanelCircleView
         style="@style/SearchPanelCircle"
-        android:id="@+id/search_panel_circle">
+        android:id="@id/search_panel_circle">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/search_logo" />
+            android:id="@id/search_logo" />
     </com.android.systemui.SearchPanelCircleView>
 
 </com.android.systemui.SearchPanelView>

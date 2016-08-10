@@ -24,25 +24,25 @@
     >
 
     <com.android.systemui.statusbar.NotificationBackgroundView
-        android:id="@+id/backgroundNormal"
+        android:id="@id/backgroundNormal"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.android.systemui.statusbar.NotificationBackgroundView
-        android:id="@+id/backgroundDimmed"
+        android:id="@id/backgroundDimmed"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.android.systemui.statusbar.NotificationContentView android:id="@+id/expanded"
+    <com.android.systemui.statusbar.NotificationContentView android:id="@id/expanded"
        android:layout_width="match_parent"
        android:layout_height="wrap_content" />
 
-    <com.android.systemui.statusbar.NotificationContentView android:id="@+id/expandedPublic"
+    <com.android.systemui.statusbar.NotificationContentView android:id="@id/expandedPublic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/veto"
+        android:id="@id/veto"
         android:layout_width="48dp"
         android:layout_height="0dp"
         android:gravity="end"
@@ -54,8 +54,8 @@
 
     <ViewStub
         android:layout="@layout/notification_guts"
-        android:id="@+id/notification_guts_stub"
-        android:inflatedId="@+id/notification_guts"
+        android:id="@id/notification_guts_stub"
+        android:inflatedId="@id/notification_guts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

@@ -19,17 +19,17 @@
 -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mobile_combo"
+    android:id="@id/mobile_combo"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
     <ImageView
-        android:id="@+id/mobile_signal"
+        android:id="@id/mobile_signal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         />
     <ImageView
-        android:id="@+id/mobile_type"
+        android:id="@id/mobile_type"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         />

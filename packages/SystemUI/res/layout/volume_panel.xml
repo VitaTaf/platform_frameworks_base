@@ -15,13 +15,13 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/visible_panel"
+    android:id="@id/visible_panel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <FrameLayout
-        android:id="@+id/slider_panel"
+        android:id="@id/slider_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/system_secondary_color"

@@ -19,13 +19,13 @@
     android:layout_height="match_parent"
     android:focusable="false">
     <SeekBar
-        android:id="@+id/debug_seek_bar_1"
+        android:id="@id/debug_seek_bar_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginTop="25dp" />
     <SeekBar
-        android:id="@+id/debug_seek_bar_2"
+        android:id="@id/debug_seek_bar_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"

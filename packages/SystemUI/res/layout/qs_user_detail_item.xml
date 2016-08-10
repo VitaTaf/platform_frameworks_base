@@ -32,7 +32,7 @@
         systemui:activatedFontFamily="sans-serif-medium">
 
     <com.android.systemui.statusbar.phone.UserAvatarView
-            android:id="@+id/user_picture"
+            android:id="@id/user_picture"
             android:layout_width="@dimen/max_avatar_size"
             android:layout_height="@dimen/max_avatar_size"
             android:layout_marginBottom="10dp"
@@ -41,7 +41,7 @@
             systemui:activeFrameColor="@color/current_user_border_color"/>
 
     <TextView
-            android:id="@+id/user_name"
+            android:id="@id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/qs_detail_item_secondary_text_size"

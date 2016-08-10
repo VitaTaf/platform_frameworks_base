@@ -20,7 +20,7 @@
     style="@style/BrightnessDialogContainer">
 
     <ImageView
-        android:id="@+id/brightness_icon"
+        android:id="@id/brightness_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -30,7 +30,7 @@
         android:visibility="gone" />
 
     <com.android.systemui.settings.ToggleSlider
-        android:id="@+id/brightness_slider"
+        android:id="@id/brightness_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

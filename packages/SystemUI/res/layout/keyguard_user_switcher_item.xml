@@ -30,13 +30,13 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         sysui:activatedFontFamily="sans-serif-medium">
-    <TextView android:id="@+id/user_name"
+    <TextView android:id="@id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:textAppearance="@style/TextAppearance.StatusBar.Expanded.UserSwitcher.UserName"
             />
-    <com.android.systemui.statusbar.phone.UserAvatarView android:id="@+id/user_picture"
+    <com.android.systemui.statusbar.phone.UserAvatarView android:id="@id/user_picture"
             android:layout_width="@dimen/max_avatar_size"
             android:layout_height="@dimen/max_avatar_size"
             android:contentDescription="@null"

@@ -20,13 +20,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/carrier_label_group"
+    android:id="@id/carrier_label_group"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/close_handle_height" >
 
     <TextView
-        android:id="@+id/carrier_label"
+        android:id="@id/carrier_label"
         android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Network"
         android:layout_height="@dimen/carrier_label_height"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Network"
         android:gravity="center"
         android:layout_gravity="bottom"
-        android:id="@+id/cell_broadcast_message"
+        android:id="@id/cell_broadcast_message"
         android:visibility="invisible"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/carrier_label_height"

@@ -22,7 +22,7 @@
         android:visibility="gone"
         >
     <TextView
-            android:id="@+id/no_notifications"
+            android:id="@id/no_notifications"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:paddingTop="12dp"

@@ -17,13 +17,13 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:internal="http://schemas.android.com/apk/prv/res/android"
-    android:id="@+id/status_bar_latest_event_content"
+    android:id="@id/status_bar_latest_event_content"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     internal:layout_minHeight="64dp"
     internal:layout_maxHeight="64dp"
     >
-    <ImageView android:id="@+id/icon"
+    <ImageView android:id="@id/icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
@@ -31,7 +31,7 @@
         android:layout_marginEnd="12dp"
         android:scaleType="centerInside"
         />
-    <DateTimeView android:id="@+id/time"
+    <DateTimeView android:id="@id/time"
         android:textAppearance="@android:style/TextAppearance.Material.Notification.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:paddingStart="8dp"
         android:visibility="gone"
         />
-    <TextView android:id="@+id/title"
+    <TextView android:id="@id/title"
         android:textAppearance="@android:style/TextAppearance.Material.Notification.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
         />
-    <ImageView android:id="@+id/profile_badge_line3"
+    <ImageView android:id="@id/profile_badge_line3"
         android:layout_width="@*android:dimen/notification_badge_size"
         android:layout_height="@*android:dimen/notification_badge_size"
         android:layout_below="@id/title"
@@ -63,7 +63,7 @@
         android:scaleType="fitCenter"
         android:visibility="gone"
         />
-    <TextView android:id="@+id/text"
+    <TextView android:id="@id/text"
         android:textAppearance="@android:style/TextAppearance.Material.Notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

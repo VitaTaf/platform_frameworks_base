@@ -22,14 +22,14 @@
     android:layout_height="wrap_content"
     >
     <TextClock
-        android:id="@+id/time_view"
+        android:id="@id/time_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.StatusBar.Expanded.Clock"
         />
     <TextClock
-        android:id="@+id/am_pm_view"
+        android:id="@id/am_pm_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -39,7 +39,7 @@
 
     <!-- Empty text view so we have the same height when expanded/collapsed-->
     <TextView
-        android:id="@+id/empty_time_view"
+        android:id="@id/empty_time_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"

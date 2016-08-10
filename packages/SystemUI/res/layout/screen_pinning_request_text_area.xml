@@ -17,14 +17,14 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/screen_pinning_text_area"
+    android:id="@id/screen_pinning_text_area"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/screen_pinning_request_bg"
     android:gravity="center_vertical" >
 
     <TextView
-        android:id="@+id/screen_pinning_title"
+        android:id="@id/screen_pinning_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingEnd="48dp"
@@ -35,7 +35,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/screen_pinning_description"
+        android:id="@id/screen_pinning_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/screen_pinning_title"
@@ -47,12 +47,12 @@
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/screen_pinning_ok_button"
+        android:id="@id/screen_pinning_ok_button"
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/screen_pinning_description"
+        android:layout_below="@id/screen_pinning_description"
         android:layout_marginEnd="40dp"
         android:layout_marginTop="18dp"
         android:background="@null"
@@ -63,7 +63,7 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/screen_pinning_cancel_button"
+        android:id="@id/screen_pinning_cancel_button"
         style="@android:style/Widget.Material.Button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"

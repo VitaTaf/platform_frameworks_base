@@ -19,16 +19,16 @@
     android:layout_height="match_parent"
     android:focusable="true">
     <FrameLayout
-        android:id="@+id/task_view_content"
+        android:id="@id/task_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.android.systemui.recents.views.TaskViewThumbnail
-            android:id="@+id/task_view_thumbnail"
+            android:id="@id/task_view_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <include layout="@layout/recents_task_view_header" />
         <FrameLayout
-            android:id="@+id/lock_to_app_fab"
+            android:id="@id/lock_to_app_fab"
             android:layout_width="@dimen/recents_lock_to_app_size"
             android:layout_height="@dimen/recents_lock_to_app_size"
             android:layout_gravity="bottom|right"

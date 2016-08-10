@@ -19,7 +19,7 @@
     android:layout_height="match_parent">
     <!-- Status Bar Scrim View -->
     <ImageView
-        android:id="@+id/status_bar_scrim"
+        android:id="@id/status_bar_scrim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
@@ -28,26 +28,26 @@
 
     <!-- Recents View -->
     <com.android.systemui.recents.views.RecentsView
-        android:id="@+id/recents_view"
+        android:id="@id/recents_view"
         android:layout_width="match_parent" 
         android:layout_height="match_parent"
         android:focusable="true" />
 
     <!-- Empty View -->
-    <ViewStub android:id="@+id/empty_view_stub"
+    <ViewStub android:id="@id/empty_view_stub"
            android:layout="@layout/recents_empty"
            android:layout_width="match_parent"
            android:layout_height="match_parent" />
 
     <!-- Debug Overlay View -->
-    <ViewStub android:id="@+id/debug_overlay_stub"
+    <ViewStub android:id="@id/debug_overlay_stub"
            android:layout="@layout/recents_debug_overlay"
            android:layout_width="match_parent"
            android:layout_height="match_parent" />
 
     <!-- Nav Bar Scrim View -->
     <ImageView
-        android:id="@+id/nav_bar_scrim"
+        android:id="@id/nav_bar_scrim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
