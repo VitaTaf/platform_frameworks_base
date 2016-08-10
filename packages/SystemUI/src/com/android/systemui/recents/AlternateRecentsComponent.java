@@ -36,7 +36,6 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,12 +239,6 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
     /** Shows the Recents. */
     @ProxyFromPrimaryToCurrentUser
     public void onShowRecents(boolean triggeredFromAltTab) {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         if (mSystemServicesProxy.isForegroundUserOwner()) {
             showRecents(triggeredFromAltTab);
         } else {
@@ -268,12 +261,6 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
     /** Hides the Recents. */
     @ProxyFromPrimaryToCurrentUser
     public void onHideRecents(boolean triggeredFromAltTab, boolean triggeredFromHomeKey) {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         if (mSystemServicesProxy.isForegroundUserOwner()) {
             hideRecents(triggeredFromAltTab, triggeredFromHomeKey);
         } else {
@@ -300,12 +287,6 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
     /** Toggles the Recents activity. */
     @ProxyFromPrimaryToCurrentUser
     public void onToggleRecents() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         if (mSystemServicesProxy.isForegroundUserOwner()) {
             toggleRecents();
         } else {
@@ -327,12 +308,6 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
     /** Preloads info for the Recents activity. */
     @ProxyFromPrimaryToCurrentUser
     public void onPreloadRecents() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         if (mSystemServicesProxy.isForegroundUserOwner()) {
             preloadRecents();
         } else {
@@ -425,22 +400,10 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
     }
 
     public void onShowNextAffiliatedTask() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         showRelativeAffiliatedTask(true);
     }
 
     public void onShowPrevAffiliatedTask() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isDeviceProvisioned()) {
-            return;
-        }
-
         showRelativeAffiliatedTask(false);
     }
 
@@ -782,14 +745,6 @@ public class AlternateRecentsComponent implements ActivityOptions.OnAnimationSta
         RecentsTaskLoadPlan plan = sInstanceLoadPlan;
         sInstanceLoadPlan = null;
         return plan;
-    }
-
-    /**
-     * @return whether this device is provisioned.
-     */
-    private boolean isDeviceProvisioned() {
-        return Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.DEVICE_PROVISIONED, 0) != 0;
     }
 
     /**** OnAnimationStartedListener Implementation ****/
