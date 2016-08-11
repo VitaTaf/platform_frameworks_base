@@ -88,6 +88,8 @@ public class Am extends BaseCommand {
     private int mSamplingInterval;
     private boolean mAutoStop;
 
+    private boolean mSticky = false;
+
     /**
      * Command-line entry point.
      *
@@ -176,6 +178,7 @@ public class Am extends BaseCommand {
                 "    --user <USER_ID> | all | current: Specify which user to send to; if not\n" +
                 "        specified then send to all users.\n" +
                 "    --receiver-permission <PERMISSION>: Require receiver to hold permission.\n" +
+                "    --sticky-broadcast : Send broadcast as a sticky broadcast.\n" +
                 "\n" +
                 "am instrument: start an Instrumentation.  Typically this target <COMPONENT>\n" +
                 "  is the form <TEST_PACKAGE>/<RUNNER_CLASS>.  Options are:\n" +
@@ -587,6 +590,8 @@ public class Am extends BaseCommand {
                 mUserId = parseUserArg(nextArgRequired());
             } else if (opt.equals("--receiver-permission")) {
                 mReceiverPermission = nextArgRequired();
+            } else if (opt.equals("--sticky-broadcast")) {
+                mSticky = true;
             } else {
                 System.err.println("Error: Unknown option: " + opt);
                 return null;
@@ -893,7 +898,7 @@ public class Am extends BaseCommand {
         IntentReceiver receiver = new IntentReceiver();
         System.out.println("Broadcasting: " + intent);
         mAm.broadcastIntent(null, intent, null, receiver, 0, null, null, mReceiverPermission,
-                android.app.AppOpsManager.OP_NONE, true, false, mUserId);
+                android.app.AppOpsManager.OP_NONE, true, mSticky, mUserId);
         receiver.waitForFinish();
     }
 
