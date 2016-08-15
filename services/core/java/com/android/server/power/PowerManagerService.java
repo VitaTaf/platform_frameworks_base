@@ -179,6 +179,8 @@ public final class PowerManagerService extends SystemService
     // dreaming or dozing state.  Indicates whether a new dream should begin.
     private boolean mSandmanSummoned;
 
+    private float mScreenAutoBrightnessAdjustmentOverrideFromWindowManager = Float.NaN;
+
     // True if MSG_SANDMAN has been scheduled.
     private boolean mSandmanScheduled;
 
@@ -2234,6 +2236,35 @@ public final class PowerManagerService extends SystemService
         }
     }
 
+  private void setScreenAutoBrightnessAdjustmentOverrideFromWindowManagerInternal(float adj)
+  {
+    synchronized (this.mLock)
+    {
+      if (Float.compare(this.mScreenAutoBrightnessAdjustmentOverrideFromWindowManager, adj) != 0)
+      {
+        this.mScreenAutoBrightnessAdjustmentOverrideFromWindowManager = adj;
+        this.mDirty |= 0x20;
+        updatePowerStateLocked();
+      }
+      return;
+    }
+    }
+
+    public void setScreenAutoBrightnessAdjustmentOverrideFromWindowManager(float adj)
+    {
+      PowerManagerService.this.mContext.enforceCallingOrSelfPermission("android.permission.DEVICE_POWER", null);
+      long l = Binder.clearCallingIdentity();
+      try
+      {
+        PowerManagerService.this.setScreenAutoBrightnessAdjustmentOverrideFromWindowManagerInternal(adj);
+        return;
+      }
+      finally
+      {
+        Binder.restoreCallingIdentity(l);
+      }
+    }
+
     private boolean isMaximumScreenOffTimeoutFromDeviceAdminEnforcedLocked() {
         return mMaximumScreenOffTimeoutFromDeviceAdmin >= 0
                 && mMaximumScreenOffTimeoutFromDeviceAdmin < Integer.MAX_VALUE;
@@ -3266,6 +3297,11 @@ public final class PowerManagerService extends SystemService
         @Override
         public void setMaximumScreenOffTimeoutFromDeviceAdmin(int timeMs) {
             setMaximumScreenOffTimeoutFromDeviceAdminInternal(timeMs);
+        }
+
+        @Override
+        public void setScreenAutoBrightnessAdjustmentOverrideFromWindowManager(float adj) {
+            setScreenAutoBrightnessAdjustmentOverrideFromWindowManagerInternal(adj);
         }
 
         @Override

@@ -658,6 +658,7 @@ public class WindowManagerService extends IWindowManager.Stub
         private Session mHoldScreen = null;
         private boolean mObscured = false;
         private boolean mSyswin = false;
+        private float mScreenAutoBrightnessAdjustment = Float.NaN;
         private float mScreenBrightness = -1;
         private float mButtonBrightness = -1;
         private long mUserActivityTimeout = -1;
@@ -9502,6 +9503,12 @@ public class WindowManagerService extends IWindowManager.Stub
                     && mInnerFields.mButtonBrightness < 0) {
                 mInnerFields.mButtonBrightness = w.mAttrs.buttonBrightness;
             }
+            if ((!this.mInnerFields.mSyswin) && (w.mAttrs.screenAutoBrightnessAdjustment >= -1.0F) 
+                && (w.mAttrs.screenAutoBrightnessAdjustment <= 1.0F) && 
+                ((this.mInnerFields.mScreenAutoBrightnessAdjustment < -1.0F) || 
+                    (this.mInnerFields.mScreenAutoBrightnessAdjustment > 1.0F))) {
+                mInnerFields.mScreenAutoBrightnessAdjustment = w.mAttrs.screenAutoBrightnessAdjustment;
+            }
             if (!mInnerFields.mSyswin && w.mAttrs.userActivityTimeout >= 0
                     && mInnerFields.mUserActivityTimeout < 0) {
                 mInnerFields.mUserActivityTimeout = w.mAttrs.userActivityTimeout;
@@ -9628,6 +9635,7 @@ public class WindowManagerService extends IWindowManager.Stub
         mInnerFields.mHoldScreen = null;
         mInnerFields.mScreenBrightness = -1;
         mInnerFields.mButtonBrightness = -1;
+        mInnerFields.mScreenAutoBrightnessAdjustment = Float.NaN;
         mInnerFields.mUserActivityTimeout = -1;
         mInnerFields.mObscureApplicationContentOnSecondaryDisplays = false;
 
@@ -10101,6 +10109,12 @@ public class WindowManagerService extends IWindowManager.Stub
             } else {
                 mPowerManagerInternal.setButtonBrightnessOverrideFromWindowManager(
                         toBrightnessOverride(mInnerFields.mButtonBrightness));
+            }
+            if (mInnerFields.mScreenAutoBrightnessAdjustment < -1.0f || mInnerFields.mScreenAutoBrightnessAdjustment > 1.0f) {
+                mPowerManagerInternal.setScreenAutoBrightnessAdjustmentOverrideFromWindowManager(Float.NaN);
+            } else {
+                mPowerManagerInternal.setScreenAutoBrightnessAdjustmentOverrideFromWindowManager(
+                        mInnerFields.mScreenAutoBrightnessAdjustment);
             }
             mPowerManagerInternal.setUserActivityTimeoutOverrideFromWindowManager(
                     mInnerFields.mUserActivityTimeout);

@@ -114,6 +114,8 @@ public abstract class PowerManagerInternal {
      */
     public abstract void setMaximumScreenOffTimeoutFromDeviceAdmin(int timeMs);
 
+    public abstract void setScreenAutoBrightnessAdjustmentOverrideFromWindowManager(float adj);
+
     /**
      * Used by the dream manager to override certain properties while dozing.
      *
