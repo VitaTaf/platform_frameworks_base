@@ -1399,6 +1399,11 @@ final class ActivityStack {
         }
     }
 
+    void notifyEventLog(String tag, int token, String taskId, String cName, String sleeping)
+      {
+        mService.notifyEventLog(tag + " : [" + token + "," + taskId + "," + cName + "]");
+      }
+
     /** If any activities below the top running one are in the INITIALIZING state and they have a
      * starting window displayed then remove that starting window. It is possible that the activity
      * in this state will never resumed in which case that starting window will be orphaned. */

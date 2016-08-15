@@ -90,6 +90,8 @@ import com.android.server.wm.AppTransition;
 import com.android.server.wm.WindowManagerService;
 import com.google.android.collect.Lists;
 import com.google.android.collect.Maps;
+import com.motorola.datacollection.DataCollectionRegistry;
+import com.motorola.datacollection.IDataCollectionListener;
 
 import libcore.io.IoUtils;
 
@@ -394,6 +396,8 @@ public final class ActivityManagerService extends ActivityManagerNative
     // default actuion automatically.  Important for devices without direct input
     // devices.
     private boolean mShowDialogs = true;
+
+    private DataCollectionRegistry mRegistry = new DataCollectionRegistry();
 
     BroadcastQueue mFgBroadcastQueue;
     BroadcastQueue mBgBroadcastQueue;
@@ -932,7 +936,6 @@ public final class ActivityManagerService extends ActivityManagerNative
      * Hardware-reported OpenGLES version.
      */
     final int GL_ES_VERSION;
-
     /**
      * List of initialization arguments to pass to all processes when binding applications to them.
      * For example, references to the commonly used services.
@@ -1203,6 +1206,10 @@ public final class ActivityManagerService extends ActivityManagerNative
      */
     SparseIntArray mUserProfileGroupIdsSelfLocked = new SparseIntArray();
 
+    boolean immediateScreenStatusReq = true;
+
+    int mSlotId = 0;
+
     private UserManagerService mUserManager;
 
     private final class AppDeathRecipient implements IBinder.DeathRecipient {
@@ -1276,6 +1283,9 @@ public final class ActivityManagerService extends ActivityManagerNative
     static final int FIRST_BROADCAST_QUEUE_MSG = 200;
     static final int FIRST_COMPAT_MODE_MSG = 300;
     static final int FIRST_SUPERVISOR_STACK_MSG = 100;
+
+    static final int RESTART_PERSISTENT_APPLICATION_MSG = 1035;
+    static final int KILL_PERSISTENT_APPLICATION_MSG = 1036;
 
     CompatModeDialog mCompatModeDialog;
     long mLastMemUsageReportTime = 0;
@@ -1805,6 +1815,20 @@ public final class ActivityManagerService extends ActivityManagerNative
                         }
                     }
                     mTaskStackListeners.finishBroadcast();
+                }
+                break;
+            }
+            case RESTART_PERSISTENT_APPLICATION_MSG: {
+                synchronized (ActivityManagerService.this) {
+                    ApplicationInfo info = (ApplicationInfo)msg.obj;
+                    restartPersistentApplicationLocked(info);
+                }
+                break;
+            }
+            case KILL_PERSISTENT_APPLICATION_MSG: {
+                synchronized (ActivityManagerService.this) {
+                    ApplicationInfo info = (ApplicationInfo)msg.obj;
+                    killPersistentApplicationLocked(info);
                 }
                 break;
             }
@@ -3165,6 +3189,11 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         return ai;
+    }
+
+    private void restartPersistentApplicationLocked(ApplicationInfo info)
+    {
+    addAppLocked(info, false, null);
     }
 
     /**
@@ -4719,6 +4748,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             if (DEBUG_CLEANUP) Slog.v(
                 TAG, "Dying app: " + app + ", pid: " + pid
                 + ", thread: " + thread.asBinder());
+            notifyEventLog("am_proc_died", app.pid, app.processName);
             handleAppDiedLocked(app, false, true);
 
             if (doOomAdj) {
@@ -4732,6 +4762,7 @@ public final class ActivityManagerService extends ActivityManagerNative
             Slog.i(TAG, "Process " + app.processName + " (pid " + pid
                     + ") has died and restarted (pid " + app.pid + ").");
             EventLog.writeEvent(EventLogTags.AM_PROC_DIED, app.userId, app.pid, app.processName);
+            notifyEventLog("am_proc_died", pid, app.processName);
         } else if (DEBUG_PROCESSES) {
             Slog.d(TAG, "Received spurious death notification for thread "
                     + thread.asBinder());
@@ -4962,6 +4993,9 @@ public final class ActivityManagerService extends ActivityManagerNative
                 return;
             } else if (app.crashing) {
                 Slog.i(TAG, "Crashing app skipping ANR: " + app + " " + annotation);
+                return;
+            } else if ("running".equals(SystemProperties.get("init.svc.dumpstate"))) {
+                Slog.i("ActivityManager", "During dumpstate skipping ANR: " + app + " " + annotation);
                 return;
             }
 
@@ -6378,6 +6412,11 @@ public final class ActivityManagerService extends ActivityManagerNative
     public final void notifyEnterAnimationComplete(IBinder token) {
         mHandler.sendMessage(mHandler.obtainMessage(ENTER_ANIMATION_COMPLETE_MSG, token));
     }
+
+  public void notifyEventLog(String log)
+  {
+    this.mRegistry.notifyEventLog(log);
+  }
 
     @Override
     public String getCallingPackage(IBinder token) {
@@ -8630,6 +8669,20 @@ public final class ActivityManagerService extends ActivityManagerNative
         Slog.e(TAG, "moveTaskBackwards not yet implemented!");
     }
 
+  private void notifyEventLog(String tag, int pid, String name)
+  {
+    final String log;
+    log = (tag + ": [" + pid + "," + name + "]");
+    notifyEventLog(log);
+  }
+
+  private void notifyEventLog(String tag, int pid, String name, int adj, String reason)
+  {
+    final String log;
+    log = (tag + " : [" + pid + "," + name + "," + adj + "," + reason + "]");
+    notifyEventLog(log);
+  }
+
     @Override
     public IBinder getHomeActivityToken() throws RemoteException {
         enforceCallingPermission(android.Manifest.permission.MANAGE_ACTIVITY_STACKS,
@@ -9146,6 +9199,11 @@ public final class ActivityManagerService extends ActivityManagerNative
         cpr.removeExternalProcessHandleLocked(externalProcessToken);
         return false;
     }
+
+  private boolean checkLenovoSafeCenter(Intent intent, String callerPackage)
+  {
+    return false;
+  }
 
     private void checkTime(long startTime, String where) {
         long now = SystemClock.elapsedRealtime();
@@ -9936,7 +9994,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
 
         if ((info.flags&(ApplicationInfo.FLAG_SYSTEM|ApplicationInfo.FLAG_PERSISTENT))
-                == (ApplicationInfo.FLAG_SYSTEM|ApplicationInfo.FLAG_PERSISTENT)) {
+                == (ApplicationInfo.FLAG_SYSTEM|ApplicationInfo.FLAG_PERSISTENT) && (app.pid != MY_PID)) {
             app.persistent = true;
             app.maxAdj = ProcessList.PERSISTENT_PROC_ADJ;
         }
@@ -10540,6 +10598,10 @@ public final class ActivityManagerService extends ActivityManagerNative
         return enqueueAssistContext(requestType, intent, hint, userHandle) != null;
     }
 
+    public void listenEventLog(IDataCollectionListener listener, boolean flag) {
+        mRegistry.listen(listener, flag);
+    }
+
     public void registerProcessObserver(IProcessObserver observer) {
         enforceCallingPermission(android.Manifest.permission.SET_ACTIVITY_WATCHER,
                 "registerProcessObserver()");
@@ -10753,6 +10815,22 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
     }
 
+  public void killPersistentApplication(ApplicationInfo info)
+  {
+    if (info == null) {
+      return;
+    }
+    int callerUid = Binder.getCallingUid();
+    if (callerUid == 1000)
+    {
+      Message msg = this.mHandler.obtainMessage(1036);
+      msg.obj = info;
+      this.mHandler.sendMessage(msg);
+      return;
+    }
+    throw new SecurityException(info + " cannot kill persistent app: " + info.packageName);
+  }
+
     public boolean killPids(int[] pids, String pReason, boolean secure) {
         if (Binder.getCallingUid() != Process.SYSTEM_UID) {
             throw new SecurityException("killPids only available to the system");
@@ -10816,6 +10894,11 @@ public final class ActivityManagerService extends ActivityManagerNative
                     reason != null ? reason : "kill uid");
         }
     }
+
+  private void killPersistentApplicationLocked(ApplicationInfo info)
+  {
+    forceStopPackageLocked(info.packageName, info.uid, true, false, true, true, false, -1, "kill persistent app");
+  }
 
     @Override
     public boolean killProcessesBelowForeground(String reason) {
@@ -10919,6 +11002,22 @@ public final class ActivityManagerService extends ActivityManagerNative
         */
         br.onReceive(mContext, intent);
     }
+
+  public void restartPersistentApplication(ApplicationInfo info)
+  {
+    if (info == null) {
+      return;
+    }
+    int i = Binder.getCallingUid();
+    if (i == 1000)
+    {
+      Message msg = this.mHandler.obtainMessage(1035);
+      msg.obj = info;
+      this.mHandler.sendMessage(msg);
+      return;
+    }
+    throw new SecurityException(i + " cannot restart persistent app: " + info.packageName);
+  }
 
     private long getLowRamTimeSinceIdle(long now) {
         return mLowRamTimeSinceLastIdle + (mLowRamStartTime > 0 ? (now-mLowRamStartTime) : 0);
@@ -11894,10 +11993,10 @@ public final class ActivityManagerService extends ActivityManagerNative
         }
     }
 
-    private static String processClass(ProcessRecord process) {
-        if (process == null || process.pid == MY_PID) {
+    private static String processClass(ProcessRecord process, int pid) {
+        if (((process == null) && (pid == MY_PID)) || ((process != null) && (process.pid == MY_PID))) {
             return "system_server";
-        } else if ((process.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+        } else if ((process != null) && (process.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
             return "system_app";
         } else {
             return "data_app";
@@ -11923,7 +12022,8 @@ public final class ActivityManagerService extends ActivityManagerNative
         // NOTE -- this must never acquire the ActivityManagerService lock,
         // otherwise the watchdog may be prevented from resetting the system.
 
-        final String dropboxTag = processClass(process) + "_" + eventType;
+        int pid = 0;
+        final String dropboxTag = processClass(process, pid) + "_" + eventType;
         final DropBoxManager dbox = (DropBoxManager)
                 mContext.getSystemService(Context.DROPBOX_SERVICE);
 
@@ -15866,10 +15966,20 @@ public final class ActivityManagerService extends ActivityManagerNative
                     && !Intent.ACTION_SHUTDOWN.equals(intent.getAction())) {
                 Slog.w(TAG, "Skipping broadcast of " + intent
                         + ": user " + userId + " is stopped");
+            if (resultTo != null) {
+                try {
+                resultTo.performReceive(new Intent(intent), 0, null, null, false, false, userId);
+                } catch (RemoteException e) {
+                }
+            }
                 return ActivityManager.BROADCAST_FAILED_USER_STOPPED;
             }
         }
 
+                boolean isLenovoSafeCenter = checkLenovoSafeCenter(intent, callerPackage);
+                if (isLenovoSafeCenter != false){
+                    userId = -0x1;
+                }
         /*
          * Prevent non-system code (defined here to be non-persistent
          * processes) from sending protected broadcasts.
@@ -15877,7 +15987,7 @@ public final class ActivityManagerService extends ActivityManagerNative
         int callingAppId = UserHandle.getAppId(callingUid);
         if (callingAppId == Process.SYSTEM_UID || callingAppId == Process.PHONE_UID
             || callingAppId == Process.SHELL_UID || callingAppId == Process.BLUETOOTH_UID
-            || callingAppId == Process.NFC_UID || callingUid == 0) {
+            || callingAppId == Process.NFC_UID || callingUid == 0 || isLenovoSafeCenter != false) {
             // Always okay.
         } else if (callerApp == null || !callerApp.persistent) {
             try {
@@ -16029,6 +16139,16 @@ public final class ActivityManagerService extends ActivityManagerNative
                         }
                         if (userId == UserHandle.USER_OWNER) {
                             mTaskPersister.addOtherDeviceTasksToRecentsLocked(ssp);
+                        }
+                    }
+                    break;
+                case Intent.ACTION_PACKAGE_REPLACED:
+                    // Special case for adding a package: by default turn on compatibility mode.
+                    data = intent.getData();
+                    if (data != null && (ssp = data.getSchemeSpecificPart()) != null) {
+                        AttributeCache ac = AttributeCache.instance();
+                        if (ac != null) {
+                            ac.removePackage(ssp);
                         }
                     }
                     break;

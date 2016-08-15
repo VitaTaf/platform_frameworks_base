@@ -51,6 +51,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.service.voice.IVoiceInteractionSession;
 import com.android.internal.app.IVoiceInteractor;
+import com.motorola.datacollection.IDataCollectionListener;
 
 import java.util.List;
 
@@ -243,6 +244,7 @@ public interface IActivityManager extends IInterface {
     
     public void killBackgroundProcesses(final String packageName, int userId)
             throws RemoteException;
+    public void killPersistentApplication(ApplicationInfo appInfo) throws RemoteException;
     public void killAllBackgroundProcesses() throws RemoteException;
     public void forceStopPackage(final String packageName, int userId) throws RemoteException;
     
@@ -431,6 +433,8 @@ public interface IActivityManager extends IInterface {
 
     public void restart() throws RemoteException;
 
+    public void restartPersistentApplication(ApplicationInfo appInfo) throws RemoteException;
+
     public void performIdleMaintenance() throws RemoteException;
 
     public IActivityContainer createActivityContainer(IBinder parentActivityToken,
@@ -469,6 +473,8 @@ public interface IActivityManager extends IInterface {
     public void notifyEnterAnimationComplete(IBinder token) throws RemoteException;
 
     public void systemBackupRestored() throws RemoteException;
+
+    public void listenEventLog(IDataCollectionListener listener, boolean flag) throws RemoteException;
 
     /*
      * Private non-Binder interfaces
@@ -792,4 +798,7 @@ public interface IActivityManager extends IInterface {
     int CHECK_PERMISSION_WITH_TOKEN_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+241;
     int REGISTER_TASK_STACK_LISTENER_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+242;
     int SYSTEM_BACKUP_RESTORED = IBinder.FIRST_CALL_TRANSACTION+243;
+    int LISTEN_EVENT_LOG_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+244;
+    int RESTART_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+245;
+    int KILL_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION+246;
 }

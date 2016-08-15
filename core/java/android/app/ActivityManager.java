@@ -29,6 +29,7 @@ import android.os.ParcelFileDescriptor;
 import com.android.internal.app.ProcessStats;
 import com.android.internal.os.TransferPipe;
 import com.android.internal.util.FastPrintWriter;
+import com.motorola.datacollection.DataCollectionListener;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -2291,7 +2292,14 @@ public class ActivityManager {
         } catch (RemoteException e) {
         }
     }
-    
+
+    public void listenEventLog(DataCollectionListener listener, boolean flag) {
+        try {
+            ActivityManagerNative.getDefault().listenEventLog(listener.callback, flag);
+        } catch (RemoteException e) {
+        }
+    }
+
     /**
      * Have the system perform a force stop of everything associated with
      * the given application package.  All processes that share its uid

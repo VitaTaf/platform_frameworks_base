@@ -50,6 +50,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Singleton;
 import com.android.internal.app.IVoiceInteractor;
+import com.motorola.datacollection.IDataCollectionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -2361,6 +2362,30 @@ public abstract class ActivityManagerNative extends Binder implements IActivityM
         case SYSTEM_BACKUP_RESTORED: {
             data.enforceInterface(IActivityManager.descriptor);
             systemBackupRestored();
+            reply.writeNoException();
+            return true;
+        }
+
+        case LISTEN_EVENT_LOG_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            IBinder b = data.readStrongBinder();
+            boolean flag = data.readInt() != 0;
+            IDataCollectionListener listener = IDataCollectionListener.Stub.asInterface(b);
+            listenEventLog(listener, flag);
+            reply.writeNoException();
+            return true;
+        }
+        case RESTART_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            ApplicationInfo info = ApplicationInfo.CREATOR.createFromParcel(data);
+            restartPersistentApplication(info);
+            reply.writeNoException();
+            return true;
+        }
+        case KILL_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION: {
+            data.enforceInterface(IActivityManager.descriptor);
+            ApplicationInfo info = ApplicationInfo.CREATOR.createFromParcel(data);
+            killPersistentApplication(info);
             reply.writeNoException();
             return true;
         }
@@ -5460,6 +5485,43 @@ class ActivityManagerProxy implements IActivityManager
         Parcel reply = Parcel.obtain();
         data.writeInterfaceToken(IActivityManager.descriptor);
         mRemote.transact(SYSTEM_BACKUP_RESTORED, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public void listenEventLog(IDataCollectionListener listener, boolean flag) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        data.writeStrongBinder(listener != null ? listener.asBinder() : null);
+        data.writeInt(flag ? 1 : 0);
+        mRemote.transact(LISTEN_EVENT_LOG_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public void killPersistentApplication(ApplicationInfo info) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        info.writeToParcel(data, 0);
+        mRemote.transact(KILL_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION, data, reply, 0);
+        reply.readException();
+        data.recycle();
+        reply.recycle();
+    }
+
+    @Override
+    public void restartPersistentApplication(ApplicationInfo info) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeInterfaceToken(IActivityManager.descriptor);
+        info.writeToParcel(data, 0);
+        mRemote.transact(RESTART_PERSISTENT_APPLICATION_WITH_APPID_TRANSACTION, data, reply, 0);
         reply.readException();
         data.recycle();
         reply.recycle();

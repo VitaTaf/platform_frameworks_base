@@ -4042,6 +4042,7 @@ public class Intent implements Parcelable, Cloneable {
     private Bundle mExtras;
     private Rect mSourceBounds;
     private Intent mSelector;
+	public String mSource;
     private ClipData mClipData;
     private int mContentUserHint = UserHandle.USER_CURRENT;
 
@@ -4079,6 +4080,7 @@ public class Intent implements Parcelable, Cloneable {
         if (o.mClipData != null) {
             this.mClipData = new ClipData(o.mClipData);
         }
+    	this.mSource = o.mSource;
     }
 
     @Override
@@ -4095,6 +4097,7 @@ public class Intent implements Parcelable, Cloneable {
         if (o.mCategories != null) {
             this.mCategories = new ArraySet<String>(o.mCategories);
         }
+    	this.mSource = o.mSource;
     }
 
     /**
@@ -7449,6 +7452,7 @@ public class Intent implements Parcelable, Cloneable {
         out.writeString(mType);
         out.writeInt(mFlags);
         out.writeString(mPackage);
+    	out.writeString(mSource);
         ComponentName.writeToParcel(mComponent, out);
 
         if (mSourceBounds != null) {
@@ -7506,6 +7510,7 @@ public class Intent implements Parcelable, Cloneable {
         mType = in.readString();
         mFlags = in.readInt();
         mPackage = in.readString();
+    	mSource = in.readString();
         mComponent = ComponentName.readFromParcel(in);
 
         if (in.readInt() != 0) {

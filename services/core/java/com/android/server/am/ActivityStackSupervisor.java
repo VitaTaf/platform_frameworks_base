@@ -411,6 +411,15 @@ public final class ActivityStackSupervisor implements DisplayListener {
             stacks.remove(mHomeStack);
             stacks.add(toFront ? topNdx : 0, mHomeStack);
             mFocusedStack = stacks.get(topNdx);
+            if (!this.mService.immediateScreenStatusReq)
+            {
+              this.mService.immediateScreenStatusReq = true;
+              Intent idleScreenIntent = new Intent("org.codeaurora.intent.action.stk.idle_screen");
+              ((Intent)idleScreenIntent).putExtra("SCREEN_IDLE", true);
+              ((Intent)idleScreenIntent).putExtra("slot_id", this.mService.mSlotId);
+              Slog.i("ActivityManager", "Broadcasting Home idle screen Intent slot=" + this.mService.mSlotId);
+              this.mService.mContext.sendBroadcast((Intent)idleScreenIntent);
+            }
             if (DEBUG_STACK) Slog.d(TAG, "moveHomeTask: topStack old=" + topStack + " new="
                     + mFocusedStack);
         }
@@ -1139,6 +1148,7 @@ public final class ActivityStackSupervisor implements DisplayListener {
                 EventLog.writeEvent(EventLogTags.AM_RESTART_ACTIVITY,
                         r.userId, System.identityHashCode(r),
                         r.task.taskId, r.shortComponentName);
+                stack.notifyEventLog("am_restart_activity", System.identityHashCode(r), Integer.toString(r.task.taskId), r.shortComponentName, null);
             }
             if (r.isHomeActivity() && r.isNotResolverActivity()) {
                 // Home process is the root process of the task.
