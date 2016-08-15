@@ -12891,7 +12891,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                         Interpolator.Result.FREEZE_END) {
                     cache.state = ScrollabilityCache.OFF;
                 } else {
-                    cache.scrollBar.mutate().setAlpha(Math.round(values[0]));
+                    cache.scrollBar.setAlpha(Math.round(values[0]));
                 }
 
                 // This will make the scroll bars inval themselves after
@@ -12901,7 +12901,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             } else {
                 // We're just on -- but we may have been fading before so
                 // reset alpha
-                cache.scrollBar.mutate().setAlpha(255);
+                cache.scrollBar.setAlpha(255);
             }
 
 
