@@ -60,12 +60,17 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         public void onExitToHomeAnimationTriggered();
         public void onScreenPinningRequest();
 
-        public void onTaskResize(Task t);
+        public void onMultiStackAddStack();
+        public void onMultiStackResizeStack();
+        public void onMultiStackRemoveStack();
+        public void onMultiStackMoveTask(Task t);
     }
 
     RecentsConfiguration mConfig;
     LayoutInflater mInflater;
     DebugOverlayView mDebugOverlay;
+    ViewStub mMultiStackDebugStub;
+    View mMultiStackDebugView;
     RecentsViewLayoutAlgorithm mLayoutAlgorithm;
 
     ArrayList<TaskStack> mStacks;
@@ -90,6 +95,28 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         mConfig = RecentsConfiguration.getInstance();
         mInflater = LayoutInflater.from(context);
         mLayoutAlgorithm = new RecentsViewLayoutAlgorithm(mConfig);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        if (!mConfig.multiStackEnabled) return;
+
+        mMultiStackDebugStub = (ViewStub) findViewById(R.id.multistack_debug_view_stub);
+        if (mMultiStackDebugView == null) {
+            mMultiStackDebugView = mMultiStackDebugStub.inflate();
+            mMultiStackDebugView.findViewById(R.id.add_stack).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCb.onMultiStackAddStack();
+                }
+            });
+            mMultiStackDebugView.findViewById(R.id.resize_stack).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCb.onMultiStackResizeStack();
+                }
+            });
+        }
     }
 
     /** Sets the callbacks */
@@ -139,6 +166,11 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 TaskStackView stackView = mTaskStackViews.get(i);
                 stackView.setDebugOverlay(mDebugOverlay);
             }
+        }
+
+        // Bring the debug view to the front
+        if (mMultiStackDebugView != null) {
+            mMultiStackDebugView.bringToFront();
         }
 
         // Trigger a new layout
@@ -299,6 +331,11 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             }
         }
 
+        // Measure the multistack debug view
+        if (mMultiStackDebugView != null) {
+            mMultiStackDebugView.measure(width, height);
+        }
+
         setMeasuredDimension(width, height);
     }
 
@@ -326,6 +363,18 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 stackView.layout(left, top, left + stackView.getMeasuredWidth(),
                         top + stackView.getMeasuredHeight());
             }
+        }
+
+        // Layout the multistack debug view
+        if (mMultiStackDebugView != null) {
+            Rect taskStackBounds = new Rect();
+            mConfig.getAvailableTaskStackBounds(getMeasuredWidth(), getMeasuredHeight(),
+                    mConfig.systemInsets.top, mConfig.systemInsets.right, taskStackBounds);
+            mMultiStackDebugView.layout(left,
+                    taskStackBounds.bottom - mConfig.systemInsets.bottom -
+                            mMultiStackDebugView.getMeasuredHeight(),
+                    left + mMultiStackDebugView.getMeasuredWidth(),
+                    taskStackBounds.bottom - mConfig.systemInsets.bottom);
         }
     }
 
@@ -590,9 +639,9 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
     }
 
     @Override
-    public void onTaskResize(Task t) {
+    public void onMultiStackMoveTask(Task t) {
         if (mCb != null) {
-            mCb.onTaskResize(t);
+            mCb.onMultiStackMoveTask(t);
         }
     }
 

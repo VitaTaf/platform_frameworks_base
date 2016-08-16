@@ -75,8 +75,8 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     View mEmptyView;
     DebugOverlayView mDebugOverlay;
 
-    // Resize task debug
-    RecentsResizeTaskDialog mResizeTaskDebugDialog;
+    // MultiStack debug
+    RecentsMultiStackDialog mMultiStackDebugDialog;
 
     // Search AppWidget
     RecentsAppWidgetHost mAppWidgetHost;
@@ -593,18 +593,37 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     }
 
 
-    /**** RecentsResizeTaskDialog ****/
+    /**** RecentsMultiStackDialog ****/
 
-    private RecentsResizeTaskDialog getResizeTaskDebugDialog() {
-        if (mResizeTaskDebugDialog == null) {
-            mResizeTaskDebugDialog = new RecentsResizeTaskDialog(getFragmentManager());
+    private RecentsMultiStackDialog getMultiStackDebugDialog() {
+        if (mMultiStackDebugDialog == null) {
+            mMultiStackDebugDialog = new RecentsMultiStackDialog(getFragmentManager());
         }
-        return mResizeTaskDebugDialog;
+        return mMultiStackDebugDialog;
     }
 
     @Override
-    public void onTaskResize(Task t) {
-        getResizeTaskDebugDialog().showResizeTaskDialog(t);
+    public void onMultiStackAddStack() {
+        RecentsMultiStackDialog dialog = getMultiStackDebugDialog();
+        dialog.showAddStackDialog();
+    }
+
+    @Override
+    public void onMultiStackResizeStack() {
+        RecentsMultiStackDialog dialog = getMultiStackDebugDialog();
+        dialog.showResizeStackDialog();
+    }
+
+    @Override
+    public void onMultiStackRemoveStack() {
+        RecentsMultiStackDialog dialog = getMultiStackDebugDialog();
+        dialog.showRemoveStackDialog();
+    }
+
+    @Override
+    public void onMultiStackMoveTask(Task t) {
+        RecentsMultiStackDialog dialog = getMultiStackDebugDialog();
+        dialog.showMoveTaskDialog(t);
     }
 
     /**** RecentsView.RecentsViewCallbacks Implementation ****/
