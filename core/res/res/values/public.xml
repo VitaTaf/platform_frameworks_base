@@ -2108,7 +2108,6 @@
     <public type="^attr-private" name="popupPromptView" id="0x01160051" />
     <public type="^attr-private" name="disableChildrenWhenDisabled" id="0x01160052" />
     <public type="^attr-private" name="internalLayout" id="0x01160053" />
-    <public type="^attr-private" name="calendarSelectedTextColor" id="0x01160054" />
     <public type="^attr-private" name="quickContactWindowSize" id="0x01160055" />
     <public type="^attr-private" name="majorWeightMin" id="0x01160056" />
     <public type="^attr-private" name="minorWeightMin" id="0x01160057" />
@@ -2267,7 +2266,6 @@
     <public type="drawable" name="btn_browser_zoom_page_overview" id="0x010800d4" />
     <public type="drawable" name="btn_cab_done_holo_dark" id="0x010800d9" />
     <public type="drawable" name="btn_cab_done_holo_light" id="0x010800da" />
-    <public type="drawable" name="btn_cab_done_material" id="0x010800db" />
     <public type="drawable" name="btn_check" id="0x010800df" />
     <public type="drawable" name="btn_check_holo_dark" id="0x010800e2" />
     <public type="drawable" name="btn_check_holo_light" id="0x010800e3" />
@@ -2660,7 +2658,6 @@
     <public type="drawable" name="btn_cab_done_default_holo_light" id="0x010800d6" />
     <public type="drawable" name="btn_cab_done_focused_holo_dark" id="0x010800d7" />
     <public type="drawable" name="btn_cab_done_focused_holo_light" id="0x010800d8" />
-    <public type="drawable" name="btn_cab_done_mtrl_alpha" id="0x010800dc" />
     <public type="drawable" name="btn_cab_done_pressed_holo_dark" id="0x010800dd" />
     <public type="drawable" name="btn_cab_done_pressed_holo_light" id="0x010800de" />
     <public type="drawable" name="btn_check_buttonless_off" id="0x010800e0" />
@@ -2987,7 +2984,6 @@
     <public type="drawable" name="btn_switch_to_on_mtrl_00010" id="0x01080240" />
     <public type="drawable" name="btn_switch_to_on_mtrl_00011" id="0x01080241" />
     <public type="drawable" name="btn_switch_to_on_mtrl_00012" id="0x01080242" />
-    <public type="drawable" name="btn_toggle_indicator_mtrl_alpha" id="0x01080247" />
     <public type="drawable" name="btn_toggle_off" id="0x01080249" />
     <public type="drawable" name="btn_toggle_off_disabled_focused_holo_dark" id="0x0108024a" />
     <public type="drawable" name="btn_toggle_off_disabled_focused_holo_light" id="0x0108024b" />
@@ -3493,7 +3489,6 @@
     <public type="drawable" name="pressed_application_background_static" id="0x01080561" />
     <public type="drawable" name="progress_bg_holo_dark" id="0x01080562" />
     <public type="drawable" name="progress_bg_holo_light" id="0x01080563" />
-    <public type="drawable" name="progress_mtrl_alpha" id="0x01080571" />
     <public type="drawable" name="progress_primary_holo_dark" id="0x01080572" />
     <public type="drawable" name="progress_primary_holo_light" id="0x01080573" />
     <public type="drawable" name="progress_secondary_holo_dark" id="0x01080574" />
@@ -3616,7 +3611,6 @@
     <public type="drawable" name="spinner_dropdown_background_up" id="0x01080635" />
     <public type="drawable" name="spinner_focused_holo_dark_am" id="0x01080637" />
     <public type="drawable" name="spinner_focused_holo_light_am" id="0x01080639" />
-    <public type="drawable" name="spinner_mtrl_am_alpha" id="0x0108063a" />
     <public type="drawable" name="spinner_normal" id="0x0108063b" />
     <public type="drawable" name="spinner_press" id="0x0108063d" />
     <public type="drawable" name="spinner_pressed_holo_dark_am" id="0x0108063f" />
@@ -3714,7 +3708,6 @@
     <public type="drawable" name="switch_thumb_holo_light" id="0x010806b1" />
     <public type="drawable" name="switch_thumb_pressed_holo_dark" id="0x010806b4" />
     <public type="drawable" name="switch_thumb_pressed_holo_light" id="0x010806b5" />
-    <public type="drawable" name="switch_track_mtrl_alpha" id="0x010806b9" />
     <public type="drawable" name="sym_action_add" id="0x010806ba" />
     <public type="drawable" name="sym_app_on_sd_unavailable_icon" id="0x010806bb" />
     <public type="drawable" name="sym_keyboard_delete" id="0x010806bc" />
