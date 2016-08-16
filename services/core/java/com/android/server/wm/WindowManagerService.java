@@ -9943,7 +9943,7 @@ public class WindowManagerService extends IWindowManager.Stub
             for (i = exitingAppTokens.size() - 1; i >= 0; i--) {
                 AppWindowToken token = exitingAppTokens.get(i);
                 if (!token.hasVisible && !mClosingApps.contains(token) &&
-                        (!token.mDeferRemoval || token.allAppWindows.isEmpty())) {
+                        (!token.mIsExiting || token.allAppWindows.isEmpty())) {
                     // Make sure there is no animation running on this token,
                     // so any windows associated with it will be removed as
                     // soon as their animations are complete
