@@ -2483,7 +2483,6 @@
     <public type="drawable" name="ratingbar_full_filled_material" id="0x010805c0" />
     <public type="drawable" name="ratingbar_full_holo_dark" id="0x010805c1" />
     <public type="drawable" name="ratingbar_full_holo_light" id="0x010805c2" />
-    <public type="drawable" name="ratingbar_full_material" id="0x010805c3" />
     <public type="drawable" name="ratingbar_holo_dark" id="0x010805c4" />
     <public type="drawable" name="ratingbar_holo_light" id="0x010805c5" />
     <public type="drawable" name="ratingbar_small" id="0x010805c6" />
@@ -2492,12 +2491,9 @@
     <public type="drawable" name="screen_background_selector_dark" id="0x010805cb" />
     <public type="drawable" name="screen_background_selector_light" id="0x010805cc" />
     <public type="drawable" name="scrollbar_handle_material" id="0x010805d1" />
-    <public type="drawable" name="scrubber_control_material_anim" id="0x010805db" />
     <public type="drawable" name="scrubber_control_selector_holo" id="0x010805e2" />
-    <public type="drawable" name="scrubber_control_selector_material" id="0x010805e3" />
     <public type="drawable" name="scrubber_progress_horizontal_holo_dark" id="0x010805ec" />
     <public type="drawable" name="scrubber_progress_horizontal_holo_light" id="0x010805ed" />
-    <public type="drawable" name="scrubber_progress_horizontal_material" id="0x010805ee" />
     <public type="drawable" name="search_dropdown_dark" id="0x010805f4" />
     <public type="drawable" name="search_dropdown_light" id="0x010805f5" />
     <public type="drawable" name="search_spinner" id="0x010805f8" />
@@ -2559,7 +2555,6 @@
     <public type="drawable" name="textfield_searchview_holo_light" id="0x0108073b" />
     <public type="drawable" name="textfield_searchview_right_holo_dark" id="0x0108073c" />
     <public type="drawable" name="textfield_searchview_right_holo_light" id="0x0108073d" />
-    <public type="drawable" name="time_picker_header_material" id="0x0108073f" />
     <public type="drawable" name="title_bar_shadow" id="0x01080742" />
     <public type="drawable" name="vector_drawable_progress_bar_large" id="0x0108074b" />
     <public type="drawable" name="vector_drawable_progress_bar_medium" id="0x0108074c" />
@@ -3974,14 +3969,8 @@
     <public type="dimen" name="timepicker_separator_padding" id="0x01050086" />
     <public type="dimen" name="timepicker_header_height" id="0x01050087" />
     <public type="dimen" name="timepicker_radial_picker_dimen" id="0x0105008a" />
-    <public type="dimen" name="datepicker_day_number_size" id="0x0105008b" />
-    <public type="dimen" name="datepicker_month_label_size" id="0x0105008c" />
-    <public type="dimen" name="datepicker_month_day_label_text_size" id="0x0105008d" />
-    <public type="dimen" name="datepicker_month_list_item_header_height" id="0x0105008e" />
     <public type="dimen" name="datepicker_view_animator_height" id="0x01050090" />
-    <public type="dimen" name="datepicker_year_picker_padding_top" id="0x01050091" />
     <public type="dimen" name="datepicker_year_label_height" id="0x01050092" />
-    <public type="dimen" name="datepicker_year_label_text_size" id="0x01050093" />
     <public type="dimen" name="datepicker_component_width" id="0x01050094" />
     <public type="dimen" name="datepicker_dialog_width" id="0x01050095" />
     <public type="dimen" name="datepicker_selected_date_day_size" id="0x01050096" />
@@ -4219,11 +4208,6 @@
     <public type="dimen" name="timepicker_separator_padding" id="0x01050086" />
     <public type="dimen" name="timepicker_header_height" id="0x01050087" />
     <public type="dimen" name="timepicker_radial_picker_dimen" id="0x0105008a" />
-    <public type="dimen" name="datepicker_day_number_size" id="0x0105008b" />
-    <public type="dimen" name="datepicker_month_label_size" id="0x0105008c" />
-    <public type="dimen" name="datepicker_month_day_label_text_size" id="0x0105008d" />
-    <public type="dimen" name="datepicker_month_list_item_header_height" id="0x0105008e" />
-    <public type="dimen" name="scrubber_track_height_material" id="0x0105010a" />
     <public type="dimen" name="progress_bar_height_material" id="0x0105010b" />
     <public type="color" name="background_leanback_dark" id="0x010600b3" />
     <public type="color" name="background_leanback_light" id="0x010600b4" />
@@ -4320,11 +4304,8 @@
     <public type="layout" name="choose_account_type" id="0x0109003e" />
     <public type="layout" name="choose_type_and_account" id="0x0109003f" />
     <public type="layout" name="date_picker_dialog" id="0x01090040" />
-    <public type="layout" name="date_picker_holo" id="0x01090041" />
     <public type="layout" name="date_picker_legacy" id="0x01090042" />
     <public type="layout" name="date_picker_legacy_holo" id="0x01090043" />
-    <public type="layout" name="date_picker_selected_date" id="0x01090044" />
-    <public type="layout" name="date_picker_view_animator" id="0x01090045" />
     <public type="layout" name="default_navigation" id="0x01090046" />
     <public type="layout" name="dialog_custom_title" id="0x01090047" />
     <public type="layout" name="dialog_custom_title_holo" id="0x01090048" />
@@ -4706,7 +4687,6 @@
     <public type="id" name="amPm" id="0x010203c0" />
     <public type="id" name="divider" id="0x010203c1" />
     <public type="id" name="time_layout" id="0x010203ed" />
-    <public type="^attr-private" name="calendarDayBackgroundColor" id="0x011600b5" />
 
     <public type="string" name="numeric_date_template" id="0x01040056" />
     <public type="string" name="month_day_year" id="0x01040057" />
@@ -6293,7 +6273,6 @@
     <public type="string" name="time_placeholder" id="0x01040684" />
     <public type="string" name="radial_numbers_typeface" id="0x01040685" />
     <public type="string" name="sans_serif" id="0x01040686" />
-    <public type="string" name="day_of_week_label_typeface" id="0x01040687" />
     <public type="string" name="lock_to_app_toast" id="0x01040688" />
     <public type="string" name="lock_to_app_toast_accessible" id="0x01040689" />
     <public type="string" name="lock_to_app_toast_locked" id="0x0104068a" />
@@ -6478,10 +6457,6 @@
     <public type="style" name="Widget.DeviceDefault.Light.TextView.ListSeparator" id="0x0103036c" />
     <public type="style" name="Widget.DeviceDefault.Light.TimePicker" id="0x0103036d" />
     <public type="style" name="Widget.DeviceDefault.Light.TextSuggestionsPopupWindow" id="0x0103036e" />
-    <public type="style" name="TextAppearance.DeviceDefault.DatePicker.DayOfWeekLabel" id="0x0103036f" />
-    <public type="style" name="TextAppearance.DeviceDefault.DatePicker.MonthLabel" id="0x01030370" />
-    <public type="style" name="TextAppearance.DeviceDefault.DatePicker.DayOfMonthLabel" id="0x01030371" />
-    <public type="style" name="TextAppearance.DeviceDefault.DatePicker.YearLabel" id="0x01030372" />
     <public type="style" name="Preference.DeviceDefault" id="0x01030373" />
     <public type="style" name="Preference.DeviceDefault.Category" id="0x01030374" />
     <public type="style" name="Preference.DeviceDefault.CheckBoxPreference" id="0x01030375" />
@@ -6640,12 +6615,8 @@
     <public type="style" name="TextAppearance.Material.Widget.Switch" id="0x0103041e" />
     <public type="style" name="TextAppearance.Material.Widget.ActionBar.Menu.Inverse" id="0x0103041f" />
     <public type="style" name="TextAppearance.Material.Widget.ActionMode" id="0x01030420" />
-    <public type="style" name="TextAppearance.Material.CalendarViewWeekDayView" id="0x01030421" />
     <public type="style" name="TextAppearance.Material.TimePicker.TimeLabel" id="0x01030422" />
     <public type="style" name="TextAppearance.Material.TimePicker.AmPmLabel" id="0x01030423" />
-    <public type="style" name="TextAppearance.Material.DatePicker.DayOfWeekLabel" id="0x01030424" />
-    <public type="style" name="TextAppearance.Material.DatePicker.MonthLabel" id="0x01030425" />
-    <public type="style" name="TextAppearance.Material.DatePicker.DayOfMonthLabel" id="0x01030426" />
     <public type="style" name="TextAppearance.Material.DatePicker.YearLabel" id="0x01030427" />
     <public type="style" name="TextAppearance.Material.DatePicker.List.YearLabel" id="0x01030428" />
     <public type="style" name="Widget.Material.Notification.ProgressBar" id="0x01030429" />
