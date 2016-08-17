@@ -3957,6 +3957,12 @@
     <public type="color" name="tertiary_text_holo_dark" id="0x0106013a" />
     <public type="color" name="tertiary_text_holo_light" id="0x0106013b" />
     <public type="color" name="control_highlight_material" id="0x0106013d" />
+    <public type="color" name="primary_text_secondary_when_activated_material" id="0x010600de" />
+    <public type="color" name="primary_text_secondary_when_activated_material_inverse" id="0x010600e3" />
+    <public type="color" name="ratingbar_background_material" id="0x010600e4" />
+    <public type="color" name="seekbar_track_progress_material" id="0x010600e5" />
+    <public type="anim" name="dialog_enter" id="0x010a0013" />
+    <public type="anim" name="dialog_exit" id="0x010a0014" />
 
     <public type="dimen" name="timepicker_time_label_size" id="0x01050080" />
     <public type="dimen" name="timepicker_ampm_label_size" id="0x01050082" />
