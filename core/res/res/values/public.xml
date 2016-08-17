@@ -4429,7 +4429,6 @@
     <public type="layout" name="search_bar" id="0x010900bd" />
     <public type="layout" name="search_dropdown_item_icons_2line" id="0x010900be" />
     <public type="layout" name="search_view" id="0x010900bf" />
-    <public type="layout" name="seekbar_dialog" id="0x010900c0" />
     <public type="layout" name="select_dialog" id="0x010900c1" />
     <public type="layout" name="select_dialog_holo" id="0x010900c2" />
     <public type="layout" name="select_dialog_item_holo" id="0x010900c3" />
@@ -4901,6 +4900,56 @@
     <public type="layout" name="time_picker_header_material" id="0x010900e3" />
     <public type="layout" name="time_picker_legacy_material" id="0x010900f5" />
     <public type="layout" name="time_picker_material" id="0x010900f6" />
+    <public type="color" name="datepicker_default_header_dayofweek_background_color_material_light" id="0x0106009d" />
+    <public type="color" name="datepicker_default_header_dayofweek_background_color_material_dark" id="0x0106009e" />
+    <public type="color" name="datepicker_default_normal_text_color_material_light" id="0x0106009f" />
+    <public type="color" name="datepicker_default_normal_text_color_material_dark" id="0x010600a0" />
+    <public type="color" name="datepicker_default_disabled_text_color_material_light" id="0x010600a1" />
+    <public type="color" name="datepicker_default_disabled_text_color_material_dark" id="0x010600a2" />
+    <public type="color" name="datepicker_default_selected_text_color_material_light" id="0x010600a3" />
+    <public type="color" name="datepicker_default_selected_text_color_material_dark" id="0x010600a4" />
+    <public type="color" name="datepicker_default_pressed_text_color_material_light" id="0x010600a5" />
+    <public type="color" name="datepicker_default_pressed_text_color_material_dark" id="0x010600a6" />
+    <public type="color" name="datepicker_default_circle_background_color_material_light" id="0x010600a7" />
+    <public type="color" name="datepicker_default_circle_background_color_material_dark" id="0x010600a8" />
+    <public type="color" name="datepicker_default_view_animator_color_material_light" id="0x010600a9" />
+    <public type="color" name="datepicker_default_view_animator_color_material_dark" id="0x010600aa" />
+    <public type="color" name="config_defaultNotificationColor" id="0x010600ab" />
+    <public type="color" name="background_cache_hint_selector_holo_dark" id="0x010600ac" />
+    <public type="color" name="background_cache_hint_selector_holo_light" id="0x010600ad" />
+    <public type="color" name="background_cache_hint_selector_material_dark" id="0x010600ae" />
+    <public type="color" name="background_cache_hint_selector_material_light" id="0x010600af" />
+    <public type="color" name="btn_colored_material" id="0x010600b0" />
+    <public type="color" name="btn_colored_text_material" id="0x010600b1" />
+    <public type="color" name="btn_default_material_dark" id="0x010600b2" />
+    <public type="color" name="btn_default_material_light" id="0x010600dd" />
+    <public type="color" name="primary_text_inverse_when_activated_material" id="0x010600e6" />
+    <public type="color" name="secondary_text_inverse_when_activated_material" id="0x010600e9" />
+    <public type="layout" name="date_picker_view_animator_material" id="0x010900f7" />
+    <public type="layout" name="day_picker_content_material" id="0x010900f8" />
+    <public type="^attr-private" name="preferencePanelStyle" id="0x0116001c" />
+    <public type="^attr-private" name="preferenceHeaderPanelStyle" id="0x0116001d" />
+    <public type="^attr-private" name="preferenceListStyle" id="0x0116001e" />
+    <public type="^attr-private" name="preferenceFragmentListStyle" id="0x0116001f" />
+    <public type="^attr-private" name="preferenceFragmentPaddingSide" id="0x01160020" />
+    <public type="^attr-private" name="seekBarPreferenceStyle" id="0x01160021" />
+    <public type="^attr-private" name="dialogTitleIconsDecorLayout" id="0x01160022" />
+    <public type="^attr-private" name="dialogCustomTitleDecorLayout" id="0x01160023" />
+    <public type="^attr-private" name="dialogTitleDecorLayout" id="0x01160024" />
+    <public type="^attr-private" name="toastFrameBackground" id="0x01160025" />
+    <public type="^attr-private" name="searchDialogTheme" id="0x01160026" />
+    <public type="^attr-private" name="preferenceFrameLayoutStyle" id="0x01160027" />
+    <public type="^attr-private" name="pointerStyle" id="0x01160028" />
+    <public type="^attr-private" name="accessibilityFocusedDrawable" id="0x01160029" />
+    <public type="^attr-private" name="findOnPageNextDrawable" id="0x0116002a" />
+    <public type="^attr-private" name="findOnPagePreviousDrawable" id="0x0116002b" />
+    <public type="^attr-private" name="colorSwitchThumbNormal" id="0x0116002c" />
+    <public type="^attr-private" name="headerTextColor" id="0x01160054" />
+    <public type="^attr-private" name="yearListItemActivatedTextAppearance" id="0x01160065" />
+    <public type="^attr-private" name="monthTextAppearance" id="0x01160066" />
+    <public type="^attr-private" name="daySelectorColor" id="0x011600b5" />
+    <public type="^attr-private" name="dayHighlightColor" id="0x011600b6" />
+    <public type="^attr-private" name="defaultQueryHint" id="0x011600b7" />
 
     <public type="string" name="numeric_date_template" id="0x01040056" />
     <public type="string" name="month_day_year" id="0x01040057" />
@@ -6985,6 +7034,11 @@
     <public type="style" name="Theme.Micro.Dialog" id="0x010304be" />
     <public type="style" name="Theme.Micro.Dialog.Alert" id="0x010304bf" />
     <public type="style" name="Theme.Micro.Dialog.AppError" id="0x010304c0" />
+    <public type="style" name="TextAppearance.Material.Widget.Calendar.Day" id="0x0103036f" />
+    <public type="style" name="TextAppearance.Material.Widget.Calendar.DayOfWeek" id="0x01030370" />
+    <public type="style" name="TextAppearance.Material.Widget.Calendar.Month" id="0x01030371" />
+    <public type="style" name="TextAppearance.Material.DatePicker.DateLabel" id="0x01030372" />
+    <public type="style" name="TextAppearance.Material.DatePicker.List.YearLabel.Activated" id="0x010303eb" />
 
     <public type="attr" name="fastScrollStyle" id="0x010103f7" />
     <public type="attr" name="windowContentTransitions" id="0x010103f8" />
@@ -8113,7 +8167,7 @@
   <public type="attr" name="trackTintMode" id="0x010104d9" />
   <public type="attr" name="start" id="0x010104d6" />
   <public type="attr" name="end" id="0x010104d7" />
-  <public type="attr" name="windowHasLightStatusBar" />
+  <public type="attr" name="windowHasLightStatusBar" id="0x010104dd" />
   <public type="attr" name="numbersInnerTextColor" id="0x010104da" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
@@ -8122,8 +8176,8 @@
   <public type="style" name="ThemeOverlay.Material.Dialog.Alert" />
   <public type="style" name="Theme.Material.Light.LightStatusBar" />
 
-  <public type="attr" name="thumbPosition" />
+  <public type="attr" name="thumbPosition" id="0x010104db" />
 
-  <public type="attr" name="colorBackgroundFloating" />
+  <public type="attr" name="colorBackgroundFloating" id="0x010104dc" />
 
 </resources>
