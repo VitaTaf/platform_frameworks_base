@@ -1185,6 +1185,8 @@ public interface WindowManagerPolicy {
      */
     public int adjustSystemUiVisibilityLw(int visibility);
 
+    public abstract boolean hasMenuBarShown();
+
     /**
      * Specifies whether there is an on-screen navigation bar separate from the status bar.
      */

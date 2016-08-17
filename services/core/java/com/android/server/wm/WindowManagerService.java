@@ -6263,6 +6263,28 @@ public class WindowManagerService extends IWindowManager.Stub
         updateRotationUnchecked(alwaysSendConfiguration, forceRelayout);
     }
 
+  public void resumeRotation()
+  {
+    if (Binder.getCallingUid() == 1000) {
+      synchronized (this.mWindowMap)
+      {
+        resumeRotationLocked();
+        return;
+      }
+    }
+  }
+
+  public void pauseRotation()
+  {
+    if (Binder.getCallingUid() == 1000) {
+      synchronized (this.mWindowMap)
+      {
+        pauseRotationLocked();
+        return;
+      }
+    }
+  }
+
     /**
      * Temporarily pauses rotation changes until resumed.
      *
@@ -10771,6 +10793,11 @@ public class WindowManagerService extends IWindowManager.Stub
         synchronized (mWindowMap) {
             return mPolicy.getInputMethodWindowVisibleHeightLw();
         }
+    }
+
+    public boolean hasMenuBarShown()
+    {
+        return mPolicy.hasMenuBarShown();
     }
 
     @Override

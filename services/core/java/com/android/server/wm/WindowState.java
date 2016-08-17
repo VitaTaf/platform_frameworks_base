@@ -635,6 +635,12 @@ final class WindowState implements WindowManagerPolicy.WindowState {
                 Math.max(mFrame.right - mStableFrame.right, 0),
                 Math.max(mFrame.bottom - mStableFrame.bottom, 0));
 
+        if ((this.mIsWallpaper) && ((this.mFrame.right < this.mContainingFrame.right) || (this.mFrame.bottom < this.mContainingFrame.bottom)))
+              {
+                this.mFrame.right = Math.max(w, this.mContainingFrame.right);
+                this.mFrame.bottom = Math.max(h, this.mContainingFrame.bottom);
+              }
+
         mCompatFrame.set(mFrame);
         if (mEnforceSizeCompat) {
             // If there is a size compatibility scale being applied to the

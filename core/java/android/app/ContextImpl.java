@@ -694,9 +694,32 @@ class ContextImpl extends Context {
                 return new ConsumerIrManager(ctx);
             }});
 
+        registerService(MODALITY_SERVICE, new ServiceFetcher() {
+            public Object createService(ContextImpl ctx) {
+                IBinder iBinder;
+                if (ctx.getResources().getBoolean(0x11200b2))
+                {
+                    iBinder = ServiceManager.getService("modality");
+                }
+                return new ConsumerIrManager(ctx);
+            }
+        });
+
         registerService(MEDIA_SESSION_SERVICE, new ServiceFetcher() {
             public Object createService(ContextImpl ctx) {
                 return new MediaSessionManager(ctx);
+            }
+        });
+
+        registerService(VZW_CONNECTIVITY_SERVICE, new ServiceFetcher() {
+            public Object createService(ContextImpl ctx) {
+                return new ConsumerIrManager(ctx);
+            }
+        });
+
+        registerService(LTE_SERVICE, new ServiceFetcher() {
+            public Object createService(ContextImpl ctx) {
+                return new ConsumerIrManager(ctx);
             }
         });
 
@@ -768,6 +791,18 @@ class ContextImpl extends Context {
                 IBinder b = ServiceManager.getService(APPWIDGET_SERVICE);
                 return new AppWidgetManager(ctx, IAppWidgetService.Stub.asInterface(b));
             }});
+
+        registerService(CDMA_SERVICE, new ServiceFetcher() {
+                public Object createService(ContextImpl ctx) {
+                    return new MediaProjectionManager(ctx);
+                }
+        });
+
+        registerService(MOTO_PERS_DATA_BLOCK_SERVICE, new ServiceFetcher() {
+                public Object createService(ContextImpl ctx) {
+                    return new MediaProjectionManager(ctx);
+                }
+        });
     }
 
     static ContextImpl getImpl(Context context) {

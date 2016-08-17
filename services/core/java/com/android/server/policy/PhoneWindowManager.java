@@ -286,6 +286,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     boolean mNavigationBarOnBottom = true; // is the navigation bar on the bottom *right now*?
     int[] mNavigationBarHeightForRotation = new int[4];
     int[] mNavigationBarWidthForRotation = new int[4];
+    boolean mNeedsShowMenuBar = false;
 
     boolean mBootMessageNeedsHiding;
     KeyguardServiceDelegate mKeyguardDelegate;
@@ -6131,6 +6132,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         return mHasNavigationBar;
     }
 
+    public boolean hasMenuBarShown() {
+        return mNeedsShowMenuBar;
+    }
     @Override
     public void setLastInputMethodWindowLw(WindowState ime, WindowState target) {
         mLastInputMethodWindow = ime;

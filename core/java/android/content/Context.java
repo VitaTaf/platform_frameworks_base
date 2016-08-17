@@ -2618,6 +2618,8 @@ public abstract class Context {
      */
     public static final String MEDIA_ROUTER_SERVICE = "media_router";
 
+    public static final String MODALITY_SERVICE = "modality";
+
     /**
      * Use with {@link #getSystemService} to retrieve a
      * {@link android.media.session.MediaSessionManager} for managing media Sessions.
@@ -2626,6 +2628,8 @@ public abstract class Context {
      * @see android.media.session.MediaSessionManager
      */
     public static final String MEDIA_SESSION_SERVICE = "media_session";
+
+    public static final String VZW_CONNECTIVITY_SERVICE = "vzwconnectivity";
 
     /**
      * Use with {@link #getSystemService} to retrieve a
@@ -2692,6 +2696,10 @@ public abstract class Context {
      * @see #getSystemService
      */
     public static final String APPWIDGET_SERVICE = "appwidget";
+
+    public static final String CDMA_SERVICE = "cdma";
+
+    public static final String MOTO_PERS_DATA_BLOCK_SERVICE = "moto_pers_data_block";
 
     /**
      * Official published name of the (internal) voice interaction manager service.
@@ -2895,6 +2903,8 @@ public abstract class Context {
      * @see android.hardware.ConsumerIrManager
      */
     public static final String CONSUMER_IR_SERVICE = "consumer_ir";
+
+    public static final String LTE_SERVICE = "lte";
 
     /**
      * {@link android.app.trust.TrustManager} for managing trust agents.
