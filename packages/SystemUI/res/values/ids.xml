@@ -366,6 +366,14 @@
     <item type="id" name="message" id="0x7f0f015b" />
     <item type="id" name="recent_remove_item" id="0x7f0f015c" />
     <item type="id" name="recent_inspect_item" id="0x7f0f015d" />
+    <item type="id" name="multistack_debug_view_stub" id="0x7f0f015e" />
+    <item type="id" name="add_stack" id="0x7f0f015f" />
+    <item type="id" name="resize_stack" id="0x7f0f0160" />
+    <item type="id" name="inset_left" id="0x7f0f0161" />
+    <item type="id" name="inset_top" id="0x7f0f0162" />
+    <item type="id" name="inset_right" id="0x7f0f0163" />
+    <item type="id" name="inset_bottom" id="0x7f0f0164" />
+    <item type="id" name="move_task" id="0x7f0f0165" />
 
     <!-- Whether the icon is from a notification for which targetSdk < L -->
     <item type="id" name="icon_is_pre_L"/>

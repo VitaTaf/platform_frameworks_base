@@ -421,4 +421,24 @@
     <public type="id" name="message" id="0x7f0f015b" />
     <public type="id" name="recent_remove_item" id="0x7f0f015c" />
     <public type="id" name="recent_inspect_item" id="0x7f0f015d" />
+    <public type="color" name="screen_pinning_primary_text" id="0x7f08003e" />
+    <public type="color" name="transparent" id="0x7f08003f" />
+    <public type="color" name="keyguard_avatar_frame_color" id="0x7f080040" />
+    <public type="color" name="keyguard_avatar_frame_shadow_color" id="0x7f080041" />
+    <public type="color" name="keyguard_avatar_nick_color" id="0x7f080042" />
+    <public type="color" name="keyguard_avatar_frame_pressed_color" id="0x7f080043" />
+    <public type="color" name="kg_widget_pager_gradient" id="0x7f080044" />
+    <public type="color" name="facelock_spotlight_mask" id="0x7f080045" />
+    <public type="color" name="clock_white" id="0x7f080046" />
+    <public type="color" name="clock_gray" id="0x7f080047" />
+    <public type="color" name="qs_user_detail_name" id="0x7f080048" />
+    <public type="color" name="segmented_button_text_selector" id="0x7f080049" />
+    <public type="id" name="multistack_debug_view_stub" id="0x7f0f015e" />
+    <public type="id" name="add_stack" id="0x7f0f015f" />
+    <public type="id" name="resize_stack" id="0x7f0f0160" />
+    <public type="id" name="inset_left" id="0x7f0f0161" />
+    <public type="id" name="inset_top" id="0x7f0f0162" />
+    <public type="id" name="inset_right" id="0x7f0f0163" />
+    <public type="id" name="inset_bottom" id="0x7f0f0164" />
+    <public type="id" name="move_task" id="0x7f0f0165" />
 </resources>

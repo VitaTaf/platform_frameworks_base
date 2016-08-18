@@ -281,6 +281,24 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int mPixelFormat;
     Object mQueueLock = new Object();
 
+    // viewgroup containing the normal contents of the statusbar
+    LinearLayout mStatusBarContents;
+
+    // right-hand icons
+    LinearLayout mSystemIconArea;
+    LinearLayout mSystemIcons;
+
+    // left-hand icons
+    LinearLayout mStatusIcons;
+    LinearLayout mStatusIconsKeyguard;
+
+    // the icons themselves
+    IconMerger mNotificationIcons;
+    View mNotificationIconArea;
+
+    // [+>
+    View mMoreIcon;
+
     StatusBarIconController mIconController;
 
     // expanded notifications
@@ -709,6 +727,15 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
+
+        mSystemIconArea = (LinearLayout) mStatusBarView.findViewById(R.id.system_icon_area);
+        mSystemIcons = (LinearLayout) mStatusBarView.findViewById(R.id.system_icons);
+        mStatusIcons = (LinearLayout)mStatusBarView.findViewById(R.id.statusIcons);
+        mNotificationIconArea = mStatusBarView.findViewById(R.id.notification_icon_area_inner);
+        mNotificationIcons = (IconMerger)mStatusBarView.findViewById(R.id.notificationIcons);
+        mMoreIcon = mStatusBarView.findViewById(R.id.moreIcon);
+        mNotificationIcons.setOverflowIndicator(mMoreIcon);
+        mStatusBarContents = (LinearLayout)mStatusBarView.findViewById(R.id.status_bar_contents);
 
         mStackScroller = (NotificationStackScrollLayout) mStatusBarWindow.findViewById(
                 R.id.notification_stack_scroller);
