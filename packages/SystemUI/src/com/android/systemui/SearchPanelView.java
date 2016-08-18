@@ -62,6 +62,7 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
 
     private int mThreshold;
     private boolean mHorizontal;
+    private boolean mIsTouching = false;
 
     private boolean mLaunching;
     private boolean mDragging;
@@ -253,6 +254,11 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel {
     public boolean isShowing() {
         return getVisibility() == View.VISIBLE && !mCircle.isAnimatingOut();
     }
+
+  public boolean isTouching()
+  {
+    return this.mIsTouching;
+  }
 
     public void setBar(BaseStatusBar bar) {
         mBar = bar;
