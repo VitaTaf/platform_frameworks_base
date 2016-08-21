@@ -2847,6 +2847,55 @@ public class AudioService extends IAudioService.Stub {
         }
     }
 
+  private void doNxpHack()
+  {
+    MediaPlayer mediaPlayer = new MediaPlayer();
+    try
+    {
+      mediaPlayer.setDataSource("/system/media/audio/nxphack.ogg");
+      mediaPlayer.setAudioStreamType(1);
+      mediaPlayer.prepare();
+      mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+      {
+        public void onCompletion(MediaPlayer mp)
+        {
+          try
+          {
+            mp.stop();
+            mp.release();
+            return;
+          }
+          catch (IllegalStateException ex) {}
+        }
+      });
+      mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener()
+      {
+        public boolean onError(MediaPlayer mp, int what, int extra)
+        {
+          try
+          {
+            mp.stop();
+            mp.release();
+            return true;
+          }
+          catch (IllegalStateException ex)
+          {
+            for (;;) {}
+          }
+        }
+      });
+      Log.d("AudioService", "Starting nxphack file playback");
+      mediaPlayer.start();
+      return;
+    }
+    catch (IOException ex)
+    {
+      Log.d("AudioService", "IOException prevents nxphack file playback");
+      return;
+    }
+    catch (IllegalStateException ex) {}catch (IllegalArgumentException ex) {}
+  }
+
     private void resetBluetoothSco() {
         synchronized(mScoClients) {
             clearAllScoClients(0, false);
@@ -2982,8 +3031,9 @@ public class AudioService extends IAudioService.Stub {
                     synchronized (mA2dpAvrcpLock) {
                         mA2dp = null;
                         if (mConnectedDevices.containsKey(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP)) {
-                            makeA2dpDeviceUnavailableNow(
+                            makeA2dpSrcUnavailable(
                                     mConnectedDevices.get(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP));
+                                    mForcedUseForComm = AudioSystem.FORCE_NONE;
                         }
                     }
                 }
@@ -4275,8 +4325,6 @@ public class AudioService extends IAudioService.Stub {
                     AudioSystem.setPhoneState(mMode);
 
                     // Restore forced usage for communcations and record
-                    AudioSystem.setForceUse(AudioSystem.FOR_COMMUNICATION, mForcedUseForComm);
-                    AudioSystem.setForceUse(AudioSystem.FOR_RECORD, mForcedUseForComm);
                     AudioSystem.setForceUse(AudioSystem.FOR_SYSTEM, mCameraSoundForced ?
                                     AudioSystem.FORCE_SYSTEM_ENFORCED : AudioSystem.FORCE_NONE);
 
