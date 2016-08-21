@@ -4025,13 +4025,11 @@
     <public type="dimen" name="preference_breadcrumbs_padding_end_material" id="0x010500cd" />
     <public type="dimen" name="preference_screen_header_padding_side_material" id="0x010500ce" />
     <public type="dimen" name="action_bar_default_height_material" id="0x010500cf" />
-    <public type="dimen" name="action_bar_default_padding_material" id="0x010500d0" />
     <public type="dimen" name="action_bar_content_inset_material" id="0x010500d1" />
     <public type="dimen" name="action_bar_icon_vertical_padding_material" id="0x010500d2" />
     <public type="dimen" name="action_bar_subtitle_top_margin_material" id="0x010500d3" />
     <public type="dimen" name="action_bar_subtitle_bottom_margin_material" id="0x010500d4" />
     <public type="dimen" name="list_item_padding_horizontal_material" id="0x010500d5" />
-    <public type="dimen" name="action_bar_navigation_padding_start_material" id="0x010500d6" />
     <public type="dimen" name="action_bar_overflow_padding_start_material" id="0x010500d7" />
     <public type="dimen" name="action_bar_overflow_padding_end_material" id="0x010500d8" />
     <public type="dimen" name="action_bar_elevation_material" id="0x010500d9" />
@@ -4892,7 +4890,6 @@
     <public type="color" name="list_highlight_material" id="0x010600e0" />
     <public type="color" name="tab_highlight_material" id="0x010600e1" />
     <public type="color" name="tab_indicator_text_material" id="0x010600e2" />
-    <public type="drawable" name="control_background_material" id="0x010800dc" />
     <public type="layout" name="alert_dialog_button_bar_material" id="0x010900df" />
     <public type="layout" name="alert_dialog_title_material" id="0x010900e1" />
     <public type="layout" name="time_picker_header_material" id="0x010900e3" />

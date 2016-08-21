@@ -6280,9 +6280,7 @@ public class Activity extends ContextThemeWrapper
             } else {
                 Fragment frag = mFragments.findFragmentByWho(who);
                 if (frag != null) {
-                    if (isRequestPermissionResult(data)) {
                         frag.onActivityResult(requestCode, resultCode, data);
-                    }
                 }
             }
         }
