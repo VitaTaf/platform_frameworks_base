@@ -8162,12 +8162,12 @@
        =============================================================== -->
   <eat-comment />
 
-  <public type="attr" name="trackTint" id="0x010104d8" />
-  <public type="attr" name="trackTintMode" id="0x010104d9" />
-  <public type="attr" name="start" id="0x010104d6" />
-  <public type="attr" name="end" id="0x010104d7" />
-  <public type="attr" name="windowHasLightStatusBar" id="0x010104dd" />
-  <public type="attr" name="numbersInnerTextColor" id="0x010104da" />
+  <public type="attr" name="trackTint" />
+  <public type="attr" name="trackTintMode" />
+  <public type="attr" name="start" />
+  <public type="attr" name="end" />
+  <public type="attr" name="windowHasLightStatusBar" />
+  <public type="attr" name="numbersInnerTextColor" />
   <public type="attr" name="iconTint" />
   <public type="attr" name="iconTintMode" />
   <public type="attr" name="overflowTint" />
@@ -8181,8 +8181,8 @@
   <public type="style" name="ThemeOverlay.Material.Dialog.Alert" />
   <public type="style" name="Theme.Material.Light.LightStatusBar" />
 
-  <public type="attr" name="thumbPosition" id="0x010104db" />
+  <public type="attr" name="thumbPosition" />
 
-  <public type="attr" name="colorBackgroundFloating" id="0x010104dc" />
+  <public type="attr" name="colorBackgroundFloating" />
 
 </resources>
