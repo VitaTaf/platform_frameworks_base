@@ -4686,7 +4686,6 @@
     <public type="id" name="minute" id="0x010203bf" />
     <public type="id" name="amPm" id="0x010203c0" />
     <public type="id" name="divider" id="0x010203c1" />
-    <public type="id" name="time_layout" id="0x010203ed" />
     <public type="id" name="columnWidth" id="0x010201fa" />
     <public type="id" name="spacingWidth" id="0x010201fb" />
     <public type="id" name="spacingWidthUniform" id="0x010201fc" />
@@ -8730,8 +8729,11 @@
   <public type="attr" name="trackTintMode" />
   <public type="attr" name="start" />
   <public type="attr" name="end" />
+  <public type="attr" name="allowUndo" />
   <public type="attr" name="windowHasLightStatusBar" />
   <public type="attr" name="numbersInnerTextColor" />
+  <public type="attr" name="colorBackgroundFloating" />
+  <public type="attr" name="thumbPosition" />
 
   <attr name="__reserved2" format="boolean" />
   <public type="attr" name="__reserved2" />
@@ -8761,12 +8763,5 @@
   <!-- Context menu ID for the "Redo" menu item to redo the last text edit operation. -->
   <public type="id" name="redo" />
   <public type="id" name="replaceText" />
-
-  <!-- TextView attribute to control undo behavior. -->
-  <public type="attr" name="allowUndo" />
-
-  <public type="attr" name="thumbPosition" />
-
-  <public type="attr" name="colorBackgroundFloating" />
 
 </resources>
