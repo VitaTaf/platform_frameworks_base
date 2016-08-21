@@ -3287,7 +3287,9 @@ public class Editor {
 
         protected void dismiss() {
             mIsDragging = false;
+            if (mContainer.isShowing()) {
             mContainer.dismiss();
+            }
             onDetached();
         }
 
@@ -3345,7 +3347,11 @@ public class Editor {
 
         public abstract void updatePosition(float x, float y);
 
-        protected void positionAtCursorOffset(int offset, boolean parentScrolled) {
+        protected void positionAtCursorOffset(int offset, boolean parentScrolled)
+        {
+          positionAtCursorOffset(offset, parentScrolled, false);
+        }
+        protected void positionAtCursorOffset(int offset, boolean parentScrolled, boolean parentPositionChanged) {
             // A HandleView relies on the layout, which may be nulled by external methods
             Layout layout = mTextView.getLayout();
             if (layout == null) {
@@ -3355,7 +3361,7 @@ public class Editor {
             }
 
             boolean offsetChanged = offset != mPreviousOffset;
-            if (offsetChanged || parentScrolled) {
+            if (offsetChanged || parentScrolled || parentPositionChanged) {
                 if (offsetChanged) {
                     updateSelection(offset);
                     addPositionToTouchUpFilter(offset);
@@ -3377,7 +3383,7 @@ public class Editor {
 
         public void updatePosition(int parentPositionX, int parentPositionY,
                 boolean parentPositionChanged, boolean parentScrolled) {
-            positionAtCursorOffset(getCurrentCursorOffset(), parentScrolled);
+            positionAtCursorOffset(getCurrentCursorOffset(), parentScrolled, parentPositionChanged);
             if (parentPositionChanged || mPositionHasChanged) {
                 if (mIsDragging) {
                     // Update touchToWindow offset in case of parent scrolling while dragging

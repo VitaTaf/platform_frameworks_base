@@ -8403,6 +8403,22 @@
     <public type="^attr-private" name="actionModePopupWindowStyle" id="0x01160019" />
     <public type="^attr-private" name="preferenceActivityStyle" id="0x0116001a" />
     <public type="^attr-private" name="preferenceFragmentStyle" id="0x0116001b" />
+    <public type="dimen" name="floating_toolbar_menu_button_side_padding" id="0x01050119" />
+    <public type="dimen" name="floating_toolbar_overflow_side_padding" id="0x0105011a" />
+    <public type="dimen" name="floating_toolbar_text_size" id="0x0105011b" />
+    <public type="dimen" name="floating_toolbar_menu_button_minimum_width" id="0x0105011c" />
+    <public type="dimen" name="floating_toolbar_preferred_width" id="0x0105011d" />
+    <public type="dimen" name="floating_toolbar_minimum_overflow_height" id="0x0105011e" />
+    <public type="dimen" name="floating_toolbar_maximum_overflow_height" id="0x0105011f" />
+    <public type="dimen" name="floating_toolbar_horizontal_margin" id="0x01050120" />
+    <public type="dimen" name="floating_toolbar_vertical_margin" id="0x01050121" />
+    <public type="drawable" name="ic_chevron_end" id="0x01080571" />
+    <public type="drawable" name="ic_chevron_start" id="0x010805c3" />
+    <public type="drawable" name="ic_spinner_caret" id="0x010805d5" />
+    <public type="drawable" name="seekbar_thumb_pressed_to_unpressed" id="0x010805d6" />
+    <public type="drawable" name="seekbar_thumb_pressed_to_unpressed_animation" id="0x010805d7" />
+    <public type="drawable" name="seekbar_thumb_unpressed_to_pressed" id="0x010805d8" />
+    <public type="drawable" name="seekbar_thumb_unpressed_to_pressed_animation" id="0x010805d9" />
 
     <public type="style" name="Widget.FastScroll" id="0x010301e5" />
     <public type="style" name="Widget.StackView" id="0x010301e6" />
