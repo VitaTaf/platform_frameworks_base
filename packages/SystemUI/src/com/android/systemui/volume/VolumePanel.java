@@ -602,7 +602,7 @@ public class VolumePanel extends Handler implements DemoMode {
 
     private int getStreamVolume(int streamType) {
         if (streamType == STREAM_MASTER) {
-            return mAudioManager.getLastAudibleMasterVolume();
+            return mAudioManager.getMasterVolume();
         } else if (streamType == STREAM_REMOTE_MUSIC) {
             if (mStreamControls != null) {
                 StreamControl sc = mStreamControls.get(streamType);
@@ -613,7 +613,7 @@ public class VolumePanel extends Handler implements DemoMode {
             }
             return -1;
         } else {
-            return mAudioManager.getLastAudibleStreamVolume(streamType);
+            return mAudioManager.getStreamVolume(streamType);
         }
     }
 
