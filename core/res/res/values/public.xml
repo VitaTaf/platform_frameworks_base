@@ -8415,6 +8415,33 @@
     <public type="drawable" name="seekbar_thumb_pressed_to_unpressed_animation" id="0x010805d7" />
     <public type="drawable" name="seekbar_thumb_unpressed_to_pressed" id="0x010805d8" />
     <public type="drawable" name="seekbar_thumb_unpressed_to_pressed_animation" id="0x010805d9" />
+    <public type="id" name="time_layout" id="0x010203ee" />
+    <public type="id" name="floating_toolbar_menu_item_image_button" id="0x010203ef" />
+    <public type="id" name="date_picker_header_year" id="0x010203f0" />
+    <public type="id" name="date_picker_header_date" id="0x010203f1" />
+    <public type="id" name="month_view" id="0x010203f2" />
+    <public type="id" name="date_picker_day_picker" id="0x010203f3" />
+    <public type="id" name="date_picker_year_picker" id="0x010203f4" />
+    <public type="id" name="day_picker_view_pager" id="0x010203f5" />
+    <public type="id" name="unpressed" id="0x010203f6" />
+    <public type="dimen" name="action_bar_default_padding_start_material" id="0x010500d6" />
+    <public type="dimen" name="floating_toolbar_menu_image_button_width" id="0x01050122" />
+    <public type="dimen" name="floating_toolbar_menu_image_button_vertical_padding" id="0x01050123" />
+    <public type="dimen" name="floating_toolbar_overflow_image_button_width" id="0x01050124" />
+    <public type="drawable" name="control_background_32dp_material" id="0x010800dc" />
+    <public type="drawable" name="btn_colored_material" id="0x01080247" />
+    <public type="drawable" name="floating_popup_background_dark" id="0x010805da" />
+    <public type="drawable" name="floating_popup_background_light" id="0x010805dd" />
+    <public type="drawable" name="ic_ab_back_material_dark" id="0x010805de" />
+    <public type="drawable" name="scrubber_control_selector_holo" id="0x010805e2" />
+    <public type="drawable" name="ic_ab_back_material_light" id="0x010805e4" />
+    <public type="drawable" name="ic_menu_moreoverflow_material_dark" id="0x010805e5" />
+    <public type="drawable" name="ic_menu_moreoverflow_material_light" id="0x010805e6" />
+    <public type="drawable" name="item_background_borderless_material_dark" id="0x010805e7" />
+    <public type="drawable" name="item_background_borderless_material_light" id="0x010805e8" />
+    <public type="drawable" name="item_background_material_dark" id="0x010805e9" />
+    <public type="drawable" name="item_background_material_light" id="0x0108076c" />
+    <public type="drawable" name="control_background_40dp_material" id="0x0108076d" />
 
     <public type="style" name="Widget.FastScroll" id="0x010301e5" />
     <public type="style" name="Widget.StackView" id="0x010301e6" />
@@ -8754,12 +8781,12 @@
 
   <!-- Context menu ID for the "Paste as plain text" menu item to to copy the current contents
           of the clipboard into the text view without formatting. -->
-  <public type="id" name="pasteAsPlainText" />
+  <public type="id" name="pasteAsPlainText" id="0x010203ea" />
   <!-- Context menu ID for the "Undo" menu item to undo the last text edit operation. -->
-  <public type="id" name="undo" />
+  <public type="id" name="undo" id="0x010203eb" />
   <!-- Context menu ID for the "Redo" menu item to redo the last text edit operation. -->
-  <public type="id" name="redo" />
-  <public type="id" name="replaceText" />
-  <public type="id" name="shareText" />
+  <public type="id" name="redo" id="0x010203ec" />
+  <public type="id" name="replaceText" id="0x010203ed" />
+  <public type="id" name="shareText" id="0x010203f7" />
 
 </resources>
