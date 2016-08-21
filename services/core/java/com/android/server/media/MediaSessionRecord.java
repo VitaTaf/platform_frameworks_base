@@ -246,37 +246,77 @@ public class MediaSessionRecord implements IBinder.DeathRecipient {
         if (isPlaybackActive(false) || hasFlag(MediaSession.FLAG_EXCLUSIVE_GLOBAL_PRIORITY)) {
             flags &= ~AudioManager.FLAG_PLAY_SOUND;
         }
+        boolean isMute = direction == MediaSessionManager.DIRECTION_MUTE;
+        if (direction > 1) {
+            direction = 1;
+        } else if (direction < -1) {
+            direction = -1;
+        }
         if (mVolumeType == PlaybackInfo.PLAYBACK_TYPE_LOCAL) {
             if (mUseMasterVolume) {
                 // If this device only uses master volume and playback is local
                 // just adjust the master volume and return.
-                mAudioManagerInternal.adjustMasterVolumeForUid(direction, flags, packageName,
-                        uid);
+                boolean isMasterMute = mAudioManager.isMasterMute();
+                if (isMute) {
+                    mAudioManagerInternal.setMasterMuteForUid(!isMasterMute,
+                            flags, packageName, mService.mICallback, uid);
+                } else {
+                    mAudioManagerInternal.adjustMasterVolumeForUid(direction, flags, packageName,
+                            uid);
+                    if (isMasterMute) {
+                        mAudioManagerInternal.setMasterMuteForUid(false,
+                                flags, packageName, mService.mICallback, uid);
+                    }
+                }
                 return;
             }
             int stream = AudioAttributes.toLegacyStreamType(mAudioAttrs);
+            boolean isStreamMute = mAudioManager.isStreamMute(stream);
             if (useSuggested) {
                 if (AudioSystem.isStreamActive(stream, 0)) {
-                    mAudioManagerInternal.adjustSuggestedStreamVolumeForUid(stream, direction,
-                            flags, packageName, uid);
+                    if (isMute) {
+                        mAudioManager.setStreamMute(stream, !isStreamMute);
+                    } else {
+                        mAudioManagerInternal.adjustSuggestedStreamVolumeForUid(stream, direction,
+                                flags, packageName, uid);
+                        if (isStreamMute && direction != 0) {
+                            mAudioManager.setStreamMute(stream, false);
+                        }
+                    }
                 } else {
                     flags |= previousFlagPlaySound;
-                    mAudioManagerInternal.adjustSuggestedStreamVolumeForUid(
-                            AudioManager.USE_DEFAULT_STREAM_TYPE, direction, flags, packageName,
-                            uid);
+                    isStreamMute =
+                            mAudioManager.isStreamMute(AudioManager.USE_DEFAULT_STREAM_TYPE);
+                    if (isMute) {
+                        mAudioManager.setStreamMute(AudioManager.USE_DEFAULT_STREAM_TYPE,
+                                !isStreamMute);
+                    } else {
+                        mAudioManagerInternal.adjustSuggestedStreamVolumeForUid(
+                                AudioManager.USE_DEFAULT_STREAM_TYPE, direction, flags, packageName,
+                                uid);
+                        if (isStreamMute && direction != 0) {
+                            mAudioManager.setStreamMute(AudioManager.USE_DEFAULT_STREAM_TYPE,
+                                    false);
+                        }
+                    }
                 }
             } else {
-                mAudioManagerInternal.adjustStreamVolumeForUid(stream, direction, flags,
-                        packageName, uid);
+                if (isMute) {
+                    mAudioManager.setStreamMute(stream, !isStreamMute);
+                } else {
+                    mAudioManagerInternal.adjustStreamVolumeForUid(stream, direction, flags,
+                            packageName, uid);
+                    if (isStreamMute && direction != 0) {
+                        mAudioManager.setStreamMute(stream, false);
+                    }
+                }
             }
         } else {
             if (mVolumeControlType == VolumeProvider.VOLUME_CONTROL_FIXED) {
                 // Nothing to do, the volume cannot be changed
                 return;
             }
-            if (direction == AudioManager.ADJUST_TOGGLE_MUTE
-                    || direction == AudioManager.ADJUST_MUTE
-                    || direction == AudioManager.ADJUST_UNMUTE) {
+            if (isMute) {
                 Log.w(TAG, "Muting remote playback is not supported");
                 return;
             }

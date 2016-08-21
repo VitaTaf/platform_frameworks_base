@@ -22,7 +22,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.media.AudioManager;
 import android.os.IBinder;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
@@ -415,16 +414,9 @@ public final class BluetoothA2dp implements BluetoothProfile {
     }
 
     /**
-     * Tells remote device to adjust volume. Only if absolute volume is
-     * supported. Uses the following values:
-     * <ul>
-     * <li>{@link AudioManager#ADJUST_LOWER}</li>
-     * <li>{@link AudioManager#ADJUST_RAISE}</li>
-     * <li>{@link AudioManager#ADJUST_MUTE}</li>
-     * <li>{@link AudioManager#ADJUST_UNMUTE}</li>
-     * </ul>
+     * Tells remote device to adjust volume. Only if absolute volume is supported.
      *
-     * @param direction One of the supported adjust values.
+     * @param direction 1 to increase volume, or -1 to decrease volume
      * @hide
      */
     public void adjustAvrcpAbsoluteVolume(int direction) {
