@@ -6260,9 +6260,7 @@ public class Activity extends ContextThemeWrapper
 
     void dispatchActivityResult(String who, int requestCode,
         int resultCode, Intent data) {
-        if (false) Log.v(
-            TAG, "Dispatching result: who=" + who + ", reqCode=" + requestCode
-            + ", resCode=" + resultCode + ", data=" + data);
+    if (mInstrumentation.execDispatchActivityResult(this, who, requestCode, resultCode, data) == false) {
         mFragments.noteStateNotSaved();
         if (who == null) {
             onActivityResult(requestCode, resultCode, data);
@@ -6281,6 +6279,7 @@ public class Activity extends ContextThemeWrapper
                 Fragment frag = mFragments.findFragmentByWho(who);
                 if (frag != null) {
                         frag.onActivityResult(requestCode, resultCode, data);
+                    }
                 }
             }
         }

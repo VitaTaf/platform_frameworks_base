@@ -217,7 +217,12 @@ public class Instrumentation {
             mPerfMetrics = mPerformanceCollector.endSnapshot();
         }
     }
-    
+
+    public boolean execDispatchActivityResult(Context context, String who, int requestCode, int resultCode, Intent data)
+    {
+        return false;
+    }
+
     /**
      * Called when the instrumented application is stopping, after all of the
      * normal application cleanup has occurred.
