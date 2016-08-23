@@ -8491,6 +8491,7 @@
     <public type="array" name="config_lmk_minfreehigh" id="0x01070052" />
     <public type="array" name="config_erase_recovery_blacklist" id="0x01070053" />
     <public type="array" name="config_erase_recovery_prefix" id="0x01070054" />
+    <public type="dimen" name="action_bar_default_padding_end_material" id="0x01050125" />
 
     <public type="style" name="Widget.FastScroll" id="0x010301e5" />
     <public type="style" name="Widget.StackView" id="0x010301e6" />
