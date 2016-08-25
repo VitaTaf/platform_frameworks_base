@@ -134,7 +134,7 @@ import android.util.Slog;
 import android.view.DisplayAdjustments;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
-import android.view.PhoneLayoutInflater;
+import com.android.internal.policy.PhoneLayoutInflater;
 import android.view.WindowManagerImpl;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.CaptioningManager;

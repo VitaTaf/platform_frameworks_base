@@ -6308,7 +6308,6 @@
     <public type="string" name="storage_internal" id="0x010405a5" />
     <public type="string" name="storage_sd_card" id="0x010405a6" />
     <public type="string" name="storage_usb" id="0x010405a7" />
-    <public type="string" name="extract_edit_menu_button" id="0x010405a8" />
     <public type="string" name="data_usage_warning_title" id="0x010405a9" />
     <public type="string" name="data_usage_warning_body" id="0x010405aa" />
     <public type="string" name="data_usage_3g_limit_title" id="0x010405ab" />
@@ -6558,6 +6557,13 @@
     <public type="string" name="stk_cc_ss_to_dial" id="0x010406a0" />
     <public type="string" name="stk_cc_ss_to_ussd" id="0x010406a1" />
     <public type="string" name="stk_cc_ss_to_ss" id="0x010406a2" />
+    <public type="string" name="date_picker_prev_month_button" id="0x0104004a" />
+    <public type="string" name="date_picker_next_month_button" id="0x0104004b" />
+    <public type="string" name="date_picker_month_typeface" id="0x0104004c" />
+    <public type="string" name="date_picker_day_of_week_typeface" id="0x0104004d" />
+    <public type="string" name="date_picker_day_typeface" id="0x0104004e" />
+    <public type="string" name="floating_toolbar_open_overflow_description" id="0x0104004f" />
+    <public type="string" name="floating_toolbar_close_overflow_description" id="0x01040050" />
 
     <public type="style" name="WindowTitleBackground" id="0x010302d3" />
     <public type="style" name="WindowTitle" id="0x010302d4" />

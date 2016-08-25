@@ -119,7 +119,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewDebug;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewHierarchyEncoder;
 import android.view.ViewParent;
 import android.view.ViewRootImpl;
 import android.view.ViewStructure;
