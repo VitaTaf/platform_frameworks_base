@@ -16,7 +16,6 @@
 package android.widget;
 
 import android.annotation.Nullable;
-import android.annotation.NonNull;
 import android.annotation.StyleRes;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -29,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.ViewHierarchyEncoder;
 import android.view.accessibility.AccessibilityEvent;
 import com.android.internal.view.menu.ActionMenuItemView;
 import com.android.internal.view.menu.MenuBuilder;
@@ -832,18 +830,6 @@ public class ActionMenuView extends LinearLayout implements MenuBuilder.ItemInvo
         public LayoutParams(int width, int height, boolean isOverflowButton) {
             super(width, height);
             this.isOverflowButton = isOverflowButton;
-        }
-
-        /** @hide */
-        @Override
-        protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
-            super.encodeProperties(encoder);
-
-            encoder.addProperty("layout:overFlowButton", isOverflowButton);
-            encoder.addProperty("layout:cellsUsed", cellsUsed);
-            encoder.addProperty("layout:extraPixels", extraPixels);
-            encoder.addProperty("layout:expandable", expandable);
-            encoder.addProperty("layout:preventEdgeOffset", preventEdgeOffset);
         }
     }
 }

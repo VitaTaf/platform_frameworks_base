@@ -17,7 +17,6 @@
 package android.widget;
 
 import android.annotation.IntDef;
-import android.annotation.NonNull;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -32,7 +31,6 @@ import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.ViewHierarchyEncoder;
 import android.view.ViewRootImpl;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -2423,12 +2421,5 @@ public class GridView extends AbsListView {
         final CollectionItemInfo itemInfo = CollectionItemInfo.obtain(
                 row, 1, column, 1, isHeading, isSelected);
         info.setCollectionItemInfo(itemInfo);
-    }
-
-    /** @hide */
-    @Override
-    protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
-        super.encodeProperties(encoder);
-        encoder.addProperty("numColumns", getNumColumns());
     }
 }

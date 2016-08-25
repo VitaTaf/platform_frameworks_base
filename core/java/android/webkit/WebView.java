@@ -16,7 +16,6 @@
 
 package android.webkit;
 
-import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.annotation.Widget;
 import android.content.Context;
@@ -44,7 +43,6 @@ import android.view.View;
 import android.view.ViewStructure;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.ViewHierarchyEncoder;
 import android.view.ViewTreeObserver;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -2550,19 +2548,5 @@ public class WebView extends AbsoluteLayout
     public void onFinishTemporaryDetach() {
         super.onFinishTemporaryDetach();
         mProvider.getViewDelegate().onFinishTemporaryDetach();
-    }
-
-    /** @hide */
-    @Override
-    protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
-        super.encodeProperties(encoder);
-
-        checkThread();
-        encoder.addProperty("webview:contentHeight", mProvider.getContentHeight());
-        encoder.addProperty("webview:contentWidth", mProvider.getContentWidth());
-        encoder.addProperty("webview:scale", mProvider.getScale());
-        encoder.addProperty("webview:title", mProvider.getTitle());
-        encoder.addProperty("webview:url", mProvider.getUrl());
-        encoder.addProperty("webview:originalUrl", mProvider.getOriginalUrl());
     }
 }

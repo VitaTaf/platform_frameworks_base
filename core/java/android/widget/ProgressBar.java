@@ -16,7 +16,6 @@
 
 package android.widget;
 
-import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.graphics.PorterDuff;
 
@@ -50,7 +49,6 @@ import android.view.Gravity;
 import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewDebug;
-import android.view.ViewHierarchyEncoder;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -1897,17 +1895,6 @@ public class ProgressBar extends View {
             removeCallbacks(mAccessibilityEventSender);
         }
         postDelayed(mAccessibilityEventSender, TIMEOUT_SEND_ACCESSIBILITY_EVENT);
-    }
-
-    /** @hide */
-    @Override
-    protected void encodeProperties(@NonNull ViewHierarchyEncoder stream) {
-        super.encodeProperties(stream);
-
-        stream.addProperty("progress:max", getMax());
-        stream.addProperty("progress:progress", getProgress());
-        stream.addProperty("progress:secondaryProgress", getSecondaryProgress());
-        stream.addProperty("progress:indeterminate", isIndeterminate());
     }
 
     /**

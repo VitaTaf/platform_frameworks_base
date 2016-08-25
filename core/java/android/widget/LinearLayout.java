@@ -19,7 +19,6 @@ package android.widget;
 import com.android.internal.R;
 
 import android.annotation.IntDef;
-import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -29,7 +28,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-import android.view.ViewHierarchyEncoder;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.RemoteViews.RemoteView;
 
 import java.lang.annotation.Retention;
@@ -1814,20 +1814,6 @@ public class LinearLayout extends ViewGroup {
         return LinearLayout.class.getName();
     }
 
-    /** @hide */
-    @Override
-    protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
-        super.encodeProperties(encoder);
-        encoder.addProperty("layout:baselineAligned", mBaselineAligned);
-        encoder.addProperty("layout:baselineAlignedChildIndex", mBaselineAlignedChildIndex);
-        encoder.addProperty("measurement:baselineChildTop", mBaselineChildTop);
-        encoder.addProperty("measurement:orientation", mOrientation);
-        encoder.addProperty("measurement:gravity", mGravity);
-        encoder.addProperty("measurement:totalLength", mTotalLength);
-        encoder.addProperty("layout:totalLength", mTotalLength);
-        encoder.addProperty("layout:useLargestChild", mUseLargestChild);
-    }
-
     /**
      * Per-child layout information associated with ViewLinearLayout.
      * 
@@ -1935,15 +1921,6 @@ public class LinearLayout extends ViewGroup {
         public String debug(String output) {
             return output + "LinearLayout.LayoutParams={width=" + sizeToString(width) +
                     ", height=" + sizeToString(height) + " weight=" + weight +  "}";
-        }
-
-        /** @hide */
-        @Override
-        protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
-            super.encodeProperties(encoder);
-
-            encoder.addProperty("layout:weight", weight);
-            encoder.addProperty("layout:gravity", gravity);
         }
     }
 }
