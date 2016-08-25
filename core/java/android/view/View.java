@@ -16064,7 +16064,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                     }
                 } else {
                     mPrivateFlags &= ~PFLAG_DIRTY_MASK;
-                    ((HardwareCanvas) canvas).drawRenderNode(renderNode, parentFlags);
+                    ((HardwareCanvas) canvas).drawRenderNode(renderNode, null, parentFlags);
                 }
             }
         } else if (cache != null) {

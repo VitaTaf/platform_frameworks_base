@@ -8796,7 +8796,6 @@
     <public type="attr" name="dialogPreferredPadding" id="0x010104d3" />
     <public type="attr" name="searchHintIcon" id="0x010104d4" />
     <public type="attr" name="revisionCode" />
-    <public type="attr" name="fraction" />
 
     <public type="style" name="Theme.DeviceDefault.Dialog.Alert" />
     <public type="style" name="Theme.DeviceDefault.Light.Dialog.Alert" />
@@ -8836,6 +8835,7 @@
   <public type="attr" name="logoDescription" />
   <public type="attr" name="titleTextColor" />
   <public type="attr" name="subtitleTextColor" />
+  <public type="attr" name="fraction" />
   <public type="attr" name="scrollIndicators" />
 
   <public type="style" name="Widget.Material.Button.Colored" id="0x010304c1" />
@@ -8856,9 +8856,9 @@
   <public type="id" name="accessibilityActionStylusButtonPress" />
   <public type="id" name="accessibilityActionShowOnScreen" />
   <public type="id" name="accessibilityActionScrollToPosition" />
-  <public type="id" name="accessibilityActionScrollUp" />
-  <public type="id" name="accessibilityActionScrollLeft" />
-  <public type="id" name="accessibilityActionScrollDown" />
-  <public type="id" name="accessibilityActionScrollRight" />
+  <public type="id" name="accessibilityActionScrollUp" id="0x010203fe" />
+  <public type="id" name="accessibilityActionScrollLeft" id="0x010203ff" />
+  <public type="id" name="accessibilityActionScrollDown" id="0x01020400" />
+  <public type="id" name="accessibilityActionScrollRight" id="0x01020401" />
 
 </resources>
