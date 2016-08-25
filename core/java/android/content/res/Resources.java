@@ -58,7 +58,6 @@ import android.util.Pools.SynchronizedPool;
 import android.util.Slog;
 import android.util.TypedValue;
 import android.view.ViewDebug;
-import android.view.ViewHierarchyEncoder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1799,17 +1798,6 @@ public class Resources {
             return themes;
         }
     }
-
-        /** @hide */
-        public void encode(@NonNull ViewHierarchyEncoder encoder) {
-            encoder.beginObject(this);
-            // TODO: revert after getTheme() is fixed
-            String[] properties = new String[0]; // getTheme();
-            for (int i = 0; i < properties.length; i += 2) {
-                encoder.addProperty(properties[i], properties[i+1]);
-            }
-            encoder.endObject();
-        }
 
     /**
      * Generate a new Theme object for this set of Resources.  It initially
