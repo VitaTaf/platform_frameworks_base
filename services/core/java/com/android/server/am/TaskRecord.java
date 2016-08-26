@@ -79,7 +79,6 @@ final class TaskRecord {
     private static final String ATTR_TASK_AFFILIATION_COLOR = "task_affiliation_color";
     private static final String ATTR_CALLING_UID = "calling_uid";
     private static final String ATTR_CALLING_PACKAGE = "calling_package";
-    private static final String ATTR_RESIZEABLE = "resizeable";
 
     private static final String TASK_THUMBNAIL_SUFFIX = "_task_thumbnail";
 
@@ -110,11 +109,9 @@ final class TaskRecord {
 
     String stringName;      // caching of toString() result.
     int userId;             // user for which this task was created
+    int creatorUid;         // The app uid that originally created the task
 
     int numFullscreen;      // Number of fullscreen activities.
-
-    boolean mResizeable;    // Activities in the task resizeable. Based on the resizable setting of
-                            // the root activity.
 
     // This represents the last resolved activity values for this task
     // NOTE: This value needs to be persisted with each task
@@ -179,7 +176,7 @@ final class TaskRecord {
         voiceSession = _voiceSession;
         voiceInteractor = _voiceInteractor;
         isAvailable = true;
-        mActivities = new ArrayList<>();
+        mActivities = new ArrayList<ActivityRecord>();
         setIntent(_intent, info);
     }
 
@@ -194,7 +191,7 @@ final class TaskRecord {
         voiceSession = null;
         voiceInteractor = null;
         isAvailable = true;
-        mActivities = new ArrayList<>();
+        mActivities = new ArrayList<ActivityRecord>();
         setIntent(_intent, info);
 
         taskType = ActivityRecord.APPLICATION_ACTIVITY_TYPE;
@@ -213,15 +210,15 @@ final class TaskRecord {
         mCallingPackage = info.packageName;
     }
 
-    private TaskRecord(ActivityManagerService service, int _taskId, Intent _intent,
-            Intent _affinityIntent, String _affinity, String _rootAffinity,
-            ComponentName _realActivity, ComponentName _origActivity, boolean _rootWasReset,
-            boolean _autoRemoveRecents, boolean _askedCompatMode, int _taskType, int _userId,
-            int _effectiveUid, String _lastDescription, ArrayList<ActivityRecord> activities,
-            long _firstActiveTime, long _lastActiveTime, long lastTimeMoved,
-            boolean neverRelinquishIdentity, TaskDescription _lastTaskDescription,
-            int taskAffiliation, int prevTaskId, int nextTaskId, int taskAffiliationColor,
-            int callingUid, String callingPackage, boolean resizeable) {
+    TaskRecord(ActivityManagerService service, int _taskId, Intent _intent, Intent _affinityIntent,
+            String _affinity, String _rootAffinity, ComponentName _realActivity,
+            ComponentName _origActivity, boolean _rootWasReset, boolean _autoRemoveRecents,
+            boolean _askedCompatMode, int _taskType, int _userId, int _effectiveUid,
+            String _lastDescription, ArrayList<ActivityRecord> activities, long _firstActiveTime,
+            long _lastActiveTime, long lastTimeMoved, boolean neverRelinquishIdentity,
+            TaskDescription _lastTaskDescription, int taskAffiliation,
+            int prevTaskId, int nextTaskId, int taskAffiliationColor, int callingUid,
+            String callingPackage) {
         mService = service;
         mFilename = String.valueOf(_taskId) + TASK_THUMBNAIL_SUFFIX +
                 TaskPersister.IMAGE_EXTENSION;
@@ -230,7 +227,7 @@ final class TaskRecord {
         intent = _intent;
         affinityIntent = _affinityIntent;
         affinity = _affinity;
-        rootAffinity = _rootAffinity;
+        rootAffinity = _affinity;
         voiceSession = null;
         voiceInteractor = null;
         realActivity = _realActivity;
@@ -256,7 +253,6 @@ final class TaskRecord {
         mNextAffiliateTaskId = nextTaskId;
         mCallingUid = callingUid;
         mCallingPackage = callingPackage;
-        mResizeable = resizeable;
     }
 
     void touchActiveTime() {
@@ -356,7 +352,6 @@ final class TaskRecord {
         } else {
             autoRemoveRecents = false;
         }
-        mResizeable = info.resizeable;
     }
 
     void setTaskToReturnTo(int taskToReturnTo) {
@@ -855,7 +850,6 @@ final class TaskRecord {
         out.attribute(null, ATTR_NEXT_AFFILIATION, String.valueOf(mNextAffiliateTaskId));
         out.attribute(null, ATTR_CALLING_UID, String.valueOf(mCallingUid));
         out.attribute(null, ATTR_CALLING_PACKAGE, mCallingPackage == null ? "" : mCallingPackage);
-        out.attribute(null, ATTR_RESIZEABLE, String.valueOf(mResizeable));
 
         if (affinityIntent != null) {
             out.startTag(null, TAG_AFFINITYINTENT);
@@ -917,7 +911,6 @@ final class TaskRecord {
         int nextTaskId = INVALID_TASK_ID;
         int callingUid = -1;
         String callingPackage = "";
-        boolean resizeable = false;
 
         for (int attrNdx = in.getAttributeCount() - 1; attrNdx >= 0; --attrNdx) {
             final String attrName = in.getAttributeName(attrNdx);
@@ -971,8 +964,6 @@ final class TaskRecord {
                 callingUid = Integer.valueOf(attrValue);
             } else if (ATTR_CALLING_PACKAGE.equals(attrName)) {
                 callingPackage = attrValue;
-            } else if (ATTR_RESIZEABLE.equals(attrName)) {
-                resizeable = Boolean.valueOf(attrValue);
             } else {
                 Slog.w(TAG, "TaskRecord: Unknown attribute=" + attrName);
             }
@@ -1002,11 +993,13 @@ final class TaskRecord {
                 }
             }
         }
+
         if (!hasRootAffinity) {
             rootAffinity = affinity;
         } else if ("@".equals(rootAffinity)) {
             rootAffinity = null;
         }
+
         if (effectiveUid <= 0) {
             Intent checkIntent = intent != null ? intent : affinityIntent;
             effectiveUid = 0;
@@ -1032,7 +1025,7 @@ final class TaskRecord {
                 autoRemoveRecents, askedCompatMode, taskType, userId, effectiveUid, lastDescription,
                 activities, firstActiveTime, lastActiveTime, lastTimeOnTop, neverRelinquishIdentity,
                 taskDescription, taskAffiliation, prevTaskId, nextTaskId, taskAffiliationColor,
-                callingUid, callingPackage, resizeable);
+                callingUid, callingPackage);
 
         for (int activityNdx = activities.size() - 1; activityNdx >=0; --activityNdx) {
             activities.get(activityNdx).task = task;
@@ -1128,7 +1121,6 @@ final class TaskRecord {
             pw.print(prefix); pw.print("lastDescription="); pw.println(lastDescription);
         }
         pw.print(prefix); pw.print("hasBeenVisible="); pw.print(hasBeenVisible);
-                pw.print(" mResizeable="); pw.print(mResizeable);
                 pw.print(" firstActiveTime="); pw.print(lastActiveTime);
                 pw.print(" lastActiveTime="); pw.print(lastActiveTime);
                 pw.print(" (inactive for ");

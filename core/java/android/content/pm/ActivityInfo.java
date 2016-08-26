@@ -643,12 +643,6 @@ public class ActivityInfo extends ComponentInfo
      */
     public String parentActivityName;
 
-    /**
-     * Value indicating if the activity is resizeable to any dimension.
-     * See {@link android.R.attr#resizeableActivity}.
-     */
-    public boolean resizeable;
-
     public ActivityInfo() {
     }
 
@@ -710,7 +704,6 @@ public class ActivityInfo extends ComponentInfo
         if (uiOptions != 0) {
             pw.println(prefix + " uiOptions=0x" + Integer.toHexString(uiOptions));
         }
-        pw.println(prefix + "resizeable=" + resizeable);
         super.dumpBack(pw, prefix);
     }
     
@@ -739,7 +732,6 @@ public class ActivityInfo extends ComponentInfo
         dest.writeString(parentActivityName);
         dest.writeInt(persistableMode);
         dest.writeInt(maxRecents);
-        dest.writeInt(resizeable ? 1 : 0);
     }
 
     public static final Parcelable.Creator<ActivityInfo> CREATOR
@@ -767,6 +759,5 @@ public class ActivityInfo extends ComponentInfo
         parentActivityName = source.readString();
         persistableMode = source.readInt();
         maxRecents = source.readInt();
-        resizeable = (source.readInt() == 1);
     }
 }
