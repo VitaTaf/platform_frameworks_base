@@ -153,6 +153,12 @@ public class PackageParser {
                     android.os.Build.VERSION_CODES.DONUT, 0)
     };
 
+    private static final String PACKAGE_MULTI_USER_COMPATIBLE = "com.motorola.multiusercompatible";
+    public static final int PACKAGE_PRIMARY_USER_ONLY_STATE_DEFAULT = 101;
+    public static final int PACKAGE_PRIMARY_USER_ONLY_STATE_DISABLED = 103;
+    public static final int PACKAGE_PRIMARY_USER_ONLY_STATE_ENABLED = 102;
+    public static final int PACKAGE_PRIMARY_USER_ONLY_STATE_INVALID = 100;
+
     /**
      * List of permissions that have been split into more granular or dependent
      * permissions.
@@ -1445,6 +1451,21 @@ public class PackageParser {
                 if (!parseBaseApplication(pkg, res, parser, attrs, flags, outError)) {
                     return null;
                 }
+
+                pkg.mPkgPrimaryUserOnly = 101;
+              if (pkg.mAppMetaData != null)
+              {
+                if (pkg.mAppMetaData.containsKey("com.motorola.multiusercompatible")) {
+                  if (pkg.mAppMetaData.getBoolean("com.motorola.multiusercompatible", false))
+                  {
+                    pkg.mPkgPrimaryUserOnly = 103;
+                  }
+                  else
+                  {
+                    pkg.mPkgPrimaryUserOnly = 102;
+                  }
+                }
+              }
             } else if (tagName.equals("overlay")) {
                 pkg.mTrustedOverlay = trustedOverlay;
 
@@ -3188,6 +3209,16 @@ public class PackageParser {
                 if (!parseIntent(res, parser, attrs, true, intent, outError)) {
                     return null;
                 }
+                if ((res.getBoolean(17957082)) && 
+                    (intent.hasAction("android.provider.Telephony.SMS_RECEIVED")) && 
+                    (!owner.packageName.equals("com.lenovo.safecenter")) && 
+                    (intent.getPriority() >= 1000))
+                {
+                    if (owner.packageName.equals("com.lenovo.safecenter.lenovoAntiSpam")) {
+                        intent.setPriority(999);
+                    }
+                    intent.setPriority(900);
+                }
                 if (intent.countActions() == 0) {
                     Slog.w(TAG, "No actions in intent filter at "
                             + mArchiveSourcePath + " "
@@ -4313,6 +4344,8 @@ public class PackageParser {
         public String mOverlayTarget;
         public int mOverlayPriority;
         public boolean mTrustedOverlay;
+
+        public int mPkgPrimaryUserOnly = 101;
 
         /**
          * Data used to feed the KeySetManagerService
