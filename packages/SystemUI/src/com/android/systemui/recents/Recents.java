@@ -707,7 +707,7 @@ public class Recents extends SystemUI
                     c.setBitmap(null);
                 }
             }
-            return thumbnail.createAshmemBitmap();
+            return thumbnail;
         }
         return null;
     }
