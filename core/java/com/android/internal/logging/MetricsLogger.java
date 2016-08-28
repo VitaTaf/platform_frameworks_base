@@ -25,18 +25,26 @@ import android.os.Build;
  * @hide
  */
 public class MetricsLogger implements MetricsConstants {
-    // These constants are temporary, they should migrate to MetricsConstants.
-    public static final int APPLICATIONS_ADVANCED = 132;
-    public static final int LOCATION_SCANNING = 133;
-    public static final int MANAGE_APPLICATIONS_ALL = 134;
-    public static final int MANAGE_APPLICATIONS_NOTIFICATIONS = 135;
 
-    public static final int ACTION_WIFI_ADD_NETWORK = 136;
-    public static final int ACTION_WIFI_CONNECT = 137;
-    public static final int ACTION_WIFI_FORCE_SCAN = 138;
-    public static final int ACTION_WIFI_FORGET = 139;
-    public static final int ACTION_WIFI_OFF = 140;
-    public static final int ACTION_WIFI_ON = 141;
+    public static final int VOLUME_DIALOG = 207;
+    public static final int VOLUME_DIALOG_DETAILS = 208;
+    public static final int ACTION_VOLUME_SLIDER = 209;
+    public static final int ACTION_VOLUME_STREAM = 210;
+    public static final int ACTION_VOLUME_KEY = 211;
+    public static final int ACTION_VOLUME_ICON = 212;
+    public static final int ACTION_RINGER_MODE = 213;
+    public static final int ACTION_ACTIVITY_CHOOSER_SHOWN = 214;
+    public static final int ACTION_ACTIVITY_CHOOSER_PICKED_APP_TARGET = 215;
+    public static final int ACTION_ACTIVITY_CHOOSER_PICKED_SERVICE_TARGET = 216;
+    public static final int ACTION_ACTIVITY_CHOOSER_PICKED_STANDARD_TARGET = 217;
+    public static final int ACTION_BRIGHTNESS = 218;
+    public static final int ACTION_BRIGHTNESS_AUTO = 219;
+    public static final int BRIGHTNESS_DIALOG = 220;
+    public static final int SYSTEM_ALERT_WINDOW_APPS = 221;
+    public static final int DREAMING = 222;
+    public static final int DOZING = 223;
+    public static final int OVERVIEW_ACTIVITY = 224;
+    // Temporary constants go here, to await migration to MetricsConstants.
 
     public static void visible(Context context, int category) throws IllegalArgumentException {
         if (Build.IS_DEBUGGABLE && category == VIEW_UNKNOWN) {

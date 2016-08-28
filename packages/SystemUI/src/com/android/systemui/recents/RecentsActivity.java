@@ -34,6 +34,8 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.Toast;
 
+import com.android.internal.logging.MetricsConstants;
+import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
 import com.android.systemui.recents.misc.Console;
@@ -226,6 +228,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // Mark the task that is the launch target
         int taskStackCount = stacks.size();
+        int launchTaskIndexInStack = 0;
         if (mConfig.launchedToTaskId != -1) {
             for (int i = 0; i < taskStackCount; i++) {
                 TaskStack stack = stacks.get(i);
@@ -235,6 +238,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
                     Task t = tasks.get(j);
                     if (t.key.id == mConfig.launchedToTaskId) {
                         t.isLaunchTarget = true;
+                        launchTaskIndexInStack = tasks.size() - j - 1;
                         break;
                     }
                 }
@@ -261,6 +265,28 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
 
         // Animate the SystemUI scrims into view
         mScrimViews.prepareEnterRecentsAnimation();
+
+        // Keep track of whether we launched from the nav bar button or via alt-tab
+        if (mConfig.launchedWithAltTab) {
+            MetricsLogger.count(this, "overview_trigger_alttab", 1);
+        } else {
+            MetricsLogger.count(this, "overview_trigger_nav_btn", 1);
+        }
+        // Keep track of whether we launched from an app or from home
+        if (mConfig.launchedFromAppWithThumbnail) {
+            MetricsLogger.count(this, "overview_source_app", 1);
+            // If from an app, track the stack index of the app in the stack (for affiliated tasks)
+            MetricsLogger.histogram(this, "overview_source_app_index", launchTaskIndexInStack);
+        } else {
+            MetricsLogger.count(this, "overview_source_home", 1);
+        }
+        // Keep track of the total stack task count
+        int taskCount = 0;
+        for (int i = 0; i < stacks.size(); i++) {
+            TaskStack stack = stacks.get(i);
+            taskCount += stack.getTaskCount();
+        }
+        MetricsLogger.histogram(this, "overview_task_count", taskCount);
     }
 
     /** Dismisses recents if we are already visible and the intent is to toggle the recents view */
@@ -385,6 +411,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     @Override
     protected void onStart() {
         super.onStart();
+        MetricsLogger.visible(this, MetricsLogger.OVERVIEW_ACTIVITY);
         RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
         SystemServicesProxy ssp = loader.getSystemServicesProxy();
         Recents.notifyVisibilityChanged(this, ssp, true);
@@ -425,6 +452,7 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
     @Override
     protected void onStop() {
         super.onStop();
+        MetricsLogger.hidden(this, MetricsLogger.OVERVIEW_ACTIVITY);
         RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
         SystemServicesProxy ssp = loader.getSystemServicesProxy();
         Recents.notifyVisibilityChanged(this, ssp, false);
@@ -509,6 +537,9 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
             case KeyEvent.KEYCODE_DEL:
             case KeyEvent.KEYCODE_FORWARD_DEL: {
                 mRecentsView.dismissFocusedTask();
+                // Keep track of deletions by keyboard
+                MetricsLogger.histogram(this, "overview_task_dismissed_source",
+                        Constants.Metrics.DismissSourceKeyboard);
                 return true;
             }
             default:
@@ -602,6 +633,8 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
         RecentsTaskLoader loader = RecentsTaskLoader.getInstance();
         SystemServicesProxy ssp = loader.getSystemServicesProxy();
         Recents.startScreenPinning(this, ssp);
+
+        MetricsLogger.count(this, "overview_screen_pinned", 1);
     }
 
     @Override
