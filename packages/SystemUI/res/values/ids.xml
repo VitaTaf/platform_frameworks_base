@@ -374,7 +374,6 @@
     <item type="id" name="inset_right" id="0x7f0f0163" />
     <item type="id" name="inset_bottom" id="0x7f0f0164" />
     <item type="id" name="move_task" id="0x7f0f0165" />
-    <item type="id" name="notification_volumeui"/>
 
     <!-- Whether the icon is from a notification for which targetSdk < L -->
     <item type="id" name="icon_is_pre_L"/>
