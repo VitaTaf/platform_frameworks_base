@@ -471,7 +471,6 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     tv.mHeaderView.draw(c);
                     c.setBitmap(null);
                 }
-                b = b.createAshmemBitmap();
                 int[] pts = new int[2];
                 tv.getLocationOnScreen(pts);
                 try {
@@ -567,7 +566,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                         sourceView.getHandler(), animStartedListener);
             } else {
                 opts = ActivityOptions.makeThumbnailAspectScaleUpAnimation(sourceView,
-                        Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8).createAshmemBitmap(),
+                        Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8),
                         offsetX, offsetY, transform.rect.width(), transform.rect.height(),
                         sourceView.getHandler(), animStartedListener);
             }
